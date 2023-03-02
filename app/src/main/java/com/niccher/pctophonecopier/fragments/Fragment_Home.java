@@ -28,6 +28,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.niccher.pctophonecopier.Dope;
 import com.niccher.pctophonecopier.R;
+import com.niccher.pctophonecopier.activities.Regista;
 
 import static androidx.core.content.ContextCompat.getSystemService;
 
@@ -35,7 +36,7 @@ public class Fragment_Home extends Fragment {
 
     AlertDialog.Builder builder;
 
-    Button scan_qr, scan_txt, scan_hist;
+    Button scan_qr, scan_txt, scan_hist, btn_reg;
 
     @Nullable
     @Override
@@ -43,8 +44,9 @@ public class Fragment_Home extends Fragment {
 
         final View view = inflater.inflate(R.layout.frag_home,container,false);
 
-        scan_qr =view.findViewById(R.id.btn_camvw);
-        scan_txt = view.findViewById(R.id.btn_img2text);
+        scan_qr =view.findViewById(R.id.btn_con_to_web);
+        scan_txt = view.findViewById(R.id.btn_cpy_from_img);
+        btn_reg = view.findViewById(R.id.btn_upload_file);
         //scan_hist = view.findViewById(R.id.btn_hist);
 
         scan_qr.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +79,13 @@ public class Fragment_Home extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "This Activity is under active development", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btn_reg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), Regista.class));
             }
         });
 

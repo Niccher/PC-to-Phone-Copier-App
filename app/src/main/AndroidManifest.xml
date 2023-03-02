@@ -5,16 +5,22 @@
 
     <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
 
-
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme2"
-        android:hardwareAccelerated="true">
-        <!--<activity android:name=".Dope"></activity>-->
+        android:theme="@style/AppTheme2">
+
+        <activity
+            android:name=".activities.Regista"
+            android:exported="false"
+            android:label="@string/title_activity_regista"
+            android:theme="@style/AppTheme2.NoActionBar" />
+        <!-- <activity android:name=".Dope"></activity> -->
+
         <activity android:name=".Dope">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".MainActivity" />
 
     </application>

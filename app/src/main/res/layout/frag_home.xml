@@ -1,50 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:gravity="center"
+    android:orientation="vertical">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:elevation="4dp"
         android:background="#e0e0e0"
+        android:elevation="@dimen/_4sdp"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="@dimen/_12sdp">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:minHeight="150dp"
+            android:minHeight="@dimen/_150sdp"
             android:orientation="vertical"
-            android:paddingTop="30dp">
+            android:paddingTop="@dimen/_30sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <Button
-                android:id="@+id/btn_camvw"
+                android:id="@+id/btn_con_to_web"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="22dp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_margin="@dimen/_22sdp"
+                android:layout_marginBottom="@dimen/_16sdp"
                 android:background="#b4abab"
-                android:text="QR Scan"
+                android:text="@string/home_conn_to_web"
                 android:textAllCaps="false"
                 android:textColor="#fff"
-                android:textSize="18sp" />
+                android:drawableStart="@drawable/link_to_web"
+                android:textSize="@dimen/_18sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/btn_img2text"
+                android:id="@+id/btn_cpy_from_img"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="22dp"
+                android:layout_height="@dimen/_50sdp"
+                android:drawableStart="@drawable/link_to_website"
+                android:layout_margin="@dimen/_22sdp"
                 android:background="#b4abab"
-                android:text="Text Scan"
+                android:text="@string/home_cpy_from_img"
                 android:textAllCaps="false"
                 android:textColor="#fff"
-                android:textSize="18sp" />
+                android:textSize="@dimen/_18sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_con_to_web" />
 
-        </LinearLayout>
+            <Button
+                android:id="@+id/btn_upload_file"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_22sdp"
+                android:background="#b4abab"
+                android:text="@string/home_file_upload"
+                android:textAllCaps="false"
+                android:textColor="#fff"
+                android:textSize="@dimen/_18sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_cpy_from_img" />
 
-    </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

@@ -12,14 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="18dp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginRight="@dimen/_18sdp"
         android:background="@drawable/background_rect_white"
-        android:elevation="8dp"
-        android:padding="12dp"
+        android:elevation="@dimen/_8sdp"
+        android:padding="@dimen/_12sdp"
         app:bnc_mode="packed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,8 +35,8 @@
             app:bt_icon="@drawable/ic_home"
             app:bt_shape="@drawable/transition_background"
             app:bt_title="Home"
-            app:bt_padding="16dp"
-            app:bt_titlePadding="16dp" />
+            app:bt_padding="@dimen/_16sdp"
+            app:bt_titlePadding="@dimen/_16sdp" />
 
         <!--<com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/c_item_2"
@@ -74,8 +74,8 @@
             app:bt_icon="@drawable/ic_playlist"
             app:bt_shape="@drawable/transition_background"
             app:bt_title="History"
-            app:bt_padding="16dp"
-            app:bt_titlePadding="16dp" />
+            app:bt_padding="@dimen/_16sdp"
+            app:bt_titlePadding="@dimen/_16sdp" />
 
     </com.gauravk.bubblenavigation.BubbleNavigationConstraintView>
 

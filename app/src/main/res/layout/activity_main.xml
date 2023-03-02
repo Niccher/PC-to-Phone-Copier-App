@@ -15,10 +15,10 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="22dp"
         android:gravity="center_horizontal"
-        android:paddingTop="40dp"
+        android:paddingTop="@dimen/_40sdp"
         android:text="Pc to Phone text copier"
         android:textColor="#ffffff"
-        android:textSize="26sp"
+        android:textSize="@dimen/_26sdp"
         android:textStyle="bold" />
 
     <ScrollView
@@ -34,28 +34,28 @@
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"
             android:background="#E1B9F1"
-            android:elevation="4dp"
+            android:elevation="@dimen/_4sdp"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="@dimen/_20sdp">
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="150dp"
+                android:minHeight="@dimen/_150sdp"
                 android:orientation="vertical"
-                android:paddingTop="30dp">
+                android:paddingTop="@dimen/_30sdp">
 
 
                 <Button
                     android:id="@+id/btn_camvw"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="22dp"
+                    android:layout_margin="@dimen/_22sdp"
                     android:background="#b4abab"
                     android:text="Camera Scan"
                     android:textAllCaps="false"
                     android:textColor="#fff"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/_18sdp" />
 
                 <com.skyhope.showmoretextview.ShowMoreTextView
                     android:id="@+id/text_view_show_more"
