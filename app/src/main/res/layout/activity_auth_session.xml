@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.Regista">
+    tools:context=".activities.AuthSession">
 
     <TextView
         android:id="@+id/reg_brand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_50sdp"
-        android:text="@string/reg_app_name"
+        android:text="@string/auth_app_name"
         android:textSize="@dimen/_18sdp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,88 +22,87 @@
         android:id="@+id/reg_brand_img"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_130sdp"
-        android:background="#BD9BA7"
         android:layout_marginStart="@dimen/_18sdp"
         android:layout_marginTop="@dimen/_16sdp"
         android:layout_marginEnd="@dimen/_18sdp"
+        android:background="#BD9BA7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/reg_brand" />
 
     <TextView
         android:id="@+id/reg_brand_head"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_16sdp"
-        android:text="How to get started"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:gravity="center"
+        android:text="@string/txt_auth_qr_scan"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-        android:textStyle="bold|italic"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/_12sdp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/reg_brand_img" />
 
-    <TextView
-        android:id="@+id/reg_how_to_1"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btn_auth_scan_qr"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:text="@string/how_1"
-        android:textStyle="bold"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:background="@drawable/background_oval"
+        android:drawableStart="@mipmap/qr_code"
+        android:gravity="center"
+        android:paddingStart="@dimen/_40sdp"
+        android:paddingEnd="@dimen/_40sdp"
+        android:text="@string/txt_auth_qr"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/reg_brand_head" />
 
     <TextView
-        android:id="@+id/reg_how_to_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:text="@string/how_2"
-        android:textStyle="bold"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/reg_how_to_1" />
-
-    <TextView
-        android:id="@+id/reg_how_to_3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:text="@string/how_3"
-        android:textStyle="bold"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/reg_how_to_2" />
-
-    <Button
-        android:id="@+id/reg_get_started"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/reg_how_to_3"
-        android:layout_marginStart="@dimen/_18sdp"
-        android:background="@drawable/background_oval"
-        android:text="@string/home_btn_get_started"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_18sdp"/>
-
-    <TextView
         android:id="@+id/reg_previous_session"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:text="@string/how_sess"
-        android:textStyle="bold"
         android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_32sdp"
         android:layout_marginEnd="@dimen/_16sdp"
+        android:gravity="center"
+        android:text="@string/txt_auth_code_scan"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/_12sdp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/reg_get_started" />
+        app:layout_constraintTop_toBottomOf="@id/btn_auth_scan_qr" />
 
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/ed_auth_scan_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:gravity="center"
+        android:hint="@string/ed_auth_hint_code"
+        app:layout_constraintTop_toBottomOf="@id/reg_previous_session" />
+
+    <Button
+        android:id="@+id/btn_auth_verify_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@drawable/background_oval"
+        android:paddingStart="@dimen/_50sdp"
+        android:paddingEnd="@dimen/_50sdp"
+        android:text="@string/btn_auth_verify_code"
+        app:layout_constraintEnd_toEndOf="@id/btn_auth_scan_qr"
+        app:layout_constraintStart_toStartOf="@id/btn_auth_scan_qr"
+        app:layout_constraintTop_toBottomOf="@id/ed_auth_scan_code" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

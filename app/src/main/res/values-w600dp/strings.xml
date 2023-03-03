@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="how_1">How to get started</string>
-    <string name="how_2">How to get started</string>
-    <string name="how_3">How to get started</string>
-    <string name="reg_app_name">Random Text</string>
-    <string name="how_sess">Prevoius sessions here in a horizontal recycleview</string>
-</resources>

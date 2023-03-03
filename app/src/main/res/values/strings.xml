@@ -22,4 +22,11 @@
 
     <string name="reg_app_name">Welcome to PC-Phone-Copier</string>
     <string name="how_sess">Previous sessions here in a horizontal recyclerview</string>
+    <string name="auth_app_name">Create a session</string>
+    <string name="txt_auth_qr_scan">Press this button scan the QR code on the website</string>
+    <string name="txt_auth_code_scan">Insert the code on the website to get started</string>
+    <string name="btn_auth_verify_code">Verify code</string>
+    <string name="home_btn_get_started">Get Started Now</string>
+    <string name="ed_auth_hint_code">Type code here</string>
+    <string name="txt_auth_qr">Scan QR</string>
 </resources>
