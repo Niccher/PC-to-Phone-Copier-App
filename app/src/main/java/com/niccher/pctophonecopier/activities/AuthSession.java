@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.google.android.material.button.MaterialButton;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.niccher.pctophonecopier.Dope;
 import com.niccher.pctophonecopier.R;
 
 public class AuthSession extends AppCompatActivity {
@@ -77,6 +78,8 @@ public class AuthSession extends AppCompatActivity {
 
     private void code_verify(){
         Toast.makeText(this, "Pending", Toast.LENGTH_SHORT).show();
+        Intent startActions = new Intent(this, Dope.class);
+        startActivity(startActions);
     }
 
     @Override

@@ -55,7 +55,7 @@
         android:layout_marginTop="@dimen/_8sdp"
         android:layout_marginEnd="@dimen/_30sdp"
         android:background="@drawable/background_oval"
-        android:drawableStart="@mipmap/qr_code"
+        android:drawableStart="@mipmap/img_qr"
         android:gravity="center"
         android:paddingStart="@dimen/_40sdp"
         android:paddingEnd="@dimen/_40sdp"

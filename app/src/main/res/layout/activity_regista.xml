@@ -22,10 +22,10 @@
         android:id="@+id/reg_brand_img"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_130sdp"
-        android:background="#BD9BA7"
         android:layout_marginStart="@dimen/_18sdp"
         android:layout_marginTop="@dimen/_16sdp"
         android:layout_marginEnd="@dimen/_18sdp"
+        android:background="#BD9BA7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/reg_brand" />
@@ -46,11 +46,11 @@
         android:id="@+id/reg_how_to_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
         android:text="@string/how_1"
         android:textStyle="bold"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/reg_brand_head" />
@@ -59,11 +59,11 @@
         android:id="@+id/reg_how_to_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
         android:text="@string/how_2"
         android:textStyle="bold"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/reg_how_to_1" />
@@ -72,11 +72,11 @@
         android:id="@+id/reg_how_to_3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
         android:text="@string/how_3"
         android:textStyle="bold"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/reg_how_to_2" />
@@ -85,25 +85,11 @@
         android:id="@+id/reg_get_started"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/reg_how_to_3"
         android:layout_marginStart="@dimen/_18sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_18sdp"
         android:background="@drawable/background_oval"
         android:text="@string/home_btn_get_started"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_18sdp"/>
-
-    <TextView
-        android:id="@+id/reg_previous_session"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:text="@string/how_sess"
-        android:textStyle="bold"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/reg_get_started" />
-
+        app:layout_constraintTop_toBottomOf="@id/reg_how_to_3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

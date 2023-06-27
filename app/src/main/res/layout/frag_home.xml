@@ -1,73 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#e0e0e0"
-        android:elevation="@dimen/_4sdp"
-        android:orientation="vertical"
-        android:padding="@dimen/_12sdp">
+        android:padding="@dimen/_12sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="fill_parent"
+            android:id="@+id/option_1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="@dimen/_150sdp"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:background="@drawable/background_pink_buttons"
+            android:padding="@dimen/_8sdp"
+            android:paddingStart="@dimen/_4sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <Button
-                android:id="@+id/btn_con_to_web"
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/_50sdp"
-                android:layout_margin="@dimen/_22sdp"
-                android:layout_marginBottom="@dimen/_16sdp"
-                android:background="#b4abab"
-                android:text="@string/home_conn_to_web"
-                android:textAllCaps="false"
-                android:textColor="#fff"
-                android:drawableStart="@drawable/link_to_web"
-                android:textSize="@dimen/_18sdp"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_describe_1"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:paddingStart="@dimen/_2sdp"
+                android:src="@mipmap/home_type_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/btn_cpy_from_img"
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/_50sdp"
-                android:drawableStart="@drawable/link_to_website"
-                android:layout_margin="@dimen/_22sdp"
-                android:background="#b4abab"
-                android:text="@string/home_cpy_from_img"
-                android:textAllCaps="false"
-                android:textColor="#fff"
-                android:textSize="@dimen/_18sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btn_con_to_web" />
-
-            <Button
-                android:id="@+id/btn_upload_file"
-                android:layout_width="fill_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_22sdp"
-                android:background="#b4abab"
-                android:text="@string/home_file_upload"
-                android:textAllCaps="false"
-                android:textColor="#fff"
-                android:textSize="@dimen/_18sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btn_cpy_from_img" />
+                android:layout_marginStart="@dimen/_18sdp"
+                android:text="@string/home_cpy_type_text"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/img_describe_1"
+                app:layout_constraintStart_toEndOf="@id/img_describe_1"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/option_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:background="@drawable/background_pink_buttons"
+            android:padding="@dimen/_8sdp"
+            android:paddingStart="@dimen/_4sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/option_1">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_describe_2"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:paddingStart="@dimen/_2sdp"
+                android:src="@mipmap/home_copy_paste"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_18sdp"
+                android:text="@string/home_cpy_from_clip"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/img_describe_2"
+                app:layout_constraintStart_toEndOf="@id/img_describe_2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/option_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:background="@drawable/background_pink_buttons"
+            android:padding="@dimen/_8sdp"
+            android:paddingStart="@dimen/_4sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/option_2">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_describe_3"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:paddingStart="@dimen/_4sdp"
+                android:src="@mipmap/home_img_to_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_18sdp"
+                android:text="@string/home_cpy_from_img"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/img_describe_3"
+                app:layout_constraintStart_toEndOf="@id/img_describe_3"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/option_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:background="@drawable/background_pink_buttons"
+            android:padding="@dimen/_8sdp"
+            android:paddingStart="@dimen/_4sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/option_3">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_describe_4"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:padding="@dimen/_2sdp"
+                android:src="@mipmap/home_file_upload"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_18sdp"
+                android:text="@string/home_file_upload"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/img_describe_4"
+                app:layout_constraintStart_toEndOf="@id/img_describe_4"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/reg_previous_session"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:text="@string/how_to_operate"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/option_4" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

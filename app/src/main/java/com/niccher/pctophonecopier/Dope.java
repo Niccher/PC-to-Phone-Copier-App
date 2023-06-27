@@ -58,7 +58,6 @@ public class Dope extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         goToSelectedFragment(new Fragment_Home());
     }
 

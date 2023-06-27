@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -36,7 +37,7 @@ public class Fragment_Home extends Fragment {
 
     AlertDialog.Builder builder;
 
-    Button scan_qr, scan_txt, scan_hist, btn_reg;
+    ConstraintLayout layout_type_type, layout_type_pasted, layout_type_img_scan, layout_type_upload;
 
     @Nullable
     @Override
@@ -44,12 +45,12 @@ public class Fragment_Home extends Fragment {
 
         final View view = inflater.inflate(R.layout.frag_home,container,false);
 
-        scan_qr =view.findViewById(R.id.btn_con_to_web);
-        scan_txt = view.findViewById(R.id.btn_cpy_from_img);
-        btn_reg = view.findViewById(R.id.btn_upload_file);
-        //scan_hist = view.findViewById(R.id.btn_hist);
+        layout_type_type =view.findViewById(R.id.option_1);
+        layout_type_pasted =view.findViewById(R.id.option_2);
+        layout_type_img_scan =view.findViewById(R.id.option_3);
+        layout_type_upload =view.findViewById(R.id.option_4);
 
-        scan_qr.setOnClickListener(new View.OnClickListener() {
+        layout_type_img_scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 IntentIntegrator integrator = IntentIntegrator.forSupportFragment(Fragment_Home.this);
@@ -75,17 +76,24 @@ public class Fragment_Home extends Fragment {
             }
         });
 
-        scan_txt.setOnClickListener(new View.OnClickListener() {
+        layout_type_type.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "This Activity is under active development", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "This Activity is under active development layout_type_type", Toast.LENGTH_SHORT).show();
             }
         });
 
-        btn_reg.setOnClickListener(new View.OnClickListener() {
+        layout_type_pasted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), Regista.class));
+                Toast.makeText(getActivity(), "This Activity is under active development layout_type_pasted", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        layout_type_upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "This Activity is under active development layout_type_upload", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -119,7 +127,7 @@ public class Fragment_Home extends Fragment {
                         try {
                             ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
                             ClipData clip = ClipData.newPlainText("Kopied", pars);
-                            if (clipboard == null || clip == null) return;
+                            if (clipboard == null ) return;
                             clipboard.setPrimaryClip(clip);
                             //Toast.makeText(getContext(), "Copied >\n"+selectedText, Toast.LENGTH_SHORT).show();
 

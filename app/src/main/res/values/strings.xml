@@ -1,10 +1,16 @@
 <resources>
     <string name="app_name">PC to Phone copier</string>
+    <string name="app_name_1">P2P Copier</string>
 
     <string name="lorem">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</string>
+
     <string name="home_conn_to_web">Connect to Website</string>
     <string name="home_cpy_from_img">Copy Text from Image</string>
     <string name="home_file_upload">Upload a file</string>
+
+    <string name="home_cpy_from_clip">Paste from Clipboard</string>
+    <string name="home_cpy_type_text">Type some Text</string>
+
     <string name="title_activity_register">Register</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -21,7 +27,7 @@
     <string name="how_3">Once the QR is scanned successfully, or the code entered is correct the app will redirect to an activity where you can copy-and-paste cross devices seamlessly.</string>
 
     <string name="reg_app_name">Welcome to PC-Phone-Copier</string>
-    <string name="how_sess">Previous sessions here in a horizontal recyclerview</string>
+    <string name="how_sess">Previous sessions here in a recyclerview</string>
     <string name="auth_app_name">Create a session</string>
     <string name="txt_auth_qr_scan">Press this button scan the QR code on the website</string>
     <string name="txt_auth_code_scan">Insert the code on the website to get started</string>
@@ -29,4 +35,5 @@
     <string name="home_btn_get_started">Get Started Now</string>
     <string name="ed_auth_hint_code">Type code here</string>
     <string name="txt_auth_qr">Scan QR</string>
+    <string name="how_to_operate">Press any category to get started</string>
 </resources>
