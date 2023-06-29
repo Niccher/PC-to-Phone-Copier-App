@@ -13,17 +13,20 @@
         android:roundIcon="@mipmap/app_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme2">
-
+        <activity
+            android:name=".activities.Handle_Texts"
+            android:exported="false" />
         <activity
             android:name=".activities.AuthSession"
             android:exported="false" />
-
-        <!-- <activity
+        <!--
+ <activity
             android:name=".activities.Regista"
             android:exported="false"
             android:label="@string/title_activity_regista"
-            android:theme="@style/AppTheme2.NoActionBar" />--> <!-- <activity android:name=".Dope"></activity> -->
-
+            android:theme="@style/AppTheme2.NoActionBar" />
+        -->
+        <!-- <activity android:name=".Dope"></activity> -->
         <activity android:name=".activities.Regista">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,16 +34,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".Dope" />
         <activity android:name=".MainActivity" />
-
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"
-            tools:replace="android:screenOrientation"
-            android:stateNotNeeded="true"/>
-
+            android:stateNotNeeded="true"
+            tools:replace="android:screenOrientation" />
     </application>
 
 </manifest>

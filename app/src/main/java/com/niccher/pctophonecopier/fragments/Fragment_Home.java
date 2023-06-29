@@ -29,6 +29,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.niccher.pctophonecopier.Dope;
 import com.niccher.pctophonecopier.R;
+import com.niccher.pctophonecopier.activities.Handle_Texts;
 import com.niccher.pctophonecopier.activities.Regista;
 
 import static androidx.core.content.ContextCompat.getSystemService;
@@ -79,14 +80,16 @@ public class Fragment_Home extends Fragment {
         layout_type_type.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "This Activity is under active development layout_type_type", Toast.LENGTH_SHORT).show();
+                Intent go_to_handle_texts = new Intent(getActivity(), Handle_Texts.class);
+                startActivity(go_to_handle_texts);
             }
         });
 
         layout_type_pasted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "This Activity is under active development layout_type_pasted", Toast.LENGTH_SHORT).show();
+                Intent go_to_handle_texts = new Intent(getActivity(), Handle_Texts.class);
+                startActivity(go_to_handle_texts);
             }
         });
 
@@ -94,6 +97,8 @@ public class Fragment_Home extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "This Activity is under active development layout_type_upload", Toast.LENGTH_SHORT).show();
+                //Intent go_to_handle_texts = new Intent(getActivity(), Handle_Texts.class);
+                //startActivity(go_to_handle_texts);
             }
         });
 

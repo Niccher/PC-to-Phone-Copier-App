@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/_18sdp"
+    tools:context=".activities.Handle_Texts">
+
+    <EditText
+        android:id="@+id/txt_box"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_200sdp"
+        android:background="@drawable/border_edit_text"
+        android:gravity="bottom"
+        android:hint="@string/str_paste_copy_hint"
+        android:padding="@dimen/_8sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/txt_paste_from_clip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_18sdp"
+        android:background="@drawable/background_oval"
+        android:text="@string/str_paste_copy"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_box" />
+
+    <Button
+        android:id="@+id/txt_upload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_18sdp"
+        android:background="@drawable/background_oval"
+        android:text="@string/str_upload_local"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_paste_from_clip" />
+
+    <ProgressBar
+        android:id="@+id/home_upload_state"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/purple_bg_light"
+        android:max="100"
+        app:layout_constraintTop_toBottomOf="@id/txt_upload" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
