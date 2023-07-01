@@ -39,4 +39,5 @@
     <string name="str_paste_copy">Paste from Clipboard</string>
     <string name="str_upload_local">Upload to Cloud</string>
     <string name="str_paste_copy_hint">Paste here or Type some text here</string>
+    <string name="str_random_quote">A basic app descriptor</string>
 </resources>
