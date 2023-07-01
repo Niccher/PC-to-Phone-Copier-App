@@ -40,4 +40,8 @@
     <string name="str_upload_local">Upload to Cloud</string>
     <string name="str_paste_copy_hint">Paste here or Type some text here</string>
     <string name="str_random_quote">A basic app descriptor</string>
+    <string name="home_qr_scan">Scan QR</string>
+    <string name="str_select_img_from_camera">Select Image from Camera</string>
+    <string name="str_img_extract_text">Extract and Copy Text</string>
+    <string name="str_extracted_text_here">Extracted Text Here</string>
 </resources>

@@ -48,7 +48,7 @@ public class Splasher extends AppCompatActivity {
         new Thread(new Runnable() {
             public void run() {
                 while (progressStatus < 100) {
-                    progressStatus += 2;
+                    progressStatus += 4;
                     handler.post(new Runnable() {
                         public void run() {
                             mProgressBar.setProgress(progressStatus);
@@ -81,7 +81,7 @@ public class Splasher extends AppCompatActivity {
 
     public String checkValidity(){
         SharedPreferences sharedPreferences = getSharedPreferences(kon.shared_pref_auth, Context.MODE_PRIVATE);
-        String status = sharedPreferences.getString("status","0");
+        String status = sharedPreferences.getString("status","1");
         return status;
     }
 }

@@ -129,6 +129,39 @@
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
                 android:padding="@dimen/_2sdp"
+                android:src="@mipmap/img_qr"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_18sdp"
+                android:text="@string/home_qr_scan"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/img_describe_4"
+                app:layout_constraintStart_toEndOf="@id/img_describe_4"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/option_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:background="@drawable/background_pink_buttons"
+            android:padding="@dimen/_8sdp"
+            android:paddingStart="@dimen/_4sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/option_4">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_describe_5"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:padding="@dimen/_2sdp"
                 android:src="@mipmap/home_file_upload"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -140,8 +173,8 @@
                 android:text="@string/home_file_upload"
                 android:textSize="@dimen/_14sdp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/img_describe_4"
-                app:layout_constraintStart_toEndOf="@id/img_describe_4"
+                app:layout_constraintBottom_toBottomOf="@id/img_describe_5"
+                app:layout_constraintStart_toEndOf="@id/img_describe_5"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -157,7 +190,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/option_4" />
+            app:layout_constraintTop_toBottomOf="@id/option_5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

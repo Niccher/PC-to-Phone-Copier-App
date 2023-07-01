@@ -29,6 +29,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.niccher.pctophonecopier.Dope;
 import com.niccher.pctophonecopier.R;
+import com.niccher.pctophonecopier.activities.Handle_Text_2_Image;
 import com.niccher.pctophonecopier.activities.Handle_Texts;
 import com.niccher.pctophonecopier.activities.Regista;
 
@@ -38,7 +39,7 @@ public class Fragment_Home extends Fragment {
 
     AlertDialog.Builder builder;
 
-    ConstraintLayout layout_type_type, layout_type_pasted, layout_type_img_scan, layout_type_upload;
+    ConstraintLayout layout_type_type, layout_type_pasted, layout_type_qr_scan, layout_type_img_scan, layout_type_upload;
 
     @Nullable
     @Override
@@ -46,34 +47,16 @@ public class Fragment_Home extends Fragment {
 
         final View view = inflater.inflate(R.layout.frag_home,container,false);
 
-        layout_type_type =view.findViewById(R.id.option_1);
-        layout_type_pasted =view.findViewById(R.id.option_2);
-        layout_type_img_scan =view.findViewById(R.id.option_3);
-        layout_type_upload =view.findViewById(R.id.option_4);
+        layout_type_type = view.findViewById(R.id.option_1);
+        layout_type_pasted = view.findViewById(R.id.option_2);
+        layout_type_img_scan = view.findViewById(R.id.option_3);
+        layout_type_qr_scan = view.findViewById(R.id.option_4);
+        layout_type_upload = view.findViewById(R.id.option_5);
 
-        layout_type_img_scan.setOnClickListener(new View.OnClickListener() {
+        layout_type_qr_scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentIntegrator integrator = IntentIntegrator.forSupportFragment(Fragment_Home.this);
-                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-                integrator.setPrompt("Scan text to copy");
-                integrator.setOrientationLocked(false);
-                integrator.setCameraId(0);
-                integrator.setBeepEnabled(true);
-                //integrator.setBarcodeImageEnabled(false);
-                integrator.initiateScan();
-
-                CameraManager camma= (CameraManager) getActivity().getSystemService(Context.CAMERA_SERVICE);
-                String camid=null;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    try {
-                        //camid=camma.getCameraIdList(0);
-                        camid=camma.getCameraIdList()[0];
-                        //camma.setTorchMode(camid,true);
-                    }catch (CameraAccessException ex){
-                        Toast.makeText(getActivity(), "Error--> "+ex.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                }
+                init_qr_scanner();
             }
         });
 
@@ -93,16 +76,45 @@ public class Fragment_Home extends Fragment {
             }
         });
 
+        layout_type_img_scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent go_to_handle_img_scan = new Intent(getActivity(), Handle_Text_2_Image.class);
+                startActivity(go_to_handle_img_scan);
+            }
+        });
+
         layout_type_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "This Activity is under active development layout_type_upload", Toast.LENGTH_SHORT).show();
-                //Intent go_to_handle_texts = new Intent(getActivity(), Handle_Texts.class);
-                //startActivity(go_to_handle_texts);
+                Toast.makeText(getActivity(), "layout_type_upload", Toast.LENGTH_SHORT).show();
             }
         });
 
         return view;
+    }
+
+    private void init_qr_scanner() {
+        IntentIntegrator integrator = IntentIntegrator.forSupportFragment(Fragment_Home.this);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+        integrator.setPrompt("Scan text to copy");
+        integrator.setOrientationLocked(false);
+        integrator.setCameraId(0);
+        integrator.setBeepEnabled(true);
+        //integrator.setBarcodeImageEnabled(false);
+        integrator.initiateScan();
+
+        CameraManager camma= (CameraManager) getActivity().getSystemService(Context.CAMERA_SERVICE);
+        String camid=null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            try {
+                //camid=camma.getCameraIdList(0);
+                camid=camma.getCameraIdList()[0];
+                //camma.setTorchMode(camid,true);
+            }catch (CameraAccessException ex){
+                Toast.makeText(getActivity(), "Error--> "+ex.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     @Override

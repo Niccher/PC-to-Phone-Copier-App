@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="how_to_operate">Press any category to get started</string>
-    <string name="str_paste_copy">Paste from Clipboard</string>
-    <string name="str_upload_local">Upload to Cloud</string>
-    <string name="str_paste_copy_hint">Paste here or Type some text here</string>
-    <string name="str_random_quote">A basic app descriptor</string>
-</resources>
