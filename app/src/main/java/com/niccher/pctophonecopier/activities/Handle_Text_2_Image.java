@@ -2,8 +2,10 @@ package com.niccher.pctophonecopier.activities;
 
 import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -15,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -41,6 +44,13 @@ public class Handle_Text_2_Image extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_handle_text2_image);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Copy from Image");
+        actionBar.show();
 
         img_view = findViewById(R.id.img_box);
         btn_sel_img = findViewById(R.id.btn_get_image);
@@ -104,5 +114,15 @@ public class Handle_Text_2_Image extends AppCompatActivity {
             txt_extracted.setText(e.getMessage());
         });
         p_bar_progress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

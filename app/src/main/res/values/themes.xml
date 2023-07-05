@@ -1,11 +1,11 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="AppTheme2.NoActionBar">
+    <style name="Theme.P2P_Copier_NoAction" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme2.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.P2P_Copier_Action" parent="Theme.MaterialComponents.DayNight.NoActionBar"/>
 
     <style name="AppTheme2.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
