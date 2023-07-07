@@ -81,7 +81,7 @@ public class Splasher extends AppCompatActivity {
 
     public String checkValidity(){
         SharedPreferences sharedPreferences = getSharedPreferences(kon.shared_pref_auth, Context.MODE_PRIVATE);
-        String status = sharedPreferences.getString("status","1");
+        String status = sharedPreferences.getString("status","0");
         return status;
     }
 }
