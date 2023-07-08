@@ -11,6 +11,7 @@ import android.hardware.camera2.CameraManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -43,7 +45,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AuthSession extends AppCompatActivity {
 
     Button btn_scan_qr, btn_scan_verify_code;
-    //MaterialButton btn_scan_verify_code;
+    TextInputEditText typed_auth_code;
     AlertDialog.Builder builder;
     Konstants kon;
     Gson gson = null;
@@ -61,6 +63,7 @@ public class AuthSession extends AppCompatActivity {
 
         btn_scan_verify_code = findViewById(R.id.btn_auth_verify_code);
         btn_scan_qr = findViewById(R.id.btn_auth_scan_qr);
+        typed_auth_code = findViewById(R.id.ed_auth_scan_code);
 
         kon = new Konstants();
         gson = new GsonBuilder()
@@ -90,7 +93,7 @@ public class AuthSession extends AppCompatActivity {
     private void init_qr_scan() {
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-        integrator.setPrompt("Scan text to copy");
+        integrator.setPrompt("Scan the QR on the website");
         integrator.setOrientationLocked(false);
         integrator.setCameraId(0);
         integrator.setBeepEnabled(true);
@@ -103,16 +106,19 @@ public class AuthSession extends AppCompatActivity {
                 camid = camma.getCameraIdList()[0];
                 //camma.setTorchMode(camid,true);
             } catch (CameraAccessException ex) {
-                //Toast.makeText(this, "Error--> "+ex.getMessage(), Toast.LENGTH_LONG).show();
                 Toast.makeText(this, "Unable to lock the camera", Toast.LENGTH_LONG).show();
             }
         }
     }
 
     private void code_verify() {
-        Toast.makeText(this, "Pending", Toast.LENGTH_SHORT).show();
-        Intent startActions = new Intent(this, Dope.class);
-        startActivity(startActions);
+        String auth_inserted_code = typed_auth_code.getText().toString().trim();
+
+        if (auth_inserted_code.isEmpty()) {
+            Toast.makeText(AuthSession.this, "Please type the code on the website.", Toast.LENGTH_LONG).show();
+        }else{
+            tryAuth("code_num", auth_inserted_code);
+        }
     }
 
     @Override
@@ -124,7 +130,7 @@ public class AuthSession extends AppCompatActivity {
                 Toast.makeText(this, "You cancelled the scanning", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
-                final String auth_qr_code = String.valueOf(result.getContents());
+                String auth_qr_code = String.valueOf(result.getContents());
                 tryAuth("code_qr", auth_qr_code);
                 Log.e("On Get", "Parsed data>: " + auth_qr_code);
 
@@ -185,7 +191,7 @@ public class AuthSession extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Mod_Device_Id> call, Throwable t) {
-                Toast.makeText(AuthSession.this,  t.getMessage()+"\nMod_Fone_Print\nUnknown error occurred, please try again", Toast.LENGTH_LONG).show();
+                Toast.makeText(AuthSession.this,  t.getMessage()+"\nCreateDeviceID\nUnknown error occurred, please try again", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -236,11 +242,11 @@ public class AuthSession extends AppCompatActivity {
                         if (postResponse.getAuth_status().equals("True")) {
                             sharedEditor = pref_Auth.edit();
                             sharedEditor.putString("auth_status", postResponse.getAuth_status());
-                            sharedEditor.putString("auth_type", postResponse.getAuth_status());
-                            sharedEditor.putString("auth_auth_code", postResponse.getAuth_status());
-                            sharedEditor.putString("auth_message", postResponse.getAuth_status());
-                            sharedEditor.putString("auth_auth_code_id", postResponse.getAuth_status());
-                            sharedEditor.putString("auth_time", postResponse.getAuth_status());
+                            sharedEditor.putString("auth_type", postResponse.getAuth_type());
+                            sharedEditor.putString("auth_auth_code", postResponse.getAuth_auth_code());
+                            sharedEditor.putString("auth_message", postResponse.getAuth_message());
+                            sharedEditor.putString("auth_auth_code_id", postResponse.getAuth_auth_code_id());
+                            sharedEditor.putString("auth_time", postResponse.getAuth_time());
                             sharedEditor.apply();
 
                             Intent to_home = new Intent(AuthSession.this, Dope.class);

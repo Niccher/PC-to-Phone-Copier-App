@@ -1,7 +1,5 @@
 package com.niccher.pctophonecopier.splash;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,8 +7,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ProgressBar;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.niccher.pctophonecopier.Dope;
 import com.niccher.pctophonecopier.R;
+import com.niccher.pctophonecopier.activities.Auth_New_Or_Continue;
 import com.niccher.pctophonecopier.activities.Regista;
 import com.niccher.pctophonecopier.utils.Konstants;
 
@@ -19,14 +20,14 @@ public class Splasher extends AppCompatActivity {
     private int progressStatus = 0;
     Konstants kon;
 
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splasher);
 
-        mProgressBar = (ProgressBar) findViewById (R.id.progress_bar);
+        mProgressBar = findViewById(R.id.progress_bar);
 
         kon = new Konstants();
 
@@ -52,15 +53,15 @@ public class Splasher extends AppCompatActivity {
                     handler.post(new Runnable() {
                         public void run() {
                             mProgressBar.setProgress(progressStatus);
-                            if (progressStatus == 100){
+                            if (progressStatus == 100) {
                                 Intent to_validate = new Intent(Splasher.this, Regista.class);
-                                Intent to_home = new Intent(Splasher.this, Dope.class);
-                                String state = checkValidity();
-                                if (Integer.parseInt(state) == 1 ){
-                                    to_home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(to_home);
+                                Intent to_sess_continuity = new Intent(Splasher.this, Auth_New_Or_Continue.class);
+
+                                if (checkValidity().equals("True")) {
+                                    to_sess_continuity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(to_sess_continuity);
                                     Splasher.this.finish();
-                                }else {
+                                } else {
                                     to_validate.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(to_validate);
                                     Splasher.this.finish();
@@ -79,9 +80,9 @@ public class Splasher extends AppCompatActivity {
         }).start();
     }
 
-    public String checkValidity(){
+    public String checkValidity() {
         SharedPreferences sharedPreferences = getSharedPreferences(kon.shared_pref_auth, Context.MODE_PRIVATE);
-        String status = sharedPreferences.getString("status","0");
+        String status = sharedPreferences.getString("auth_status", "False");
         return status;
     }
 }

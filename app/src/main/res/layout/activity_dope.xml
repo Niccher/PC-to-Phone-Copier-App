@@ -31,12 +31,12 @@
             app:bt_colorActive="#787"
             app:bt_colorInactive="#487"
             app:bt_icon="@drawable/ic_home"
-            app:bt_padding="@dimen/_16sdp"
+            app:bt_padding="@dimen/_12sdp"
             app:bt_shape="@drawable/transition_background"
             app:bt_title="Home"
-            app:bt_titlePadding="@dimen/_16sdp" />
+            app:bt_titlePadding="@dimen/_12sdp" />
 
-        <!--<com.gauravk.bubblenavigation.BubbleToggleView
+        <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/c_item_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,10 +44,10 @@
             app:bt_colorActive="#787"
             app:bt_colorInactive="#487"
             app:bt_icon="@drawable/ic_qr"
+            app:bt_padding="@dimen/_12sdp"
             app:bt_shape="@drawable/transition_background"
             app:bt_title="QR"
-            app:bt_padding="16dp"
-            app:bt_titlePadding="16dp" />
+            app:bt_titlePadding="@dimen/_12sdp" />
 
         <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/c_item_3"
@@ -56,11 +56,11 @@
             app:bt_active="true"
             app:bt_colorActive="#787"
             app:bt_colorInactive="#487"
-            app:bt_icon="@drawable/ic_photos"
+            app:bt_icon="@drawable/ic_qr"
+            app:bt_padding="@dimen/_12sdp"
             app:bt_shape="@drawable/transition_background"
             app:bt_title="Image"
-            app:bt_padding="16dp"
-            app:bt_titlePadding="16dp" /> -->
+            app:bt_titlePadding="@dimen/_12sdp" />
 
         <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/c_item_4"
@@ -73,7 +73,7 @@
             app:bt_padding="@dimen/_16sdp"
             app:bt_shape="@drawable/transition_background"
             app:bt_title="History"
-            app:bt_titlePadding="@dimen/_16sdp" />
+            app:bt_titlePadding="@dimen/_12sdp" />
 
     </com.gauravk.bubblenavigation.BubbleNavigationConstraintView>
 

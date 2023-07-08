@@ -12,6 +12,8 @@ import com.gauravk.bubblenavigation.BubbleNavigationConstraintView;
 import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
 import com.niccher.pctophonecopier.fragments.Fragment_History;
 import com.niccher.pctophonecopier.fragments.Fragment_Home;
+import com.niccher.pctophonecopier.fragments.Fragment_Image;
+import com.niccher.pctophonecopier.fragments.Fragment_QR;
 
 public class Dope extends AppCompatActivity {
 
@@ -36,13 +38,13 @@ public class Dope extends AppCompatActivity {
                     case 0:
                         selectedFragm = new Fragment_Home();
                         break;
-                    /*case 1:
+                    case 1:
                         selectedFragm = new Fragment_QR();
                         break;
                     case 2:
                         selectedFragm = new Fragment_Image();
-                        break;*/
-                    case 1:
+                        break;
+                    case 3:
                         selectedFragm = new Fragment_History();
                         break;
                     default:

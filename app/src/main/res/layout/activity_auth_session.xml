@@ -90,6 +90,8 @@
         android:layout_marginEnd="@dimen/_30sdp"
         android:gravity="center"
         android:hint="@string/ed_auth_hint_code"
+        android:inputType="number"
+        android:maxLength="8"
         app:layout_constraintTop_toBottomOf="@id/reg_previous_session" />
 
     <Button
