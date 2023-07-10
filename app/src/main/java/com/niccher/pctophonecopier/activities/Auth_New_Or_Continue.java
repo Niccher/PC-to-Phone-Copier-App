@@ -6,12 +6,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
-import com.niccher.pctophonecopier.Dope;
+import com.niccher.pctophonecopier.HomePage;
 import com.niccher.pctophonecopier.R;
-import com.niccher.pctophonecopier.splash.Splasher;
 
 public class Auth_New_Or_Continue extends AppCompatActivity {
 
@@ -25,8 +22,8 @@ public class Auth_New_Or_Continue extends AppCompatActivity {
         sess_continue = findViewById(R.id.option_previous);
         sess_new = findViewById(R.id.option_new);
 
-        Intent to_validate = new Intent(Auth_New_Or_Continue.this, Regista.class);
-        Intent to_home = new Intent(Auth_New_Or_Continue.this, Dope.class);
+        Intent to_validate = new Intent(Auth_New_Or_Continue.this, AuthSession.class);
+        Intent to_home = new Intent(Auth_New_Or_Continue.this, HomePage.class);
 
         sess_continue.setOnClickListener(new View.OnClickListener() {
             @Override

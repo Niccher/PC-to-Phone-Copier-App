@@ -15,7 +15,7 @@ import com.niccher.pctophonecopier.fragments.Fragment_Home;
 import com.niccher.pctophonecopier.fragments.Fragment_Image;
 import com.niccher.pctophonecopier.fragments.Fragment_QR;
 
-public class Dope extends AppCompatActivity {
+public class HomePage extends AppCompatActivity {
 
     FrameLayout frameLayout;
     BubbleNavigationConstraintView bubbleNavigationLinearView;
@@ -23,7 +23,7 @@ public class Dope extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dope);
+        setContentView(R.layout.activity_home_page);
         frameLayout = findViewById(R.id.frame);
 
         bubbleNavigationLinearView = findViewById(R.id.bub_navigation_view_linear);

@@ -13,6 +13,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -50,6 +51,7 @@ public class Handle_Text_2_Image extends AppCompatActivity {
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Copy from Image");
+        actionBar.setBackgroundDrawable(getDrawable(R.color.col_bg_dark_gray));
         actionBar.show();
 
         img_view = findViewById(R.id.img_box);
@@ -60,6 +62,9 @@ public class Handle_Text_2_Image extends AppCompatActivity {
 
         p_bar_progress.setVisibility(View.GONE);
         txt_extracted.setVisibility(View.GONE);
+
+        //btn_sel_img.setBackgroundColor(getResources().getColor(R.color.purple_bg_light));
+        //btn_sel_img.setBackground(getDrawable(R.color.purple_bg_light));
 
         btn_sel_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,29 +96,33 @@ public class Handle_Text_2_Image extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Bundle bundle = data.getExtras();
-        Bitmap bitmap = (Bitmap) bundle.get("data");
-        img_view.setImageBitmap(bitmap);
-        p_bar_progress.setVisibility(View.VISIBLE);
+        try {
+            Bundle bundle = data.getExtras();
+            Bitmap bitmap = (Bitmap) bundle.get("data");
+            img_view.setImageBitmap(bitmap);
+            p_bar_progress.setVisibility(View.VISIBLE);
 
-        //Create a FirebaseVisionImage object from your image/bitmap.
-        FirebaseVisionImage firebaseVisionImage = FirebaseVisionImage.fromBitmap(bitmap);
+            //Create a FirebaseVisionImage object from your image/bitmap.
+            FirebaseVisionImage firebaseVisionImage = FirebaseVisionImage.fromBitmap(bitmap);
 
-        FirebaseVision firebaseVision = FirebaseVision.getInstance();
-        FirebaseVisionTextRecognizer firebaseVisionTextRecognizer = firebaseVision.getOnDeviceTextRecognizer();
+            FirebaseVision firebaseVision = FirebaseVision.getInstance();
+            FirebaseVisionTextRecognizer firebaseVisionTextRecognizer = firebaseVision.getOnDeviceTextRecognizer();
 
-        //Process the Image
-        Task<FirebaseVisionText> task = firebaseVisionTextRecognizer.processImage(firebaseVisionImage);
+            //Process the Image
+            Task<FirebaseVisionText> task = firebaseVisionTextRecognizer.processImage(firebaseVisionImage);
 
-        txt_extracted.setVisibility(View.VISIBLE);
-        task.addOnSuccessListener(firebaseVisionText -> {
-            String text = firebaseVisionText.getText();
-            txt_extracted.setText(text);
-        });
-        task.addOnFailureListener(e -> {
-            txt_extracted.setText(e.getMessage());
-        });
-        p_bar_progress.setVisibility(View.GONE);
+            txt_extracted.setVisibility(View.VISIBLE);
+            task.addOnSuccessListener(firebaseVisionText -> {
+                String text = firebaseVisionText.getText();
+                txt_extracted.setText(text);
+            });
+            task.addOnFailureListener(e -> {
+                txt_extracted.setText(e.getMessage());
+            });
+            p_bar_progress.setVisibility(View.GONE);
+        }catch (Exception nodata){
+            Toast.makeText(this, "Event cancelled, please restart the camera again", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

@@ -14,6 +14,8 @@ import android.content.ClipboardManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,6 +44,7 @@ public class Handle_Texts extends AppCompatActivity {
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Text");
+        actionBar.setBackgroundDrawable(getDrawable(R.color.col_bg_dark_gray));
         actionBar.show();
 
         txt_text_area = findViewById(R.id.txt_box);

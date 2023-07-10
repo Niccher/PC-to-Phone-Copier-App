@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/col_bg_lite_gray"
     tools:context=".activities.Regista">
 
     <TextView
@@ -88,7 +89,7 @@
         android:layout_marginStart="@dimen/_18sdp"
         android:layout_marginTop="@dimen/_16sdp"
         android:layout_marginEnd="@dimen/_18sdp"
-        android:background="@drawable/background_oval"
+        android:background="@drawable/background_pink_buttons"
         android:text="@string/home_btn_get_started"
         app:layout_constraintTop_toBottomOf="@id/reg_how_to_3" />
 

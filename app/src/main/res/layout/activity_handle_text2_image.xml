@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/col_bg_lite_gray"
     android:padding="@dimen/_16sdp"
     tools:context=".activities.Handle_Text_2_Image">
 
@@ -24,7 +25,6 @@
                 android:id="@+id/img_box"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_200sdp"
-                android:background="@drawable/border_edit_text"
                 android:padding="@dimen/_8sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -57,6 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:background="@drawable/border_edit_text"
+                android:backgroundTint="@color/col_bg_dark_gray"
                 android:hint="@string/str_extracted_text_here"
                 android:padding="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_8sdp"

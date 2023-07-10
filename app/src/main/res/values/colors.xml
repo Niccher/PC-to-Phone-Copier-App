@@ -6,5 +6,7 @@
 
     <color name="purple_bg_light">#f3e5f5</color>
     <color name="white">#fff</color>
+    <color name="col_bg_lite_gray">#e0e0e0</color>
+    <color name="col_bg_dark_gray">#C3C2C2</color>
 
 </resources>

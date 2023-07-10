@@ -17,37 +17,40 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.P2P_Copier_NoAction"
         android:usesCleartextTraffic="true">
+
         <activity
             android:name=".activities.Auth_New_Or_Continue"
             android:exported="false" />
+
         <activity
             android:name=".activities.Handle_Text_2_Image"
             android:exported="false"
             android:theme="@style/Theme.P2P_Copier_Action" />
+
         <activity
             android:name=".activities.Handle_Texts"
             android:exported="false"
             android:theme="@style/Theme.P2P_Copier_Action" />
+
         <activity
             android:name=".activities.AuthSession"
             android:exported="false" />
-        <!--
-            <activity
-            android:name=".activities.Regista"
-            android:exported="false"
-            android:label="@string/title_activity_regista"
-            android:theme="@style/AppTheme2.NoActionBar" />
-        -->
+
         <activity android:name=".activities.Regista" />
-        <activity android:name=".splash.Splasher">
+
+        <activity android:name=".splash.Splasher"
+            android:theme="@style/Theme.P2P_Copier_NoAction">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Dope" />
+
+        <activity android:name=".HomePage" />
+
         <activity android:name=".MainActivity" />
+
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"

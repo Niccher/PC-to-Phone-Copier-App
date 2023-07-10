@@ -5,7 +5,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.P2P_Copier_Action" parent="Theme.MaterialComponents.DayNight.NoActionBar"/>
+    <style name="Theme.P2P_Copier_Action" parent="Theme.MaterialComponents.DayNight.DarkActionBar"/>
 
     <style name="AppTheme2.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

@@ -9,7 +9,6 @@ import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.niccher.pctophonecopier.Dope;
 import com.niccher.pctophonecopier.R;
 import com.niccher.pctophonecopier.activities.Auth_New_Or_Continue;
 import com.niccher.pctophonecopier.activities.Regista;
