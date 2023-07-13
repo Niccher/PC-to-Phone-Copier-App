@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.niccher.pctophonecopier.R;
+import com.niccher.pctophonecopier.activities.Handle_Files;
 import com.niccher.pctophonecopier.activities.Handle_Text_2_Image;
 import com.niccher.pctophonecopier.activities.Handle_Texts;
 
@@ -81,7 +82,8 @@ public class Fragment_Home extends Fragment {
         layout_type_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "layout_type_upload", Toast.LENGTH_SHORT).show();
+                Intent go_to_handle_files = new Intent(getActivity(), Handle_Files.class);
+                startActivity(go_to_handle_files);
             }
         });
 

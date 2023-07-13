@@ -10,8 +10,10 @@
         <entry key="app/src/main/res/layout/activity_auth_new_or_continue.xml" value="0.36770833333333336" />
         <entry key="app/src/main/res/layout/activity_auth_session.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/activity_dope.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/activity_handle_files.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/activity_handle_text2_image.xml" value="0.37604166666666666" />
-        <entry key="app/src/main/res/layout/activity_handle_texts.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/activity_handle_texts.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/activity_home_page.xml" value="0.39114583333333336" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/activity_regista.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/activity_splasher.xml" value="0.25364583333333335" />
