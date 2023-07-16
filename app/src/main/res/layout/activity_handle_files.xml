@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".activities.Handle_Files">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/desc_file_info_RecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:padding="@dimen/_2sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:itemCount="1"
+        tools:listitem="@layout/item_file_info" />
+
     <TextView
         android:id="@+id/btn_open_files"
         android:layout_width="0dp"
