@@ -6,14 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".activities.Handle_Files">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <TextView
         android:id="@+id/btn_open_files"
-        android:text="OPen files"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:background="@drawable/background_pink_buttons"
+        android:drawableStart="@drawable/ic_file_attach"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/_8sdp"
+        android:text="@string/str_upload_select_a_file"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_upload_files"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/btn_upload_files"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:background="@drawable/background_pink_buttons"
+        android:drawableStart="@drawable/ic_file_upload"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/_8sdp"
+        android:text="@string/str_upload_upload_to_cloud"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_open_files"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

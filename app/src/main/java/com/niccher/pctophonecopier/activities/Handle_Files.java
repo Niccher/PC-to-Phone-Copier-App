@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.niccher.pctophonecopier.R;
@@ -26,12 +27,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class Handle_Files extends AppCompatActivity {
 
-    Button btn_files;
+    TextView btn_files, btn_upload;
     int get_files_code = 102;
     Konstants kon;
+
+    ArrayList<String> sel_files;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +50,12 @@ public class Handle_Files extends AppCompatActivity {
         actionBar.setBackgroundDrawable(getDrawable(R.color.col_bg_dark_gray));
         actionBar.show();
 
+        sel_files = new ArrayList<>();
+
         kon = new Konstants();
 
         btn_files = findViewById(R.id.btn_open_files);
+        btn_upload = findViewById(R.id.btn_upload_files);
 
         btn_files.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +65,13 @@ public class Handle_Files extends AppCompatActivity {
                 //chooseFile.setType("text/plain");
                 chooseFile.setType("*/*");
                 startActivityForResult(Intent.createChooser(chooseFile,"Select  a file to upload"), get_files_code);
+            }
+        });
+
+        btn_upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(Handle_Files.this, "Upload", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -70,11 +84,15 @@ public class Handle_Files extends AppCompatActivity {
             String file_name = getFileName(selected_file);
             String file_path = "";
 
-            //File file = new File(selected_file.getPath());
-            //file_path = file.getAbsolutePath();
+            sel_files.add(file_name);
+
+            File file = new File(selected_file.getPath());
+            file_path = file.getAbsolutePath();
 
             //Log.e(kon.TAGGED, "getFileName(selected_file): " + file_path);
-            Log.e(kon.TAGGED, "filePath(selected_file): " + file_name);
+            for (String f_now: sel_files) {
+                Log.e(kon.TAGGED, "File at : " + file_path +" file as : "+ f_now);
+            }
         }else{}
     }
 

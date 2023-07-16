@@ -47,4 +47,6 @@
     <string name="home_sess_new_sess">Create a new Session Now</string>
     <string name="home_sess_continue">Continue with the previous Session.</string>
     <string name="home_sess_continuity">Seems your device had already created a session. You can either \"Continue\" or \"Create a new session\".</string>
+    <string name="str_upload_select_a_file">Select a file/s</string>
+    <string name="str_upload_upload_to_cloud">Upload</string>
 </resources>
