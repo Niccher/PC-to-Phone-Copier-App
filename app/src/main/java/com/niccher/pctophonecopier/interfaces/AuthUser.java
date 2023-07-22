@@ -3,6 +3,7 @@ package com.niccher.pctophonecopier.interfaces;
 import com.niccher.pctophonecopier.model.Mod_Auth;
 import com.niccher.pctophonecopier.model.Mod_Device;
 import com.niccher.pctophonecopier.model.Mod_Device_Id;
+import com.niccher.pctophonecopier.model.Mod_File_Uploaded;
 
 import java.util.Map;
 
@@ -36,9 +37,15 @@ public interface AuthUser {
 
     @Multipart
     @POST("upload")
-    Call<ResponseBody> filesUpload(
+    Call<Mod_File_Uploaded> filesUpload(
             @Part("varDevId") RequestBody print_id,
             @Part MultipartBody.Part file
     );
+    /*@Multipart
+    @POST("upload")
+    Call<ResponseBody> filesUpload(
+            @Part("varDevId") RequestBody print_id,
+            @Part MultipartBody.Part file
+    );*/
 
 }

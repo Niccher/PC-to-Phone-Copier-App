@@ -25,9 +25,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.niccher.pctophonecopier.HomePage;
 import com.niccher.pctophonecopier.R;
 import com.niccher.pctophonecopier.adapters.Adapter_Sel_Files;
 import com.niccher.pctophonecopier.interfaces.AuthUser;
+import com.niccher.pctophonecopier.model.Mod_Auth;
+import com.niccher.pctophonecopier.model.Mod_File_Uploaded;
 import com.niccher.pctophonecopier.model.Mod_File_info;
 import com.niccher.pctophonecopier.utils.FileUtils;
 import com.niccher.pctophonecopier.utils.Helpers;
@@ -195,21 +198,25 @@ public class Handle_Files extends AppCompatActivity {
         RequestBody requestBody0 = RequestBody.create( okhttp3.MultipartBody.FORM, part_dev_id);
 
         // finally, execute the request
-        Call<ResponseBody> call = int_upload.filesUpload(requestBody0, body);
-        call.enqueue(new Callback<ResponseBody>() {
+        Call<Mod_File_Uploaded> call = int_upload.filesUpload(requestBody0, body);
+        call.enqueue(new Callback<Mod_File_Uploaded>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                //progressBar.setVisibility(View.GONE);
+            public void onResponse(Call<Mod_File_Uploaded> call, Response<Mod_File_Uploaded> response) {
+                Mod_File_Uploaded postResponse = response.body();
+
+                if (postResponse.getStatus() == 0  || postResponse.getStatus() == 2 ) {
+                    Toast.makeText(Handle_Files.this, postResponse.getMessage(), Toast.LENGTH_LONG).show();
+                }else if (postResponse.getStatus() == 1 ) {
+                    Toast.makeText(Handle_Files.this, postResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e("Upload error:", t.getMessage());
-                //progressBar.setVisibility(View.GONE);
+            public void onFailure(Call<Mod_File_Uploaded> call, Throwable t) {
+                //Log.e("Upload error:", t.getMessage());
+                Toast.makeText(Handle_Files.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
-        Log.e(kon.TAGGED, "Upload_Loot: Data Upload" );
     }
 
     @Override
