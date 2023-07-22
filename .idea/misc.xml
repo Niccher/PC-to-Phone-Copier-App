@@ -7,6 +7,9 @@
         <entry key="app/src/main/res/drawable/background_pink_buttons.xml" value="0.2035" />
         <entry key="app/src/main/res/drawable/background_rect.xml" value="0.2035" />
         <entry key="app/src/main/res/drawable/border_edit_text.xml" value="0.2035" />
+        <entry key="app/src/main/res/drawable/ic_cancel.xml" value="0.2975" />
+        <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.2975" />
+        <entry key="app/src/main/res/drawable/ic_file_upload_green.xml" value="0.2975" />
         <entry key="app/src/main/res/layout/activity_auth_new_or_continue.xml" value="0.36770833333333336" />
         <entry key="app/src/main/res/layout/activity_auth_session.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/activity_dope.xml" value="0.37604166666666666" />

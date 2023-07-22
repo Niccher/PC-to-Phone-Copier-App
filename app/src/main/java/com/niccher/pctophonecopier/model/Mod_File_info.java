@@ -1,12 +1,16 @@
 package com.niccher.pctophonecopier.model;
 
+import android.net.Uri;
+
 public class Mod_File_info {
     String f_name, f_type, f_size;
+    Uri f_uri;
 
-    public Mod_File_info(String f_name, String f_type, String f_size) {
+    public Mod_File_info(String f_name, String f_type, String f_size, Uri f_uri) {
         this.f_name = f_name;
         this.f_type = f_type;
         this.f_size = f_size;
+        this.f_uri = f_uri;
     }
 
     public String getF_name() {
@@ -31,5 +35,13 @@ public class Mod_File_info {
 
     public void setF_size(String f_size) {
         this.f_size = f_size;
+    }
+
+    public Uri getF_uri() {
+        return f_uri;
+    }
+
+    public void setF_uri(Uri f_uri) {
+        this.f_uri = f_uri;
     }
 }
