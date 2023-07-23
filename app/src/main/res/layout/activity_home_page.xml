@@ -9,11 +9,7 @@
         android:id="@+id/bub_navigation_view_linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginLeft="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:layout_marginRight="@dimen/_18sdp"
+        android:layout_margin="@dimen/_12sdp"
         android:background="@drawable/background_rect_white"
         android:elevation="@dimen/_8sdp"
         android:orientation="horizontal"
@@ -28,12 +24,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:bt_active="true"
-            app:bt_colorActive="#787"
-            app:bt_colorInactive="#487"
+            app:bt_colorActive="@color/color_bubble_toggle_active"
+            app:bt_colorInactive="@color/color_bubble_toggle_inactive"
             app:bt_icon="@drawable/ic_home"
             app:bt_padding="@dimen/_12sdp"
             app:bt_shape="@drawable/transition_background"
-            app:bt_title="Home"
+            app:bt_title="@string/home_menu_home"
             app:bt_titlePadding="@dimen/_12sdp" />
 
         <com.gauravk.bubblenavigation.BubbleToggleView
@@ -41,12 +37,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:bt_active="true"
-            app:bt_colorActive="#787"
-            app:bt_colorInactive="#487"
-            app:bt_icon="@drawable/ic_qr"
+            app:bt_colorActive="@color/color_bubble_toggle_active"
+            app:bt_colorInactive="@color/color_bubble_toggle_inactive"
+            app:bt_icon="@drawable/ic_history"
             app:bt_padding="@dimen/_12sdp"
             app:bt_shape="@drawable/transition_background"
-            app:bt_title="QR"
+            app:bt_title="@string/home_menu_history_text"
             app:bt_titlePadding="@dimen/_12sdp" />
 
         <com.gauravk.bubblenavigation.BubbleToggleView
@@ -54,15 +50,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:bt_active="true"
-            app:bt_colorActive="#787"
-            app:bt_colorInactive="#487"
-            app:bt_icon="@drawable/ic_qr"
+            app:bt_colorActive="@color/color_bubble_toggle_active"
+            app:bt_colorInactive="@color/color_bubble_toggle_inactive"
+            app:bt_icon="@drawable/ic_history"
             app:bt_padding="@dimen/_12sdp"
             app:bt_shape="@drawable/transition_background"
-            app:bt_title="Image"
+            app:bt_title="@string/home_menu_history_files"
             app:bt_titlePadding="@dimen/_12sdp" />
 
-        <com.gauravk.bubblenavigation.BubbleToggleView
+        <!--<com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/c_item_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,7 +69,7 @@
             app:bt_padding="@dimen/_16sdp"
             app:bt_shape="@drawable/transition_background"
             app:bt_title="History"
-            app:bt_titlePadding="@dimen/_12sdp" />
+            app:bt_titlePadding="@dimen/_12sdp" />-->
 
     </com.gauravk.bubblenavigation.BubbleNavigationConstraintView>
 

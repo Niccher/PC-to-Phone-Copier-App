@@ -19,6 +19,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.niccher.pctophonecopier.R;
@@ -31,7 +33,7 @@ import java.util.ArrayList;
 
 public class Handle_Files extends AppCompatActivity {
 
-    TextView btn_files, btn_upload;
+    FloatingActionButton fab_files;
     int get_files_code = 102;
     public static int code_read_files = 123;
     Konstants kon;
@@ -59,29 +61,17 @@ public class Handle_Files extends AppCompatActivity {
         kon = new Konstants();
         helpers = new Helpers();
 
-        btn_files = findViewById(R.id.btn_open_files);
-        btn_upload = findViewById(R.id.btn_upload_files);
+        fab_files = findViewById(R.id.fab_open_files);
 
-        btn_files.setOnClickListener(new View.OnClickListener() {
+        fab_files.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Snackbar.make(view, "Floating Button", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
                 chooseFile.addCategory(Intent.CATEGORY_OPENABLE);
                 //chooseFile.setType("text/plain");
                 chooseFile.setType("*/*");
                 startActivityForResult(Intent.createChooser(chooseFile, "Select  a file to upload"), get_files_code);
-            }
-        });
-
-        btn_upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    Uri uri_file_sample = sel_files.get(0);
-                    //filesUpload(uri_file_sample);
-                }catch (Exception es){
-                    Toast.makeText(Handle_Files.this, es.getMessage(), Toast.LENGTH_SHORT).show();
-                }
             }
         });
 

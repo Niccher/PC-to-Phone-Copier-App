@@ -23,7 +23,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.niccher.pctophonecopier.HomePage;
 import com.niccher.pctophonecopier.R;
-import com.niccher.pctophonecopier.interfaces.AuthUser;
+import com.niccher.pctophonecopier.interfaces.RetrofitInterface;
 import com.niccher.pctophonecopier.model.Mod_Auth;
 import com.niccher.pctophonecopier.model.Mod_Device_Id;
 import com.niccher.pctophonecopier.utils.Helpers;
@@ -47,7 +47,7 @@ public class AuthSession extends AppCompatActivity {
     Konstants kon;
     Gson gson = null;
 
-    AuthUser authUser;
+    RetrofitInterface retrofitInterface;
 
     SharedPreferences pref_Auth = null;
     SharedPreferences pref_Device = null;
@@ -171,7 +171,7 @@ public class AuthSession extends AppCompatActivity {
         parameters.put("device_User", String.valueOf(Build.USER)+"");
         parameters.put("device_Serial", String.valueOf(Build.SERIAL)+"");
 
-        Call<Mod_Device_Id> call = authUser.createDevice(parameters);
+        Call<Mod_Device_Id> call = retrofitInterface.createDevice(parameters);
 
         call.enqueue(new Callback<Mod_Device_Id>() {
             @Override
@@ -206,7 +206,7 @@ public class AuthSession extends AppCompatActivity {
                     .client(ServiceGenerator.getUnsafeOkHttpClient())
                     .build();
 
-            authUser = retrof.create(AuthUser.class);
+            retrofitInterface = retrof.create(RetrofitInterface.class);
             createDeviceID();
         }
     }
@@ -218,14 +218,14 @@ public class AuthSession extends AppCompatActivity {
                 .client(ServiceGenerator.getUnsafeOkHttpClient())
                 .build();
 
-        authUser = retrofit.create(AuthUser.class);
+        retrofitInterface = retrofit.create(RetrofitInterface.class);
 
         Map<String, String> parameters = new HashMap<>();
         parameters.put("var_auth_type", auth_type);
         parameters.put("var_auth_code", auth_code);
         parameters.put("var_dev_uuid", Helpers.get_prefs_dev("dev_uuid", this));
 
-        Call<Mod_Auth> call = authUser.createRegister(parameters);
+        Call<Mod_Auth> call = retrofitInterface.createRegister(parameters);
 
         call.enqueue(new Callback<Mod_Auth>() {
             @Override

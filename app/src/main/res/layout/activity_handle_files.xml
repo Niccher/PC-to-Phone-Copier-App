@@ -17,23 +17,18 @@
         tools:itemCount="1"
         tools:listitem="@layout/item_file_info" />
 
-    <TextView
-        android:id="@+id/btn_open_files"
-        android:layout_width="0dp"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_open_files"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_12sdp"
         android:layout_marginEnd="@dimen/_12sdp"
-        android:background="@drawable/background_pink_buttons"
-        android:drawableStart="@drawable/ic_file_attach"
-        android:gravity="center_horizontal"
-        android:padding="@dimen/_8sdp"
-        android:text="@string/str_upload_select_a_file"
+        android:layout_marginBottom="@dimen/_12sdp"
+        android:background="@color/purple_bg_light"
+        android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_upload_files"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
+    <!--<TextView
         android:id="@+id/btn_upload_files"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -46,6 +41,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_open_files"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

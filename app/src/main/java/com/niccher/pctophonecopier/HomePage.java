@@ -10,10 +10,9 @@ import android.widget.FrameLayout;
 
 import com.gauravk.bubblenavigation.BubbleNavigationConstraintView;
 import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
-import com.niccher.pctophonecopier.fragments.Fragment_History;
+import com.niccher.pctophonecopier.fragments.Fragment_History_Files;
 import com.niccher.pctophonecopier.fragments.Fragment_Home;
-import com.niccher.pctophonecopier.fragments.Fragment_Image;
-import com.niccher.pctophonecopier.fragments.Fragment_QR;
+import com.niccher.pctophonecopier.fragments.Fragment_History_Text;
 
 public class HomePage extends AppCompatActivity {
 
@@ -38,14 +37,14 @@ public class HomePage extends AppCompatActivity {
                     case 0:
                         selectedFragm = new Fragment_Home();
                         break;
-                    case 1:
+                    /*case 1:
                         selectedFragm = new Fragment_QR();
+                        break;*/
+                    case 1:
+                        selectedFragm = new Fragment_History_Text();
                         break;
                     case 2:
-                        selectedFragm = new Fragment_Image();
-                        break;
-                    case 3:
-                        selectedFragm = new Fragment_History();
+                        selectedFragm = new Fragment_History_Files();
                         break;
                     default:
                         selectedFragm = new Fragment_Home();

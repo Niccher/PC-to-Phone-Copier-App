@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.niccher.pctophonecopier.R;
-import com.niccher.pctophonecopier.interfaces.AuthUser;
+import com.niccher.pctophonecopier.interfaces.RetrofitInterface;
 import com.niccher.pctophonecopier.model.Mod_File_Uploaded;
 import com.niccher.pctophonecopier.model.Mod_File_info;
 import com.niccher.pctophonecopier.utils.FileUtils;
@@ -45,7 +45,7 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
     Helpers helpers = null;
 
     Retrofit retrofit_upload = null;
-    AuthUser interface_upload = null;
+    RetrofitInterface interface_upload = null;
 
     public Adapter_Sel_Files(ArrayList<Mod_File_info> list_file_infos, Context context) {
         this.list_file_infos = list_file_infos;
@@ -63,7 +63,7 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
                 .client(ServiceGenerator.getUnsafeOkHttpClient())
                 .build();
 
-        interface_upload = retrofit_upload.create(AuthUser.class);
+        interface_upload = retrofit_upload.create(RetrofitInterface.class);
     }
 
     @NonNull
