@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -82,6 +83,7 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
 
         holder.part_mini_remove.setVisibility(View.VISIBLE);
         holder.part_mini_delete.setVisibility(View.GONE);
+        holder.part_mini_progress.setVisibility(View.INVISIBLE);
 
         holder.part_mini_upload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +92,8 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
                 Uri file_uri = list_file_infos.get(position).getF_uri();
 
                 File file_to_upload = FileUtils.getFile(context, file_uri);
+                holder.part_mini_progress.setVisibility(View.VISIBLE);
+                holder.part_mini_progress.setIndeterminate(true);
 
                 RequestBody requestFile = RequestBody.create(MediaType.parse( helpers.getFileName(file_uri, context)[1]), file_to_upload );
                 MultipartBody.Part body = MultipartBody.Part.createFormData("uploaded_file", file_to_upload.getName(), requestFile);
@@ -114,6 +118,7 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
                             holder.part_mini_upload.setEnabled(false);
                             holder.part_mini_remove.setVisibility(View.GONE);
                             holder.part_mini_delete.setVisibility(View.VISIBLE);
+                            holder.part_mini_progress.setVisibility(View.GONE);
                         }
                     }
 
@@ -121,6 +126,7 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
                     public void onFailure(Call<Mod_File_Uploaded> call, Throwable t) {
                         //Log.e("Upload error:", t.getMessage());
                         Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+                        holder.part_mini_progress.setVisibility(View.GONE);
                     }
                 });
             }
@@ -151,6 +157,7 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView part_name, part_type, part_size;
         TextView part_mini_upload, part_mini_remove, part_mini_delete;
+        ProgressBar part_mini_progress;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -161,6 +168,8 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
             part_mini_upload = itemView.findViewById(R.id.f_info_upload);
             part_mini_remove = itemView.findViewById(R.id.f_info_remove);
             part_mini_delete = itemView.findViewById(R.id.f_info_delete);
+
+            part_mini_progress = itemView.findViewById(R.id.f_info_progress);
         }
     }
 }

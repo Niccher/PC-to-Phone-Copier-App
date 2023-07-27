@@ -48,10 +48,22 @@
                 android:text="@string/app_name_1"
                 android:textSize="@dimen/_10sdp"
                 android:textStyle="italic"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/f_info_ext"
                 app:layout_constraintTop_toBottomOf="@id/f_info_name" />
 
+            <ProgressBar
+                android:id="@+id/f_info_progress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:max="100"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/f_info_upload"
+                app:layout_constraintStart_toEndOf="@id/f_info_ext"
+                app:layout_constraintTop_toBottomOf="@id/f_info_size" />
 
             <TextView
                 android:id="@+id/f_info_upload"
@@ -65,8 +77,7 @@
                 android:paddingEnd="@dimen/_8sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/f_info_remove"
-                app:layout_constraintTop_toBottomOf="@id/f_info_name" />
+                app:layout_constraintEnd_toStartOf="@id/f_info_remove" />
 
             <TextView
                 android:id="@+id/f_info_remove"
