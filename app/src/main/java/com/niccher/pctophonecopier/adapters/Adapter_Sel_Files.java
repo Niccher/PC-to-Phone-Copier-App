@@ -100,11 +100,13 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
 
                 // add another part within the multipart request
                 String part_dev_id = helpers.get_prefs_dev("dev_uuid", context);
+                String part_sess_id = helpers.get_prefs_sess("auth_auth_code_id", context);
 
                 RequestBody requestBody0 = RequestBody.create( okhttp3.MultipartBody.FORM, part_dev_id);
+                RequestBody requestBody1 = RequestBody.create( okhttp3.MultipartBody.FORM, part_sess_id);
 
                 // finally, execute the request
-                Call<Mod_File_Uploaded> call = interface_upload.filesUpload(requestBody0, body);
+                Call<Mod_File_Uploaded> call = interface_upload.filesUpload(requestBody0, requestBody1, body);
                 call.enqueue(new Callback<Mod_File_Uploaded>() {
                     @Override
                     public void onResponse(Call<Mod_File_Uploaded> call, Response<Mod_File_Uploaded> response) {
@@ -117,6 +119,7 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
                             holder.part_mini_upload.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_file_upload, 0, 0, 0);
                             holder.part_mini_upload.setEnabled(false);
                             holder.part_mini_remove.setVisibility(View.GONE);
+                            holder.part_mini_upload.setVisibility(View.GONE);
                             holder.part_mini_delete.setVisibility(View.VISIBLE);
                             holder.part_mini_progress.setVisibility(View.GONE);
                         }

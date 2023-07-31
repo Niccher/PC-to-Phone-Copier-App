@@ -26,6 +26,21 @@ public class Helpers {
         return id;
     }
 
+    public static String get_prefs_sess(String ty, Context cntt){
+        Konstants kon;
+        kon = new Konstants();
+        SharedPreferences pref_dev = cntt.getSharedPreferences(kon.shared_pref_auth, Context.MODE_PRIVATE);
+        String id = "";
+        if (ty=="auth_auth_code_id"){
+            id = pref_dev.getString("auth_auth_code_id", "undefined");
+        }else if (ty=="auth_auth_code"){
+            id = pref_dev.getString("auth_auth_code", "undefined");
+        }else if (ty=="auth_type"){
+            id = pref_dev.getString("auth_type", "undefined");
+        }
+        return id;
+    }
+
     public static String humanReadableByteCountBin(long bytes) {
         long absB = bytes == Long.MIN_VALUE ? Long.MAX_VALUE : Math.abs(bytes);
         if (absB < 1024) {

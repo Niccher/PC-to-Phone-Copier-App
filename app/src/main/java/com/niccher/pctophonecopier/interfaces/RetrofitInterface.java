@@ -38,7 +38,8 @@ public interface RetrofitInterface {
     @Multipart
     @POST("upload")
     Call<Mod_File_Uploaded> filesUpload(
-            @Part("varDevId") RequestBody print_id,
+            @Part("varDevId") RequestBody device_id,
+            @Part("varSessId") RequestBody sess_id,
             @Part MultipartBody.Part file
     );
     /*@Multipart
