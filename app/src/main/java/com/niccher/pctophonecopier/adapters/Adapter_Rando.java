@@ -65,9 +65,9 @@ public class Adapter_Rando extends RecyclerView.Adapter<Adapter_Rando.ViewHolder
             public void onClick(View view) {
                 Toast.makeText(context, "Removing " + list_file_infos.get(position).getF_name(), Toast.LENGTH_SHORT).show();
                 list_file_infos.remove(position);
-                notifyItemChanged(position);
                 notifyDataSetChanged();
-                notifyItemRangeChanged(position, list_file_infos.size());
+                notifyItemChanged(position);
+                //notifyItemRangeChanged(position, list_file_infos.size());
             }
         });
         holder.part_mini_delete.setOnClickListener(new View.OnClickListener() {

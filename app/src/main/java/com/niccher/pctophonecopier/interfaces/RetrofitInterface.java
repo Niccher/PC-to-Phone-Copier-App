@@ -4,6 +4,8 @@ import com.niccher.pctophonecopier.model.Mod_Auth;
 import com.niccher.pctophonecopier.model.Mod_Device;
 import com.niccher.pctophonecopier.model.Mod_Device_Id;
 import com.niccher.pctophonecopier.model.Mod_File_Uploaded;
+import com.niccher.pctophonecopier.model.Mod_List_File_Uploaded;
+import com.niccher.pctophonecopier.utils.ResponseSummarizer;
 
 import java.util.Map;
 
@@ -42,6 +44,15 @@ public interface RetrofitInterface {
             @Part("varSessId") RequestBody sess_id,
             @Part MultipartBody.Part file
     );
+
+    @FormUrlEncoded
+    @POST("get_files_uploaded_by_session")
+    Call<Mod_List_File_Uploaded> getFilesUploadedbySessDevid0(@FieldMap Map<String, String> fields);
+
+    @FormUrlEncoded
+    @POST("get_files_uploaded_by_session")
+    Call<ResponseSummarizer> getFilesUploadedbySessDevid(@FieldMap Map<String, String> fields);
+
     /*@Multipart
     @POST("upload")
     Call<ResponseBody> filesUpload(
