@@ -1,27 +1,22 @@
 package com.niccher.pctophonecopier.fragments;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.niccher.pctophonecopier.HomePage;
 import com.niccher.pctophonecopier.R;
-import com.niccher.pctophonecopier.activities.AuthSession;
+import com.niccher.pctophonecopier.adapters.Adapter_Uploaded_Files;
 import com.niccher.pctophonecopier.interfaces.RetrofitInterface;
-import com.niccher.pctophonecopier.model.Mod_Auth;
 import com.niccher.pctophonecopier.model.Mod_List_File_Uploaded;
 import com.niccher.pctophonecopier.utils.Helpers;
 import com.niccher.pctophonecopier.utils.Konstants;
@@ -45,20 +40,26 @@ public class Fragment_History_Files extends Fragment {
     Gson gson = null;
     Helpers helpers;
 
-    TextView tv_files;
+    RecyclerView rcy_files;
 
     RetrofitInterface retrofitInterface;
 
     ResponseSummarizer responseSummarizer;
     ArrayList<Mod_List_File_Uploaded> summaryFileList;
 
+    ArrayList<Mod_List_File_Uploaded> modListFileUploadeds;
+    Adapter_Uploaded_Files adapterUploadedFiles;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.frag_history_files,container,false);
+        View view = inflater.inflate(R.layout.frag_history_files, container, false);
 
-        tv_files = view.findViewById(R.id.file_listing);
+        rcy_files = view.findViewById(R.id.recycler_uploaded_files);
+
+        rcy_files.setHasFixedSize(true);
+        rcy_files.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         helpers = new Helpers();
         kon = new Konstants();
@@ -70,7 +71,6 @@ public class Fragment_History_Files extends Fragment {
 
         return view;
     }
-
 
     private void filesListing() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -97,6 +97,7 @@ public class Fragment_History_Files extends Fragment {
                     parseFiles(responseSummarizer);
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseSummarizer> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage() + "\nUnknown error occurred, please try again", Toast.LENGTH_LONG).show();
@@ -104,18 +105,14 @@ public class Fragment_History_Files extends Fragment {
         });
     }
 
-    private void parseFiles(ResponseSummarizer responseSummarizer){
+    private void parseFiles(ResponseSummarizer responseSummarizer) {
         Fragment_History_Files.this.summaryFileList = new ArrayList<Mod_List_File_Uploaded>(Arrays.asList(responseSummarizer.getSummarizer()));
-        String flist = "";
 
         for (Mod_List_File_Uploaded filelist : Fragment_History_Files.this.summaryFileList) {
-            flist = filelist.getUp_file_Name() +
-                    "\nSize " + helpers.humanReadableByteCountBin(Long.parseLong(filelist.getUp_file_Size())) +
-                    "\nType "+ filelist.getUp_file_Type() +
-                    "\nExtension "+ filelist.getUp_file_Extension() +
-                    "\nCreated "+ filelist.getUp_file_Created_at() + "\n\n\n";
-            tv_files.append(flist);
-//            Log.e(kon.TAGGED, "parseFiles: " + flist);
+            adapterUploadedFiles = new Adapter_Uploaded_Files(summaryFileList, getActivity());
+            rcy_files.setAdapter(adapterUploadedFiles);
+            adapterUploadedFiles.notifyDataSetChanged();
+
         }
     }
 }
