@@ -1,16 +1,13 @@
 package com.niccher.pctophonecopier.adapters;
 
-import static androidx.core.app.ActivityCompat.requestPermissions;
-import static androidx.core.content.ContextCompat.checkSelfPermission;
 import static com.niccher.pctophonecopier.utils.Helpers.humanReadableByteCountBin;
 
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.os.Build;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +24,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.niccher.pctophonecopier.R;
 import com.niccher.pctophonecopier.interfaces.RetrofitInterface;
-import com.niccher.pctophonecopier.model.Mod_Auth;
-import com.niccher.pctophonecopier.model.Mod_File_Uploaded;
 import com.niccher.pctophonecopier.model.Mod_List_File_Uploaded;
 import com.niccher.pctophonecopier.utils.Helpers;
 import com.niccher.pctophonecopier.utils.Konstants;
@@ -43,7 +38,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -100,6 +94,17 @@ public class Adapter_Uploaded_Files extends RecyclerView.Adapter<Adapter_Uploade
         holder.part_size.setText(humanReadableByteCountBin(Long.parseLong(list_file_infos.get(position).getUp_file_Size())));
         holder.part_ext.setText(list_file_infos.get(position).getUp_file_Extension());
         holder.part_date.setText(list_file_infos.get(position).getUp_file_Created_at());
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            File file_path = new File (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + list_file_infos.get(position).getUp_file_Name());
+            Drawable icon_present = holder.part_mini_download.getContext().getResources().getDrawable( R.drawable.ic_download_blue );
+            Drawable icon_absent  = holder.part_mini_download.getContext().getResources().getDrawable( R.drawable.ic_download );
+            if(file_path.exists() && ! file_path.isDirectory()) {
+                holder.part_mini_download.setCompoundDrawablesWithIntrinsicBounds( icon_present, null, null, null);
+            }else {
+                holder.part_mini_download.setCompoundDrawablesWithIntrinsicBounds( icon_absent, null, null, null);
+            }
+        }
 
         holder.part_mini_download.setOnClickListener(new View.OnClickListener() {
             @Override
