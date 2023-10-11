@@ -13,6 +13,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Multipart;
@@ -53,11 +54,8 @@ public interface RetrofitInterface {
     @POST("get_files_uploaded_by_session")
     Call<ResponseSummarizer> getFilesUploadedbySessDevid(@FieldMap Map<String, String> fields);
 
-    /*@Multipart
-    @POST("upload")
-    Call<ResponseBody> filesUpload(
-            @Part("varDevId") RequestBody print_id,
-            @Part MultipartBody.Part file
-    );*/
+    @FormUrlEncoded
+    @POST("get_files_uploaded_by_session_download")
+    Call<ResponseBody> getFilesUploadedbySessDevidDownloaded(@FieldMap Map<String, String> fields);
 
 }

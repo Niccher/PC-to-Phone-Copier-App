@@ -1,8 +1,16 @@
 package com.niccher.pctophonecopier.adapters;
 
+import static androidx.core.app.ActivityCompat.requestPermissions;
+import static androidx.core.content.ContextCompat.checkSelfPermission;
 import static com.niccher.pctophonecopier.utils.Helpers.humanReadableByteCountBin;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,27 +18,77 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.niccher.pctophonecopier.R;
+import com.niccher.pctophonecopier.interfaces.RetrofitInterface;
+import com.niccher.pctophonecopier.model.Mod_Auth;
+import com.niccher.pctophonecopier.model.Mod_File_Uploaded;
 import com.niccher.pctophonecopier.model.Mod_List_File_Uploaded;
+import com.niccher.pctophonecopier.utils.Helpers;
+import com.niccher.pctophonecopier.utils.Konstants;
+import com.niccher.pctophonecopier.utils.ServiceGenerator;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Adapter_Uploaded_Files extends RecyclerView.Adapter<Adapter_Uploaded_Files.ViewHolder> {
 
     ArrayList<Mod_List_File_Uploaded> list_file_infos;
     Context context;
 
+    Retrofit retrofit_download = null;
+    RetrofitInterface interface_download = null;
+
+    Konstants kon;
+    Gson gson = null;
+    Helpers helpers = null;
+
+    View view;
+    int perm_storage_write = 102;
+
     public Adapter_Uploaded_Files(ArrayList<Mod_List_File_Uploaded> list_file_infos, Context context) {
         this.list_file_infos = list_file_infos;
         this.context = context;
+
+        kon = new Konstants();
+        helpers = new Helpers();
+        gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
+        retrofit_download = new Retrofit.Builder()
+                .baseUrl(kon.str_file_upload_action)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(ServiceGenerator.getUnsafeOkHttpClient())
+                .build();
+
+        interface_download = retrofit_download.create(RetrofitInterface.class);
     }
 
     @NonNull
     @Override
     public Adapter_Uploaded_Files.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_uploaded_file_info, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_uploaded_file_info, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -46,9 +104,87 @@ public class Adapter_Uploaded_Files extends RecyclerView.Adapter<Adapter_Uploade
         holder.part_mini_download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Downloading -> " + list_file_infos.get(position).getUp_file_Name(), Toast.LENGTH_LONG).show();
+                String part_file_id = list_file_infos.get(position).getUp_file_uuid();
+                String part_dev_id = Helpers.get_prefs_dev("dev_uuid", context);
+                String part_sess_id = Helpers.get_prefs_sess("auth_auth_code_id", context);
+
+                Map<String, String> parameters = new HashMap<>();
+                parameters.put("var_file_id", part_file_id);
+                parameters.put("var_dev_id", part_dev_id);
+                parameters.put("var_sess_id", part_sess_id);
+
+                Call<ResponseBody> call = interface_download.getFilesUploadedbySessDevidDownloaded(parameters);
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful()) {
+                            checkPermissions();
+                            Toast.makeText(context, "Downloading -> " + list_file_infos.get(position).getUp_file_Name() , Toast.LENGTH_SHORT).show();
+                            boolean writtenToDisk = writeResponseBodyToDisk(response.body(), list_file_infos.get(position).getUp_file_Name());
+                            Toast.makeText(context, "Download status -> " + writtenToDisk , Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, "Un expected response, please try again " , Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Toast.makeText(context, "Failed to initiate download, please try again " , Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
+    }
+
+    private boolean writeResponseBodyToDisk(ResponseBody body, String file_name) {
+        try {
+            File new_loaded_file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + file_name);
+            InputStream inputStream = null;
+            OutputStream outputStream = null;
+            try {
+                byte[] fileReader = new byte[4096];
+                long fileSize = body.contentLength();
+                long fileSizeDownloaded = 0;
+
+                inputStream = body.byteStream();
+                outputStream = new FileOutputStream(new_loaded_file);
+
+                while (true) {
+                    int read = inputStream.read(fileReader);
+                    if (read == -1) {
+                        break;
+                    }
+                    outputStream.write(fileReader, 0, read);
+                    fileSizeDownloaded += read;
+                    //Log.d(kon.TAGGED, "file download size: " + fileSizeDownloaded + " of " + fileSize);
+                }
+                outputStream.flush();
+                Snackbar snackbar = Snackbar.make(view, "File "+file_name+" has been successfully downloaded",Snackbar.LENGTH_LONG);
+                snackbar.show();
+
+                return true;
+            } catch (IOException e) {
+                Toast.makeText(context, "Unable to save file: " + file_name, Toast.LENGTH_SHORT).show();
+                return false;
+            } finally {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+            }
+        } catch (IOException e) {
+            Toast.makeText(context, "Unknown error and unable to save file: " + file_name, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+
+    private void checkPermissions(){
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity) context,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, perm_storage_write);
+        }
     }
 
     @Override

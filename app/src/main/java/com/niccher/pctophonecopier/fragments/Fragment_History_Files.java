@@ -1,5 +1,7 @@
 package com.niccher.pctophonecopier.fragments;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,8 +51,10 @@ public class Fragment_History_Files extends Fragment {
     ResponseSummarizer responseSummarizer;
     ArrayList<Mod_List_File_Uploaded> summaryFileList;
 
-    ArrayList<Mod_List_File_Uploaded> modListFileUploadeds;
     Adapter_Uploaded_Files adapterUploadedFiles;
+
+    int perm_storage_write = 102;
+    int perm_storage_read = 104;
 
     @Nullable
     @Override
@@ -106,13 +112,20 @@ public class Fragment_History_Files extends Fragment {
     }
 
     private void parseFiles(ResponseSummarizer responseSummarizer) {
+        checkPermissions();
         Fragment_History_Files.this.summaryFileList = new ArrayList<Mod_List_File_Uploaded>(Arrays.asList(responseSummarizer.getSummarizer()));
-
         for (Mod_List_File_Uploaded filelist : Fragment_History_Files.this.summaryFileList) {
             adapterUploadedFiles = new Adapter_Uploaded_Files(summaryFileList, getActivity());
             rcy_files.setAdapter(adapterUploadedFiles);
             adapterUploadedFiles.notifyDataSetChanged();
+        }
+    }
 
+    private void checkPermissions(){
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, perm_storage_write);
         }
     }
 }
