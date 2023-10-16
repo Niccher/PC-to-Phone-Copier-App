@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -44,7 +45,7 @@ public class Fragment_History_Files extends Fragment {
     Gson gson = null;
     Helpers helpers;
 
-    RecyclerView rcy_files;
+    RecyclerView rcy_files_current, rcy_files_all;
 
     RetrofitInterface retrofitInterface;
 
@@ -56,16 +57,25 @@ public class Fragment_History_Files extends Fragment {
     int perm_storage_write = 102;
     int perm_storage_read = 104;
 
+    TextView hist_current,hist_all;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.frag_history_files, container, false);
 
-        rcy_files = view.findViewById(R.id.recycler_uploaded_files);
+        rcy_files_current = view.findViewById(R.id.recycler_uploaded_files);
+        rcy_files_all = view.findViewById(R.id.recycler_uploaded_all_files);
 
-        rcy_files.setHasFixedSize(true);
-        rcy_files.setLayoutManager(new LinearLayoutManager(getActivity()));
+        hist_current = view.findViewById(R.id.history_curr_session);
+        hist_all = view.findViewById(R.id.history_all_session);
+
+        rcy_files_current.setHasFixedSize(true);
+        rcy_files_current.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        rcy_files_all.setHasFixedSize(true);
+        rcy_files_all.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         helpers = new Helpers();
         kon = new Konstants();
@@ -100,7 +110,10 @@ public class Fragment_History_Files extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     ResponseSummarizer summaryResponse = response.body();
                     responseSummarizer = summaryResponse;
-                    parseFiles(responseSummarizer);
+                    hist_current.setVisibility(View.VISIBLE);
+                    hist_all.setVisibility(View.VISIBLE);
+                    parseFiles_current(responseSummarizer);
+                    parseFiles_all(responseSummarizer);
                 }
             }
 
@@ -111,12 +124,22 @@ public class Fragment_History_Files extends Fragment {
         });
     }
 
-    private void parseFiles(ResponseSummarizer responseSummarizer) {
+    private void parseFiles_current(ResponseSummarizer responseSummarizer) {
         checkPermissions();
         Fragment_History_Files.this.summaryFileList = new ArrayList<Mod_List_File_Uploaded>(Arrays.asList(responseSummarizer.getSummarizer()));
         for (Mod_List_File_Uploaded filelist : Fragment_History_Files.this.summaryFileList) {
             adapterUploadedFiles = new Adapter_Uploaded_Files(summaryFileList, getActivity());
-            rcy_files.setAdapter(adapterUploadedFiles);
+            rcy_files_current.setAdapter(adapterUploadedFiles);
+            adapterUploadedFiles.notifyDataSetChanged();
+        }
+    }
+
+    private void parseFiles_all(ResponseSummarizer responseSummarizer) {
+        checkPermissions();
+        Fragment_History_Files.this.summaryFileList = new ArrayList<Mod_List_File_Uploaded>(Arrays.asList(responseSummarizer.getSummarizerAll()));
+        for (Mod_List_File_Uploaded filelist : Fragment_History_Files.this.summaryFileList) {
+            adapterUploadedFiles = new Adapter_Uploaded_Files(summaryFileList, getActivity());
+            rcy_files_all.setAdapter(adapterUploadedFiles);
             adapterUploadedFiles.notifyDataSetChanged();
         }
     }

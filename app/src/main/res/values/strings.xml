@@ -52,4 +52,6 @@
     <string name="home_menu_history_text">Text</string>
     <string name="home_menu_history_files">Files</string>
     <string name="home_menu_home">Home</string>
+    <string name="hist_current_sess_files">Current Session</string>
+    <string name="hist_all_sess_files">All Files</string>
 </resources>

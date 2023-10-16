@@ -39,7 +39,6 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
 
     ArrayList<Mod_File_info> list_file_infos;
     Context context;
-    Uri file_uri;
 
     Konstants kon;
     Gson gson = null;
@@ -93,12 +92,10 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
 
                 File file_to_upload = FileUtils.getFile(context, file_uri);
                 holder.part_mini_progress.setVisibility(View.VISIBLE);
-                holder.part_mini_progress.setIndeterminate(true);
 
                 RequestBody requestFile = RequestBody.create(MediaType.parse( helpers.getFileName(file_uri, context)[1]), file_to_upload );
                 MultipartBody.Part body = MultipartBody.Part.createFormData("uploaded_file", file_to_upload.getName(), requestFile);
 
-                // add another part within the multipart request
                 String part_dev_id = helpers.get_prefs_dev("dev_uuid", context);
                 String part_sess_id = helpers.get_prefs_sess("auth_auth_code_id", context);
 
@@ -127,7 +124,6 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
 
                     @Override
                     public void onFailure(Call<Mod_File_Uploaded> call, Throwable t) {
-                        //Log.e("Upload error:", t.getMessage());
                         Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
                         holder.part_mini_progress.setVisibility(View.GONE);
                     }
@@ -147,7 +143,7 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
         holder.part_mini_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Delete -> " + list_file_infos.get(position).getF_name(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Deleting -> " + list_file_infos.get(position).getF_name(), Toast.LENGTH_SHORT).show();
             }
         });
     }

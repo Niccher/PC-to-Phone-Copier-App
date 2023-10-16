@@ -91,6 +91,20 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
+            <ProgressBar
+                android:id="@+id/f_info_progress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:indeterminate="true"
+                android:max="100"
+                app:layout_constraintEnd_toStartOf="@id/f_info_download"
+                app:layout_constraintStart_toEndOf="@id/f_info_ext"
+                app:layout_constraintTop_toBottomOf="@id/f_info_date" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

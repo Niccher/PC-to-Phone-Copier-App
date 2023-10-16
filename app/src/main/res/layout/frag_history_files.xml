@@ -35,17 +35,59 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_uploaded_files"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/hist_current_files"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_4sdp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:itemCount="2"
-                    tools:listitem="@layout/item_uploaded_file_info">
+                    app:layout_constraintTop_toTopOf="parent">
 
-                </androidx.recyclerview.widget.RecyclerView>
+                    <TextView
+                        android:id="@+id/history_curr_session"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/hist_current_sess_files"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_uploaded_files"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        app:layout_constraintTop_toBottomOf="@id/history_curr_session"
+                        tools:itemCount="2"
+                        tools:listitem="@layout/item_uploaded_file_info" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/hist_all_files"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/hist_current_files">
+
+                    <TextView
+                        android:id="@+id/history_all_session"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/hist_all_sess_files"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_uploaded_all_files"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        app:layout_constraintTop_toBottomOf="@id/history_all_session"
+                        tools:itemCount="2"
+                        tools:listitem="@layout/item_uploaded_file_info" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
