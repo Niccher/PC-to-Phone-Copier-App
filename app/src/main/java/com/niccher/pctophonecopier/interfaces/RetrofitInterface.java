@@ -1,9 +1,9 @@
 package com.niccher.pctophonecopier.interfaces;
 
 import com.niccher.pctophonecopier.model.Mod_Auth;
-import com.niccher.pctophonecopier.model.Mod_Device;
 import com.niccher.pctophonecopier.model.Mod_Device_Id;
 import com.niccher.pctophonecopier.model.Mod_File_Uploaded;
+import com.niccher.pctophonecopier.model.Mod_File_Delete;
 import com.niccher.pctophonecopier.model.Mod_List_File_Uploaded;
 import com.niccher.pctophonecopier.utils.ResponseSummarizer;
 
@@ -13,7 +13,6 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Multipart;
@@ -57,5 +56,9 @@ public interface RetrofitInterface {
     @FormUrlEncoded
     @POST("get_files_uploaded_by_session_download")
     Call<ResponseBody> getFilesUploadedbySessDevidDownloaded(@FieldMap Map<String, String> fields);
+
+    @FormUrlEncoded
+    @POST("set_files_to_delete")
+    Call<Mod_File_Delete> setFileToDelete(@FieldMap Map<String, String> fields);
 
 }

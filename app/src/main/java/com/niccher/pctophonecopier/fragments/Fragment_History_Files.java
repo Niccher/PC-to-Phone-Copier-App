@@ -126,22 +126,26 @@ public class Fragment_History_Files extends Fragment {
 
     private void parseFiles_current(ResponseSummarizer responseSummarizer) {
         checkPermissions();
-        Fragment_History_Files.this.summaryFileList = new ArrayList<Mod_List_File_Uploaded>(Arrays.asList(responseSummarizer.getSummarizer()));
-        for (Mod_List_File_Uploaded filelist : Fragment_History_Files.this.summaryFileList) {
-            adapterUploadedFiles = new Adapter_Uploaded_Files(summaryFileList, getActivity());
-            rcy_files_current.setAdapter(adapterUploadedFiles);
-            adapterUploadedFiles.notifyDataSetChanged();
-        }
+        try {
+            Fragment_History_Files.this.summaryFileList = new ArrayList<Mod_List_File_Uploaded>(Arrays.asList(responseSummarizer.getSummarizer()));
+            for (Mod_List_File_Uploaded filelist : Fragment_History_Files.this.summaryFileList) {
+                adapterUploadedFiles = new Adapter_Uploaded_Files(summaryFileList, getActivity());
+                rcy_files_current.setAdapter(adapterUploadedFiles);
+                adapterUploadedFiles.notifyDataSetChanged();
+            }
+        }catch (Exception es){}
     }
 
     private void parseFiles_all(ResponseSummarizer responseSummarizer) {
         checkPermissions();
-        Fragment_History_Files.this.summaryFileList = new ArrayList<Mod_List_File_Uploaded>(Arrays.asList(responseSummarizer.getSummarizerAll()));
-        for (Mod_List_File_Uploaded filelist : Fragment_History_Files.this.summaryFileList) {
-            adapterUploadedFiles = new Adapter_Uploaded_Files(summaryFileList, getActivity());
-            rcy_files_all.setAdapter(adapterUploadedFiles);
-            adapterUploadedFiles.notifyDataSetChanged();
-        }
+        try {
+            Fragment_History_Files.this.summaryFileList = new ArrayList<Mod_List_File_Uploaded>(Arrays.asList(responseSummarizer.getSummarizerAll()));
+            for (Mod_List_File_Uploaded filelist : Fragment_History_Files.this.summaryFileList) {
+                adapterUploadedFiles = new Adapter_Uploaded_Files(summaryFileList, getActivity());
+                rcy_files_all.setAdapter(adapterUploadedFiles);
+                adapterUploadedFiles.notifyDataSetChanged();
+            }
+        }catch (Exception es){}
     }
 
     private void checkPermissions(){

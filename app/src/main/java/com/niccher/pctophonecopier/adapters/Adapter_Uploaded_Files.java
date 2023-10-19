@@ -30,6 +30,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.niccher.pctophonecopier.R;
 import com.niccher.pctophonecopier.interfaces.RetrofitInterface;
+import com.niccher.pctophonecopier.model.Mod_File_Delete;
 import com.niccher.pctophonecopier.model.Mod_List_File_Uploaded;
 import com.niccher.pctophonecopier.utils.Helpers;
 import com.niccher.pctophonecopier.utils.Konstants;
@@ -56,8 +57,8 @@ public class Adapter_Uploaded_Files extends RecyclerView.Adapter<Adapter_Uploade
     ArrayList<Mod_List_File_Uploaded> list_file_infos;
     Context context;
 
-    Retrofit retrofit_download = null;
-    RetrofitInterface interface_download = null;
+    Retrofit retrofit_download, retrofit_delete = null;
+    RetrofitInterface interface_download, interface_delete = null;
 
     Konstants kon;
     Gson gson = null;
@@ -84,6 +85,14 @@ public class Adapter_Uploaded_Files extends RecyclerView.Adapter<Adapter_Uploade
                 .build();
 
         interface_download = retrofit_download.create(RetrofitInterface.class);
+
+        retrofit_delete = new Retrofit.Builder()
+                .baseUrl(kon.str_file_upload_action)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(ServiceGenerator.getUnsafeOkHttpClient())
+                .build();
+
+        interface_delete = retrofit_delete.create(RetrofitInterface.class);
     }
 
     @NonNull
@@ -190,6 +199,51 @@ public class Adapter_Uploaded_Files extends RecyclerView.Adapter<Adapter_Uploade
                 });
             }
         });
+
+        holder.part_mini_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String part_file_id = list_file_infos.get(position).getUp_file_uuid();
+                String part_file_name = list_file_infos.get(position).getUp_file_Name();
+                String part_dev_id = Helpers.get_prefs_dev("dev_uuid", context);
+                String part_sess_id = Helpers.get_prefs_sess("auth_auth_code_id", context);
+
+                Map<String, String> parameters = new HashMap<>();
+                parameters.put("var_file_uuid", part_file_id);
+                parameters.put("var_file_name", part_file_name);
+                //parameters.put("var_dev_id", part_dev_id);
+                //parameters.put("var_sess_id", part_sess_id);
+
+                holder.part_mini_progress.setVisibility(View.VISIBLE);
+
+                Call<Mod_File_Delete> call = interface_delete.setFileToDelete(parameters);
+                call.enqueue(new Callback<Mod_File_Delete>() {
+                    @Override
+                    public void onResponse(Call<Mod_File_Delete> call, Response<Mod_File_Delete> response) {
+                        if (response.isSuccessful()) {
+                            Mod_File_Delete mod_file_delete = response.body();
+                            if (mod_file_delete.getStatus().equals("1")){
+                                Toast.makeText(context, "File "+ part_file_name +" deleted " , Toast.LENGTH_SHORT).show();
+                                list_file_infos.remove(position);
+                                notifyItemChanged(position);
+                                notifyDataSetChanged();
+                                notifyItemRangeChanged(position, list_file_infos.size());
+                            }else {
+                                Toast.makeText(context, "Deleting "+ part_file_name +" has encountered an error " , Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(context, "Un-expected error when deleting response, please try again " , Toast.LENGTH_LONG).show();
+                        }
+                        holder.part_mini_progress.setVisibility(View.GONE);
+                    }
+                    @Override
+                    public void onFailure(Call<Mod_File_Delete> call, Throwable t) {
+                        Toast.makeText(context, "Failed to delete "+part_file_name+", please try again " , Toast.LENGTH_LONG).show();
+                        holder.part_mini_progress.setVisibility(View.GONE);
+                    }
+                });
+            }
+        });
     }
 
     private boolean writeResponseBodyToDisk(ResponseBody body, String file_name) {
@@ -236,6 +290,9 @@ public class Adapter_Uploaded_Files extends RecyclerView.Adapter<Adapter_Uploade
         }
     }
 
+    private void setFitlToDelete(ResponseBody body, String file_name) {
+    }
+
     private void checkPermissions(){
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -251,7 +308,7 @@ public class Adapter_Uploaded_Files extends RecyclerView.Adapter<Adapter_Uploade
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView part_name, part_type, part_ext, part_size, part_date;
-        TextView part_mini_download;
+        TextView part_mini_download, part_mini_delete;
         ProgressBar part_mini_progress;
 
         public ViewHolder(@NonNull View itemView) {
@@ -263,6 +320,7 @@ public class Adapter_Uploaded_Files extends RecyclerView.Adapter<Adapter_Uploade
             part_date = itemView.findViewById(R.id.f_info_date);
 
             part_mini_download = itemView.findViewById(R.id.f_info_download);
+            part_mini_delete = itemView.findViewById(R.id.f_info_delete);
             part_mini_progress = itemView.findViewById(R.id.f_info_progress);
         }
     }
