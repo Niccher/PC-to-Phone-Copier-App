@@ -55,6 +55,7 @@ public class Handle_Texts extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(Handle_Texts.this, "btn_upload", Toast.LENGTH_SHORT).show();
+                initTextUpload(txt_text_area.getText().toString());
             }
         });
 
@@ -68,10 +69,7 @@ public class Handle_Texts extends AppCompatActivity {
     private void initPasteText() {
         // Gets a handle to the Clipboard Manager.
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-
-        // Gets a content resolver instance.
         ContentResolver cr = getContentResolver();
-
         ClipData clipData = clipboard.getPrimaryClip();
 
         try {
@@ -106,6 +104,10 @@ public class Handle_Texts extends AppCompatActivity {
         }catch (Exception ex){
             Toast.makeText(Handle_Texts.this, "Seems the Clipboard is empty", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void initTextUpload(String toUpload){
+
     }
 
     @Override

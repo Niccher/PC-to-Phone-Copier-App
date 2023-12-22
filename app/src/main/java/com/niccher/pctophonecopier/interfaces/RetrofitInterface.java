@@ -61,4 +61,8 @@ public interface RetrofitInterface {
     @POST("set_files_to_delete")
     Call<Mod_File_Delete> setFileToDelete(@FieldMap Map<String, String> fields);
 
+    @FormUrlEncoded
+    @POST("set_files_to_delete")
+    Call<Mod_File_Delete> setTextToUpload(@FieldMap Map<String, String> fields);
+
 }
