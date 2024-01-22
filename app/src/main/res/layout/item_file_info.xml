@@ -15,12 +15,25 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_4sdp">
 
-            <TextView
-                android:id="@+id/f_info_ext"
+            <ImageView
+                android:id="@+id/f_info_ext_img"
                 android:layout_width="@dimen/_60sdp"
                 android:layout_height="@dimen/_40sdp"
                 android:gravity="center"
                 android:text="@string/app_name_1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/f_info_ext_text"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@color/col_bg_lite_gray"
+                android:gravity="center"
+                android:text="@string/app_name_1"
+                android:textSize="@dimen/_10sdp"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +48,7 @@
                 android:text="@string/app_name_1"
                 android:textSize="@dimen/_14sdp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@id/f_info_ext"
+                app:layout_constraintStart_toEndOf="@id/f_info_ext_img"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -48,7 +61,7 @@
                 android:text="@string/app_name_1"
                 android:textSize="@dimen/_10sdp"
                 android:textStyle="italic"
-                app:layout_constraintStart_toEndOf="@id/f_info_ext"
+                app:layout_constraintStart_toEndOf="@id/f_info_ext_img"
                 app:layout_constraintTop_toBottomOf="@id/f_info_name" />
 
             <ProgressBar
@@ -63,7 +76,7 @@
                 android:max="100"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/f_info_upload"
-                app:layout_constraintStart_toEndOf="@id/f_info_ext"
+                app:layout_constraintStart_toEndOf="@id/f_info_ext_img"
                 app:layout_constraintTop_toBottomOf="@id/f_info_size" />
 
             <TextView
