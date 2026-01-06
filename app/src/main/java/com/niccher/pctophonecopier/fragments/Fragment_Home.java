@@ -92,7 +92,7 @@ public class Fragment_Home extends Fragment {
 
     private void init_qr_scanner() {
         IntentIntegrator integrator = IntentIntegrator.forSupportFragment(Fragment_Home.this);
-        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
         integrator.setPrompt("Scan text to copy");
         integrator.setOrientationLocked(false);
         integrator.setCameraId(0);

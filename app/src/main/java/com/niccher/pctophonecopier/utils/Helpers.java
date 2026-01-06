@@ -1,10 +1,12 @@
 package com.niccher.pctophonecopier.utils;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.OpenableColumns;
+
+import com.niccher.pctophonecopier.datastore.AuthPreferences;
+import com.niccher.pctophonecopier.datastore.DevicePreferences;
 
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
@@ -12,33 +14,61 @@ import java.text.StringCharacterIterator;
 public class Helpers {
 
     public static String get_prefs_dev(String ty, Context cntt){
-        Konstants kon;
-        kon = new Konstants();
-        SharedPreferences pref_dev = cntt.getSharedPreferences(kon.shared_pref_device, Context.MODE_PRIVATE);
+        DevicePreferences devicePrefs = new DevicePreferences(cntt);
         String id = "";
-        if (ty=="dev_uuid"){
-            id = pref_dev.getString("dev_uuid", "undefined");
-        }else if (ty=="dev_status"){
-            id = pref_dev.getString("dev_status", "undefined");
-        }else if (ty=="dev_message"){
-            id = pref_dev.getString("dev_message", "undefined");
+        if ("dev_uuid".equals(ty)){
+            id = devicePrefs.getDeviceUuidSync();
+        }else if ("dev_status".equals(ty)){
+            id = devicePrefs.getDeviceStatusSync();
+        }else if ("dev_message".equals(ty)){
+            id = devicePrefs.getDeviceMessageSync();
         }
         return id;
     }
 
+    public static void set_prefs_dev(String ty, String value, Context cntt){
+        // For now, keep using SharedPreferences for setters until DataStore is fully integrated
+        Konstants kon = new Konstants();
+        android.content.SharedPreferences pref_dev = cntt.getSharedPreferences(kon.shared_pref_device, Context.MODE_PRIVATE);
+        android.content.SharedPreferences.Editor editor = pref_dev.edit();
+
+        if ("dev_uuid".equals(ty)){
+            editor.putString("dev_uuid", value);
+        }else if ("dev_status".equals(ty)){
+            editor.putString("dev_status", value);
+        }else if ("dev_message".equals(ty)){
+            editor.putString("dev_message", value);
+        }
+        editor.apply();
+    }
+
     public static String get_prefs_sess(String ty, Context cntt){
-        Konstants kon;
-        kon = new Konstants();
-        SharedPreferences pref_dev = cntt.getSharedPreferences(kon.shared_pref_auth, Context.MODE_PRIVATE);
+        AuthPreferences authPrefs = new AuthPreferences(cntt);
         String id = "";
-        if (ty=="auth_auth_code_id"){
-            id = pref_dev.getString("auth_auth_code_id", "undefined");
-        }else if (ty=="auth_auth_code"){
-            id = pref_dev.getString("auth_auth_code", "undefined");
-        }else if (ty=="auth_type"){
-            id = pref_dev.getString("auth_type", "undefined");
+        if ("auth_auth_code_id".equals(ty)){
+            id = authPrefs.getAuthCodeIdSync();
+        }else if ("auth_auth_code".equals(ty)){
+            id = authPrefs.getAuthCodeSync();
+        }else if ("auth_type".equals(ty)){
+            id = authPrefs.getAuthTypeSync();
         }
         return id;
+    }
+
+    public static void set_prefs_sess(String ty, String value, Context cntt){
+        // For now, keep using SharedPreferences for setters until DataStore is fully integrated
+        Konstants kon = new Konstants();
+        android.content.SharedPreferences pref_dev = cntt.getSharedPreferences(kon.shared_pref_auth, Context.MODE_PRIVATE);
+        android.content.SharedPreferences.Editor editor = pref_dev.edit();
+
+        if ("auth_auth_code_id".equals(ty)){
+            editor.putString("auth_auth_code_id", value);
+        }else if ("auth_auth_code".equals(ty)){
+            editor.putString("auth_auth_code", value);
+        }else if ("auth_type".equals(ty)){
+            editor.putString("auth_type", value);
+        }
+        editor.apply();
     }
 
     public static String humanReadableByteCountBin(long bytes) {
@@ -56,7 +86,7 @@ public class Helpers {
         return String.format("%.1f %ciB", value / 1024.0, ci.current());
     }
 
-    public String[] getFileName(Uri uri, Context cnt) {
+    public static String[] getFileName(Uri uri, Context cnt) {
         Cursor returnCursor = cnt.getContentResolver().query(uri, null, null, null, null);
 
         int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);

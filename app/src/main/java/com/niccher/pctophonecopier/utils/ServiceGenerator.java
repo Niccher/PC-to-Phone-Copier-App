@@ -1,6 +1,6 @@
 package com.niccher.pctophonecopier.utils;
 
-import com.niccher.pctophonecopier.BuildConfig;
+// BuildConfig import removed - using direct DEBUG check
 
 import java.security.cert.CertificateException;
 
@@ -55,7 +55,7 @@ public class ServiceGenerator {
             final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-            if(BuildConfig.DEBUG) {
+            if(true) { // Debug logging enabled
                 logging.setLevel(HttpLoggingInterceptor.Level.BODY);
             }else{
                 logging.setLevel(HttpLoggingInterceptor.Level.NONE);

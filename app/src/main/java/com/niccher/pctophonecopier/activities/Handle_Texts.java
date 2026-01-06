@@ -8,6 +8,7 @@ import static android.content.ClipDescription.MIMETYPE_TEXT_URILIST;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -34,10 +35,16 @@ public class Handle_Texts extends AppCompatActivity {
     EditText txt_text_area;
     Button btn_paste, btn_upload;
 
+    // ViewModel
+    private com.niccher.pctophonecopier.viewmodels.TextViewModel textViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_handle_texts);
+
+        // Initialize ViewModel
+        textViewModel = new ViewModelProvider(this).get(com.niccher.pctophonecopier.viewmodels.TextViewModel.class);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
@@ -54,8 +61,8 @@ public class Handle_Texts extends AppCompatActivity {
         btn_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(Handle_Texts.this, "btn_upload", Toast.LENGTH_SHORT).show();
-                initTextUpload(txt_text_area.getText().toString());
+                textViewModel.setTextContent(txt_text_area.getText().toString());
+                textViewModel.uploadText();
             }
         });
 
@@ -63,6 +70,24 @@ public class Handle_Texts extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 initPasteText();
+            }
+        });
+
+        // Observe ViewModel LiveData
+        textViewModel.getTextContent().observe(this, text -> {
+            txt_text_area.setText(text);
+        });
+
+        textViewModel.getErrorMessage().observe(this, error -> {
+            if (error != null && !error.isEmpty()) {
+                Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        textViewModel.getUploadSuccess().observe(this, success -> {
+            if (success) {
+                Toast.makeText(this, "Text uploaded successfully!", Toast.LENGTH_SHORT).show();
+                textViewModel.clearText();
             }
         });
     }

@@ -89,7 +89,7 @@ public class AuthSession extends AppCompatActivity {
 
     private void init_qr_scan() {
         IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
         integrator.setPrompt("Scan the QR on the website");
         integrator.setOrientationLocked(false);
         integrator.setCameraId(0);

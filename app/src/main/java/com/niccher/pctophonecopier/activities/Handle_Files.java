@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,16 +35,19 @@ public class Handle_Files extends AppCompatActivity {
     Konstants kon;
     Helpers helpers = null;
 
-    ArrayList<Uri> sel_files;
-    ArrayList<Mod_File_info> my_got_file;
-
     Adapter_Sel_Files list_got_files;
     RecyclerView recyclerView_got_files;
+
+    // ViewModel
+    private com.niccher.pctophonecopier.viewmodels.FileViewModel fileViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_handle_files);
+
+        // Initialize ViewModel
+        fileViewModel = new ViewModelProvider(this).get(com.niccher.pctophonecopier.viewmodels.FileViewModel.class);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
@@ -76,8 +80,23 @@ public class Handle_Files extends AppCompatActivity {
         recyclerView_got_files.setHasFixedSize(true);
         recyclerView_got_files.setLayoutManager(new LinearLayoutManager(getApplication()));
 
-        my_got_file = new ArrayList<Mod_File_info>(1);
-        sel_files = new ArrayList<Uri>(1);
+        // Observe ViewModel LiveData
+        fileViewModel.getSelectedFiles().observe(this, files -> {
+            showAddedFile(new ArrayList<>(files));
+        });
+
+        fileViewModel.getErrorMessage().observe(this, error -> {
+            if (error != null && !error.isEmpty()) {
+                android.widget.Toast.makeText(this, error, android.widget.Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        fileViewModel.getUploadSuccess().observe(this, success -> {
+            if (success) {
+                android.widget.Toast.makeText(this, "Files uploaded successfully!", android.widget.Toast.LENGTH_SHORT).show();
+                fileViewModel.clearFiles();
+            }
+        });
     }
 
     @Override
@@ -85,13 +104,9 @@ public class Handle_Files extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == get_files_code && resultCode == Activity.RESULT_OK) {
             Uri uri_selected_file = data.getData();
-            sel_files.add(uri_selected_file);
-            my_got_file.add(new Mod_File_info(
-                    helpers.getFileName(uri_selected_file, getApplication())[0], helpers.getFileName(uri_selected_file, getApplication())[1],
-                    helpers.getFileName(uri_selected_file, getApplication())[2], uri_selected_file));
-            showAddedFile(my_got_file);
-            //filesUpload(uri_selected_file);
-        } else {
+            if (uri_selected_file != null) {
+                fileViewModel.addFile(uri_selected_file);
+            }
         }
     }
 
@@ -102,9 +117,14 @@ public class Handle_Files extends AppCompatActivity {
     }
 
     private void selPermissions() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, code_read_files);
+        // For Android 13+ (API 33+), we don't need storage permissions for ACTION_GET_CONTENT
+        // The system handles this automatically
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            // For older versions, check and request legacy storage permissions if needed
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, code_read_files);
+                }
             }
         }
     }

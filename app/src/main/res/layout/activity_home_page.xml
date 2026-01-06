@@ -5,78 +5,20 @@
     android:layout_height="match_parent"
     android:background="#DCDEE2">
 
-    <com.gauravk.bubblenavigation.BubbleNavigationConstraintView
-        android:id="@+id/bub_navigation_view_linear"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_12sdp"
+        android:layout_alignParentBottom="true"
         android:background="@drawable/background_rect_white"
-        android:elevation="@dimen/_8sdp"
-        android:orientation="horizontal"
-        android:padding="@dimen/_12sdp"
-        app:bnc_mode="packed"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.gauravk.bubblenavigation.BubbleToggleView
-            android:id="@+id/c_item_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:bt_active="true"
-            app:bt_colorActive="@color/color_bubble_toggle_active"
-            app:bt_colorInactive="@color/color_bubble_toggle_inactive"
-            app:bt_icon="@drawable/ic_home"
-            app:bt_padding="@dimen/_12sdp"
-            app:bt_shape="@drawable/transition_background"
-            app:bt_title="@string/home_menu_home"
-            app:bt_titlePadding="@dimen/_12sdp" />
-
-        <com.gauravk.bubblenavigation.BubbleToggleView
-            android:id="@+id/c_item_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:bt_active="true"
-            app:bt_colorActive="@color/color_bubble_toggle_active"
-            app:bt_colorInactive="@color/color_bubble_toggle_inactive"
-            app:bt_icon="@drawable/ic_history"
-            app:bt_padding="@dimen/_12sdp"
-            app:bt_shape="@drawable/transition_background"
-            app:bt_title="@string/home_menu_history_text"
-            app:bt_titlePadding="@dimen/_12sdp" />
-
-        <com.gauravk.bubblenavigation.BubbleToggleView
-            android:id="@+id/c_item_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:bt_active="true"
-            app:bt_colorActive="@color/color_bubble_toggle_active"
-            app:bt_colorInactive="@color/color_bubble_toggle_inactive"
-            app:bt_icon="@drawable/ic_history"
-            app:bt_padding="@dimen/_12sdp"
-            app:bt_shape="@drawable/transition_background"
-            app:bt_title="@string/home_menu_history_files"
-            app:bt_titlePadding="@dimen/_12sdp" />
-
-        <!--<com.gauravk.bubblenavigation.BubbleToggleView
-            android:id="@+id/c_item_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:bt_active="true"
-            app:bt_colorActive="#787"
-            app:bt_colorInactive="#487"
-            app:bt_icon="@drawable/ic_playlist"
-            app:bt_padding="@dimen/_16sdp"
-            app:bt_shape="@drawable/transition_background"
-            app:bt_title="History"
-            app:bt_titlePadding="@dimen/_12sdp" />-->
-
-    </com.gauravk.bubblenavigation.BubbleNavigationConstraintView>
+        app:menu="@menu/bottom_navigation_menu"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color" />
 
     <FrameLayout
         android:id="@+id/frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/bub_navigation_view_linear" />
+        android:layout_above="@id/bottom_navigation" />
 
 </RelativeLayout>
