@@ -54,4 +54,19 @@
     <string name="home_menu_home">Home</string>
     <string name="hist_current_sess_files">Current Session</string>
     <string name="hist_all_sess_files">All Files</string>
+
+
+    <string name="quick_actions">Quick Actions</string>
+    <string name="your_activity">Activity</string>
+    <string name="transfers">Transfers</string>
+    <string name="files">Files</string>
+    <string name="texts">Texts</string>
+    <string name="connect_now">Connect</string>
+    <string name="view_tutorial">Watch Tutorial</string>
+    <string name="quick_tip_steps">1. Connect to website\n2. Choose method\n3. Transfer</string>
+    <string name="home_cpy_type_text_short">Type</string>
+    <string name="home_cpy_from_clip_short">Paste</string>
+    <string name="home_cpy_from_img_short">Image OCR</string>
+    <string name="home_qr_scan_short">QR Scan</string>
+    <string name="home_file_upload_short">Files</string>
 </resources>

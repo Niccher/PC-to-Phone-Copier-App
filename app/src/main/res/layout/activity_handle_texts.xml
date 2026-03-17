@@ -1,55 +1,285 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/col_bg_lite_gray"
-    android:padding="@dimen/_18sdp"
-    tools:context=".activities.Handle_Texts">
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
 
-    <EditText
-        android:id="@+id/txt_box"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_200sdp"
-        android:background="@drawable/border_edit_text"
-        android:backgroundTint="@color/white"
-        android:gravity="bottom"
-        android:hint="@string/str_paste_copy_hint"
-        android:padding="@dimen/_8sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/txt_paste_from_clip"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_18sdp"
-        app:background="@color/purple_bg_light"
-        android:text="@string/str_paste_copy"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txt_box" />
+        android:background="@android:color/transparent"
+        android:elevation="0dp"
+        app:elevation="0dp">
 
-    <Button
-        android:id="@+id/txt_upload"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_texts"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:title="Text Transfer"
+            app:titleTextColor="@color/colorPrimaryDark" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_18sdp"
-        app:background="@color/purple_bg_light"
-        android:text="@string/str_upload_local"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txt_paste_from_clip" />
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <ProgressBar
-        android:id="@+id/home_upload_state"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:indeterminate="true"
-        android:indeterminateTint="@color/purple_bg_light"
-        android:max="100"
-        app:layout_constraintTop_toBottomOf="@id/txt_upload" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_24sdp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <!-- Text Input Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/_16sdp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/col_bg_dark_gray"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@color/col_bg_lite_gray"
+                android:layout_marginBottom="@dimen/_24sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_20sdp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Enter or Paste Text"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/_16sdp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/_12sdp"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Type or paste your text here"
+                        app:hintTextColor="@color/dull_secondary"
+                        app:boxBackgroundMode="outline"
+                        app:boxStrokeColor="@color/colorPrimary"
+                        app:endIconMode="clear_text"
+                        app:endIconTint="@color/dull_secondary"
+                        app:boxCornerRadiusTopStart="@dimen/_12sdp"
+                        app:boxCornerRadiusTopEnd="@dimen/_12sdp"
+                        app:boxCornerRadiusBottomEnd="@dimen/_12sdp"
+                        app:boxCornerRadiusBottomStart="@dimen/_12sdp"
+                        android:layout_marginBottom="@dimen/_16sdp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txt_box"
+                            android:layout_width="match_parent"
+                            android:layout_height="180dp"
+                            android:gravity="top|start"
+                            android:inputType="textMultiLine"
+                            android:maxLines="10"
+                            android:padding="@dimen/_16sdp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/_14sdp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Characters: 0"
+                            android:textColor="@color/dull_secondary"
+                            android:textSize="@dimen/_12sdp"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Clear"
+                            android:textColor="@color/dull_primary"
+                            android:textSize="@dimen/_12sdp"
+                            app:backgroundTint="@color/col_bg_dark_gray"
+                            app:cornerRadius="@dimen/_8sdp"
+                            app:elevation="0dp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Action Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="@dimen/_24sdp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/txt_paste_from_clip"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginBottom="@dimen/_12sdp"
+                    android:text="Paste from Clipboard"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/_14sdp"
+                    android:textColor="@color/colorPrimaryDark"
+                    app:backgroundTint="@color/colorPrimaryLight"
+                    app:cornerRadius="@dimen/_16sdp"
+                    app:elevation="0dp"
+                    app:icon="@drawable/ic_menu_paste"
+                    app:iconGravity="textStart"
+                    app:iconTint="@color/colorPrimaryDark"
+                    app:iconPadding="@dimen/_8sdp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/txt_upload"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:text="Upload to Cloud"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/_14sdp"
+                    android:textColor="@color/white"
+                    app:backgroundTint="@color/colorPrimary"
+                    app:cornerRadius="@dimen/_16sdp"
+                    app:elevation="4dp"
+                    app:icon="@drawable/ic_menu_upload"
+                    app:iconGravity="textStart"
+                    app:iconTint="@color/white"
+                    app:iconPadding="@dimen/_8sdp" />
+
+            </LinearLayout>
+
+            <!-- Progress Section -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:cardCornerRadius="@dimen/_16sdp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/col_bg_dark_gray"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_20sdp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Upload Progress"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/_16sdp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/_16sdp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/_12sdp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Preparing..."
+                            android:textColor="@color/dull_primary"
+                            android:textSize="@dimen/_14sdp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0%"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/_14sdp"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/home_upload_state"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:indeterminate="false"
+                        app:trackColor="@color/col_bg_dark_gray"
+                        app:trackCornerRadius="4dp"
+                        app:indicatorColor="@color/colorPrimary"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Quick Actions -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Quick Actions"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginBottom="@dimen/_12sdp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/_6sdp"
+                    android:text="Copy"
+                    android:textSize="@dimen/_12sdp"
+                    android:textColor="@color/dull_primary"
+                    app:backgroundTint="@color/col_bg_lite_gray"
+                    app:strokeColor="@color/col_bg_dark_gray"
+                    app:strokeWidth="1dp"
+                    app:elevation="0dp"
+                    app:cornerRadius="@dimen/_12sdp"
+                    app:icon="@drawable/ic_menu_send"
+                    app:iconTint="@color/dull_primary"
+                    app:iconGravity="textStart"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:text="Share"
+                    android:textSize="@dimen/_12sdp"
+                    android:textColor="@color/dull_primary"
+                    app:backgroundTint="@color/col_bg_lite_gray"
+                    app:strokeColor="@color/col_bg_dark_gray"
+                    app:strokeWidth="1dp"
+                    app:elevation="0dp"
+                    app:cornerRadius="@dimen/_12sdp"
+                    app:icon="@drawable/ic_menu_share"
+                    app:iconTint="@color/dull_primary"
+                    app:iconGravity="textStart"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

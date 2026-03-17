@@ -1,48 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/col_bg_lite_gray">
+    android:background="@drawable/gradient_background_subtle">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="@dimen/_48sdp">
 
+        <!-- Logo Container -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="@dimen/_32sdp"
+            app:cardCornerRadius="60dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@drawable/gradient_accent_highlight"
+                android:padding="@dimen/_24sdp">
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@mipmap/app_logo"
+                    android:tint="@android:color/white"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- App Name -->
         <TextView
             android:id="@+id/txt_label"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/app_name"
-            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            android:textSize="@dimen/_24sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="@dimen/_200sdp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:max="100"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txt_label" />
+            android:text="P2P Copier"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/_32sdp"
+            android:textStyle="bold"
+            android:letterSpacing="0.05"
+            android:layout_marginBottom="@dimen/_8sdp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_18sdp"
-            android:text="@string/str_random_quote"
-            android:textSize="@dimen/_18sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:text="PC to Phone Transfer"
+            android:textColor="@color/dull_secondary"
+            android:textSize="@dimen/_14sdp"
+            android:layout_marginBottom="@dimen/_48sdp"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Progress -->
+<!--        <com.google.android.material.progressindicator.LinearProgressIndicator-->
+<!--            android:id="@+id/progress_bar"-->
+<!--            android:layout_width="200dp"-->
+<!--            android:layout_height="4dp"-->
+<!--            android:indeterminate="true"-->
+<!--            app:indicatorColor="@drawable/gradient_progress"-->
+<!--            app:trackColor="@color/col_bg_dark_gray"-->
+<!--            android:layout_marginBottom="@dimen/_32sdp"/>-->
 
-</RelativeLayout>
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progress_bar"
+            android:layout_width="200dp"
+            android:layout_height="4dp"
+            android:indeterminate="true"
+            app:indicatorColor="@color/colorPrimary"
+            app:trackColor="@color/col_bg_dark_gray"/>
+
+
+        <!-- Quote -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Seamless cross-device transfer"
+            android:textColor="@color/dull_primary"
+            android:textSize="@dimen/_14sdp"
+            android:fontFamily="sans-serif-light"
+            android:lineSpacingExtra="4dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Made simple"
+            android:textColor="@color/dull_accent"
+            android:textSize="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:fontFamily="sans-serif-light"/>
+
+        <!-- Version -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="v1.0.0"
+            android:textColor="@color/dull_secondary"
+            android:textSize="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_48sdp"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

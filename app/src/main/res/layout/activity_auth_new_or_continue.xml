@@ -1,110 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/col_bg_lite_gray"
+    android:background="@color/white"
     tools:context=".activities.Auth_New_Or_Continue">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/_12sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical"
+        android:padding="@dimen/_24sdp"
+        android:gravity="center_vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <!-- Title Section -->
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:text="Session Status"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/_24sdp"
+            android:textStyle="bold"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:gravity="center"/>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/option_previous"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="How would you like to proceed?"
+            android:textColor="@color/dull_secondary"
+            android:textSize="@dimen/_14sdp"
+            android:layout_marginBottom="@dimen/_32sdp"
+            android:gravity="center"/>
+
+        <!-- Continue Previous Session -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/option_previous"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_16sdp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="2dp"
+            app:cardBackgroundColor="@color/col_bg_lite_gray"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_18sdp"
-                android:background="@drawable/background_pink_buttons"
-                android:padding="@dimen/_8sdp"
-                android:paddingStart="@dimen/_4sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:orientation="horizontal"
+                android:padding="@dimen/_16sdp"
+                android:gravity="center_vertical">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/img_describe_1"
-                    android:layout_width="@dimen/_40sdp"
-                    android:layout_height="@dimen/_40sdp"
-                    android:paddingStart="@dimen/_2sdp"
-                    android:src="@mipmap/action_session_re_use"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    app:cardCornerRadius="28dp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardElevation="0dp">
 
-                <TextView
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/img_describe_1"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/action_session_re_use"
+                        app:tint="@color/white" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/_16sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_sess_continue"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/_16sdp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/reg_previous_session"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:text="@string/home_sess_continuity"
+                        android:textColor="@color/dull_secondary"
+                        android:textSize="@dimen/_12sdp"/>
+
+                </LinearLayout>
+
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_12sdp"
-                    android:text="@string/home_sess_continue"
-                    android:textSize="@dimen/_12sdp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@id/img_describe_1"
-                    app:layout_constraintStart_toEndOf="@id/img_describe_1"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:src="@drawable/ic_arrow_forward"
+                    app:tint="@color/colorPrimaryDark"
+                    android:alpha="0.5"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/option_new"
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- New Session -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/option_new"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_16sdp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/col_bg_dark_gray"
+            app:strokeWidth="1dp"
+            app:cardBackgroundColor="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_18sdp"
-                android:background="@drawable/background_pink_buttons"
-                android:padding="@dimen/_8sdp"
-                android:paddingStart="@dimen/_4sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/option_previous">
+                android:orientation="horizontal"
+                android:padding="@dimen/_16sdp"
+                android:gravity="center_vertical">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/img_describe_2"
-                    android:layout_width="@dimen/_40sdp"
-                    android:layout_height="@dimen/_40sdp"
-                    android:paddingStart="@dimen/_2sdp"
-                    android:src="@mipmap/action_session_new"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    app:cardCornerRadius="28dp"
+                    app:cardBackgroundColor="@color/col_bg_lite_gray"
+                    app:cardElevation="0dp">
 
-                <TextView
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/img_describe_2"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/action_session_new"
+                        app:tint="@color/colorPrimaryDark" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/_16sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_sess_new_sess"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/_16sdp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:text="Start a fresh connection process"
+                        android:textColor="@color/dull_secondary"
+                        android:textSize="@dimen/_12sdp"/>
+
+                </LinearLayout>
+
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_12sdp"
-                    android:text="@string/home_sess_new_sess"
-                    android:textSize="@dimen/_12sdp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@id/img_describe_2"
-                    app:layout_constraintStart_toEndOf="@id/img_describe_2"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:src="@drawable/ic_arrow_forward"
+                    app:tint="@color/colorPrimaryDark"
+                    android:alpha="0.5"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/reg_previous_session"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_12sdp"
-                android:layout_marginEnd="@dimen/_16sdp"
-                android:paddingBottom="@dimen/_12sdp"
-                android:text="@string/home_sess_continuity"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/option_new" />
+        </com.google.android.material.card.MaterialCardView>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

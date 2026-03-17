@@ -21,18 +21,18 @@
         <activity
             android:name=".activities.Handle_Files"
             android:exported="true"
-            android:theme="@style/Theme.P2P_Copier_Action" />
+            android:theme="@style/Theme.P2P_Copier_NoAction" />
         <activity
             android:name=".activities.Auth_New_Or_Continue"
             android:exported="false" />
         <activity
             android:name=".activities.Handle_Text_2_Image"
             android:exported="false"
-            android:theme="@style/Theme.P2P_Copier_Action" />
+            android:theme="@style/Theme.P2P_Copier_NoAction" />
         <activity
             android:name=".activities.Handle_Texts"
             android:exported="false"
-            android:theme="@style/Theme.P2P_Copier_Action" />
+            android:theme="@style/Theme.P2P_Copier_NoAction" />
         <activity
             android:name=".activities.AuthSession"
             android:exported="false" />

@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="#CCC0DF">
+    android:background="@color/col_bg_lite_gray"
+    tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/title"
@@ -17,7 +18,7 @@
         android:gravity="center_horizontal"
         android:paddingTop="@dimen/_40sdp"
         android:text="Pc to Phone text copier"
-        android:textColor="#ffffff"
+        android:textColor="@color/dull_primary"
         android:textSize="@dimen/_26sdp"
         android:textStyle="bold" />
 
@@ -33,7 +34,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"
-            android:background="#E1B9F1"
+            android:background="@drawable/gradient_card_background"
             android:elevation="@dimen/_4sdp"
             android:orientation="vertical"
             android:padding="@dimen/_20sdp">
@@ -51,10 +52,10 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_22sdp"
-                    android:background="#b4abab"
+                    android:background="@drawable/gradient_button_primary"
                     android:text="Camera Scan"
                     android:textAllCaps="false"
-                    android:textColor="#fff"
+                    android:textColor="@android:color/white"
                     android:textSize="@dimen/_18sdp" />
 
                 <com.skyhope.showmoretextview.ShowMoreTextView

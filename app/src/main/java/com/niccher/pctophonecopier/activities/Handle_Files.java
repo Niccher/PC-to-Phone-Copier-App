@@ -49,13 +49,16 @@ public class Handle_Files extends AppCompatActivity {
         // Initialize ViewModel
         fileViewModel = new ViewModelProvider(this).get(com.niccher.pctophonecopier.viewmodels.FileViewModel.class);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Handle Files");
-        actionBar.setBackgroundDrawable(getDrawable(R.color.col_bg_dark_gray));
-        actionBar.show();
+        // Setup Toolbar
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar_files);
+        setSupportActionBar(toolbar);
+
+        androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         kon = new Konstants();
         helpers = new Helpers();

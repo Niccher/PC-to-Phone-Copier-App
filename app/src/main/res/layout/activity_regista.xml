@@ -1,96 +1,266 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/col_bg_lite_gray"
-    tools:context=".activities.Regista">
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
 
-    <TextView
-        android:id="@+id/reg_brand"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_50sdp"
-        android:text="@string/reg_app_name"
-        android:textSize="@dimen/_18sdp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/reg_brand_img"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_130sdp"
-        android:layout_marginStart="@dimen/_18sdp"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_18sdp"
-        android:background="#BD9BA7"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/reg_brand" />
-
-    <TextView
-        android:id="@+id/reg_brand_head"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:text="How to get started"
-        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-        android:textStyle="bold|italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/reg_brand_img" />
-
-    <TextView
-        android:id="@+id/reg_how_to_1"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        android:text="@string/how_1"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/reg_brand_head" />
+        android:background="@android:color/transparent"
+        android:elevation="0dp">
 
-    <TextView
-        android:id="@+id/reg_how_to_2"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/transparent"
+            app:title=""
+            app:titleTextColor="@android:color/white" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        android:text="@string/how_2"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/reg_how_to_1" />
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <TextView
-        android:id="@+id/reg_how_to_3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        android:text="@string/how_3"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/reg_how_to_2" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_24sdp">
 
-    <Button
-        android:id="@+id/reg_get_started"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_18sdp"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_18sdp"
-        android:background="@drawable/background_pink_buttons"
-        android:text="@string/home_btn_get_started"
-        app:layout_constraintTop_toBottomOf="@id/reg_how_to_3" />
+            <!-- Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginBottom="@dimen/_32sdp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="@dimen/_16sdp"
+                    app:cardCornerRadius="50dp"
+                    app:cardElevation="8dp"
+                    app:cardBackgroundColor="@color/colorPrimaryLight"
+                    app:cardMaxElevation="12dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:background="@color/colorPrimary">
+
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@mipmap/app_logo"
+                            android:scaleType="fitCenter"
+                            android:tint="@android:color/white"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/reg_brand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Welcome to P2P Copier"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/_22sdp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="@dimen/_8sdp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Transfer files between devices seamlessly"
+                    android:textColor="@color/dull_secondary"
+                    android:textSize="@dimen/_14sdp"
+                    android:lineSpacingExtra="4dp"/>
+
+            </LinearLayout>
+
+            <!-- How-to Steps -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/_16sdp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/col_bg_dark_gray"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@color/col_bg_lite_gray"
+                android:layout_marginBottom="@dimen/_24sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_20sdp">
+
+                    <TextView
+                        android:id="@+id/reg_brand_head"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Getting Started"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/_18sdp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/_16sdp"/>
+
+                    <!-- Step 1 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/_20sdp">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            app:cardCornerRadius="18dp"
+                            app:cardBackgroundColor="@color/colorPrimary"
+                            app:cardElevation="0dp"
+                            android:layout_marginEnd="@dimen/_12sdp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="1"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/_14sdp"
+                                android:textStyle="bold" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <TextView
+                            android:id="@+id/reg_how_to_1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/how_1"
+                            android:textColor="@color/dull_primary"
+                            android:textSize="@dimen/_13sdp"
+                            android:lineSpacingExtra="4dp"/>
+
+                    </LinearLayout>
+
+                    <!-- Step 2 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/_20sdp">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            app:cardCornerRadius="18dp"
+                            app:cardBackgroundColor="@color/colorPrimary"
+                            app:cardElevation="0dp"
+                            android:layout_marginEnd="@dimen/_12sdp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="2"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/_14sdp"
+                                android:textStyle="bold" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <TextView
+                            android:id="@+id/reg_how_to_2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/how_2"
+                            android:textColor="@color/dull_primary"
+                            android:textSize="@dimen/_13sdp"
+                            android:lineSpacingExtra="4dp"/>
+
+                    </LinearLayout>
+
+                    <!-- Step 3 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            app:cardCornerRadius="18dp"
+                            app:cardBackgroundColor="@color/colorPrimary"
+                            app:cardElevation="0dp"
+                            android:layout_marginEnd="@dimen/_12sdp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="3"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/_14sdp"
+                                android:textStyle="bold" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <TextView
+                            android:id="@+id/reg_how_to_3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/how_3"
+                            android:textColor="@color/dull_primary"
+                            android:textSize="@dimen/_13sdp"
+                            android:lineSpacingExtra="4dp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Get Started Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/reg_get_started"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:text="Get Started Now"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_16sdp"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/colorPrimary"
+                app:cornerRadius="@dimen/_16sdp"
+                app:elevation="4dp"
+                android:layout_marginTop="@dimen/_8sdp"
+                app:icon="@drawable/ic_menu_send"
+                app:iconGravity="textStart"
+                app:iconPadding="@dimen/_8sdp"
+                app:iconTint="@android:color/white"/>
+
+            <!-- Terms -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="By continuing, you agree to our Terms Privacy Policy"
+                android:textColor="@color/dull_secondary"
+                android:textSize="@dimen/_11sdp"
+                android:layout_marginTop="@dimen/_16sdp"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

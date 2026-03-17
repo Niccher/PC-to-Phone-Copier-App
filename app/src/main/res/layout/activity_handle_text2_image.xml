@@ -1,72 +1,323 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/col_bg_lite_gray"
-    android:padding="@dimen/_16sdp"
-    tools:context=".activities.Handle_Text_2_Image">
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
 
-    <ScrollView
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/_20sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="@android:color/transparent"
+        android:elevation="0dp"
+        app:elevation="0dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_image"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:title="Image to Text"
+            app:titleTextColor="@color/colorPrimaryDark" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:orientation="vertical"
+            android:padding="@dimen/_24sdp">
 
-            <ImageView
-                android:id="@+id/img_box"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_200sdp"
-                android:padding="@dimen/_8sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/btn_get_image"
+            <!-- Image Preview Card -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_18sdp"
-                android:background="@drawable/background_oval"
-                android:text="@string/str_select_img_from_camera"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/img_box" />
+                app:cardCornerRadius="@dimen/_16sdp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/col_bg_dark_gray"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@color/col_bg_lite_gray"
+                android:layout_marginBottom="@dimen/_24sdp">
 
-            <ProgressBar
-                android:id="@+id/prg_state"
-                style="?android:attr/progressBarStyleHorizontal"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_20sdp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Image Source"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/_16sdp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/_16sdp"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="220dp"
+                        app:cardCornerRadius="@dimen/_12sdp"
+                        app:cardElevation="0dp"
+                        android:layout_marginBottom="@dimen/_20sdp">
+
+                        <ImageView
+                            android:id="@+id/img_box"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_menu_gallery"
+                            app:tint="@color/col_bg_dark_gray"
+                            android:background="@color/white"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:background="#20000000">
+
+                            <!-- Visual hint if no image -->
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_get_image"
+                            android:layout_width="0dp"
+                            android:layout_height="64dp"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="@dimen/_6sdp"
+                            android:drawableStart="@drawable/ic_menu_camera"
+                            android:drawablePadding="@dimen/_8sdp"
+                            android:text="Camera"
+                            android:textAllCaps="false"
+                            android:textSize="@dimen/_14sdp"
+                            android:textColor="@color/white"
+                            app:backgroundTint="@color/colorPrimary"
+                            app:cornerRadius="@dimen/_16sdp"
+                            app:elevation="4dp"
+                            app:iconGravity="textStart"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_gallery"
+                            android:layout_width="0dp"
+                            android:layout_height="64dp"
+                            android:layout_weight="1"
+                            android:layout_marginStart="@dimen/_6sdp"
+                            android:drawableStart="@drawable/ic_menu_gallery"
+                            android:drawablePadding="@dimen/_8sdp"
+                            android:text="Gallery"
+                            android:textAllCaps="false"
+                            android:textSize="@dimen/_14sdp"
+                            android:textColor="@color/colorPrimaryDark"
+                            app:backgroundTint="@color/colorPrimaryLight"
+                            app:cornerRadius="@dimen/_16sdp"
+                            app:elevation="0dp"
+                            app:iconGravity="textStart"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Progress Indicator -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/progress_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:indeterminate="true"
-                android:indeterminateTint="@color/colorPrimary"
-                android:max="100"
-                app:layout_constraintTop_toBottomOf="@id/btn_get_image" />
+                android:visibility="gone"
+                app:cardCornerRadius="@dimen/_16sdp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/col_bg_dark_gray"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@color/white"
+                android:layout_marginBottom="@dimen/_24sdp">
 
-            <TextView
-                android:id="@+id/txt_box"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_20sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/_12sdp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Processing Image..."
+                            android:textColor="@color/dull_primary"
+                            android:textSize="@dimen/_14sdp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0%"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/_14sdp"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/prg_state"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:indeterminate="false"
+                        app:trackColor="@color/col_bg_dark_gray"
+                        app:trackCornerRadius="4dp"
+                        app:indicatorColor="@color/colorPrimary"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Extracting text from image"
+                        android:textColor="@color/dull_secondary"
+                        android:textSize="@dimen/_12sdp"
+                        android:layout_marginTop="@dimen/_12sdp"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Extracted Text Card -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_18sdp"
-                android:background="@drawable/border_edit_text"
-                android:backgroundTint="@color/col_bg_dark_gray"
-                android:hint="@string/str_extracted_text_here"
-                android:padding="@dimen/_8sdp"
-                android:paddingBottom="@dimen/_8sdp"
-                android:scrollbars="vertical|horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/prg_state" />
+                app:cardCornerRadius="@dimen/_16sdp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/col_bg_dark_gray"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@color/white">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_20sdp">
 
-    </ScrollView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/_16sdp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Extracted Text"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/_16sdp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/text_char_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 chars"
+                            android:textColor="@color/dull_secondary"
+                            android:textSize="@dimen/_12sdp"/>
+
+                    </LinearLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Text will appear here"
+                        app:hintTextColor="@color/dull_secondary"
+                        app:boxBackgroundMode="outline"
+                        app:boxStrokeColor="@color/colorPrimary"
+                        app:endIconMode="clear_text"
+                        app:endIconTint="@color/dull_secondary"
+                        app:boxCornerRadiusTopStart="@dimen/_12sdp"
+                        app:boxCornerRadiusTopEnd="@dimen/_12sdp"
+                        app:boxCornerRadiusBottomEnd="@dimen/_12sdp"
+                        app:boxCornerRadiusBottomStart="@dimen/_12sdp"
+                        android:layout_marginBottom="@dimen/_20sdp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txt_box"
+                            android:layout_width="match_parent"
+                            android:layout_height="180dp"
+                            android:gravity="top|start"
+                            android:inputType="textMultiLine"
+                            android:maxLines="10"
+                            android:padding="@dimen/_16sdp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/_14sdp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:layout_width="0dp"
+                            android:layout_height="56dp"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="@dimen/_6sdp"
+                            android:text="Copy"
+                            android:textColor="@color/dull_primary"
+                            android:textSize="@dimen/_12sdp"
+                            app:backgroundTint="@color/col_bg_lite_gray"
+                            app:strokeColor="@color/col_bg_dark_gray"
+                            app:strokeWidth="1dp"
+                            app:elevation="0dp"
+                            app:cornerRadius="@dimen/_12sdp"
+                            app:icon="@drawable/ic_menu_save"
+                            app:iconTint="@color/dull_primary"
+                            app:iconGravity="textStart"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:layout_width="0dp"
+                            android:layout_height="56dp"
+                            android:layout_weight="1"
+                            android:layout_marginStart="@dimen/_6sdp"
+                            android:text="Share"
+                            android:textColor="@color/dull_primary"
+                            android:textSize="@dimen/_12sdp"
+                            app:backgroundTint="@color/col_bg_lite_gray"
+                            app:strokeColor="@color/col_bg_dark_gray"
+                            app:strokeWidth="1dp"
+                            app:elevation="0dp"
+                            app:cornerRadius="@dimen/_12sdp"
+                            app:icon="@drawable/ic_menu_share"
+                            app:iconTint="@color/dull_primary"
+                            app:iconGravity="textStart"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

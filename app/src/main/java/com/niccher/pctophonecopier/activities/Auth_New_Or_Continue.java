@@ -12,7 +12,7 @@ import com.niccher.pctophonecopier.R;
 
 public class Auth_New_Or_Continue extends AppCompatActivity {
 
-    ConstraintLayout sess_continue, sess_new;
+    View sess_continue, sess_new;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

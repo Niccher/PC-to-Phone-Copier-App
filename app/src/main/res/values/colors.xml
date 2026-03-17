@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#794FCF</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#1A73E8</color>
+    <color name="colorPrimaryDark">#1558D6</color>
+    <color name="colorPrimaryLight">#E8F0FE</color>
+    <color name="colorAccent">#00B0FF</color>
 
-    <color name="purple_bg_light">#f3e5f5</color>
-    <color name="white">#fff</color>
-    <color name="col_bg_lite_gray">#e0e0e0</color>
-    <color name="col_bg_dark_gray">#C3C2C2</color>
+    <color name="purple_bg_light">#F5F5F5</color>
+    <color name="white">#FFFFFF</color>
+    <color name="col_bg_lite_gray">#F8F9FA</color>
+    <color name="col_bg_dark_gray">#E8EAED</color>
 
-    <color name="color_bubble_toggle_active">#787</color>
-    <color name="color_bubble_toggle_inactive">#487</color>
+    <color name="color_bubble_toggle_active">#1A73E8</color>
+    <color name="color_bubble_toggle_inactive">#BDC1C6</color>
+
+    <!-- Muted accent colors mapped to clean readable tones -->
+    <color name="dull_primary">#3C4043</color>
+    <color name="dull_secondary">#5F6368</color>
+    <color name="dull_accent">#DADCE0</color>
+    <color name="dull_success">#1E8E3E</color>
+    <color name="dull_warning">#F9AB00</color>
+    <color name="dull_error">#D93025</color>
 
 </resources>

@@ -46,13 +46,16 @@ public class Handle_Text_2_Image extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_handle_text2_image);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Copy from Image");
-        actionBar.setBackgroundDrawable(getDrawable(R.color.col_bg_dark_gray));
-        actionBar.show();
+        // Setup Toolbar
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar_image);
+        setSupportActionBar(toolbar);
+
+        androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         img_view = findViewById(R.id.img_box);
         btn_sel_img = findViewById(R.id.btn_get_image);

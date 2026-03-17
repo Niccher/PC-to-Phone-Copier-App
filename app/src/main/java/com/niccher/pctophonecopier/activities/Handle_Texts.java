@@ -46,13 +46,16 @@ public class Handle_Texts extends AppCompatActivity {
         // Initialize ViewModel
         textViewModel = new ViewModelProvider(this).get(com.niccher.pctophonecopier.viewmodels.TextViewModel.class);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Text");
-        actionBar.setBackgroundDrawable(getDrawable(R.color.col_bg_dark_gray));
-        actionBar.show();
+        // Setup Toolbar
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar_texts);
+        setSupportActionBar(toolbar);
+
+        androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         txt_text_area = findViewById(R.id.txt_box);
         btn_paste = findViewById(R.id.txt_paste_from_clip);

@@ -1,46 +1,301 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.Handle_Files">
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/desc_file_info_RecyclerView"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:padding="@dimen/_2sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:itemCount="1"
-        tools:listitem="@layout/item_file_info" />
+        android:background="@android:color/transparent"
+        android:elevation="0dp"
+        app:elevation="0dp">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_files"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:title="File Manager"
+            app:titleTextColor="@color/colorPrimaryDark" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <!-- Stats Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_16sdp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/col_bg_dark_gray"
+            app:strokeWidth="1dp"
+            app:cardBackgroundColor="@color/col_bg_lite_gray"
+            android:layout_margin="@dimen/_16sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/_16sdp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/_24sdp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Files"
+                        android:textColor="@color/dull_secondary"
+                        android:textSize="@dimen/_12sdp"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="40dp"
+                    android:layout_marginHorizontal="@dimen/_16sdp"
+                    android:background="@color/dull_accent"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="48.2"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/_24sdp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MB Total"
+                        android:textColor="@color/dull_secondary"
+                        android:textSize="@dimen/_12sdp"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="40dp"
+                    android:layout_marginHorizontal="@dimen/_16sdp"
+                    android:background="@color/dull_accent"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/_24sdp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Uploading"
+                        android:textColor="@color/dull_secondary"
+                        android:textSize="@dimen/_12sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- File List Section -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:cardCornerRadius="@dimen/_24sdp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/col_bg_dark_gray"
+            app:strokeWidth="1dp"
+            app:cardBackgroundColor="@color/white"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_16sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_16sdp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Your Files"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/_18sdp"
+                        android:textStyle="bold"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Select All"
+                        android:textColor="@color/dull_primary"
+                        android:textSize="@dimen/_12sdp"
+                        app:backgroundTint="@color/col_bg_dark_gray"
+                        app:elevation="0dp"
+                        app:cornerRadius="@dimen/_8sdp"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/col_bg_dark_gray"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/desc_file_info_RecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:padding="@dimen/_8sdp"
+                    android:clipToPadding="false"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/item_file_info" />
+
+                <LinearLayout
+                    android:id="@+id/empty_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_16sdp"
+                    android:gravity="center"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginBottom="@dimen/_16sdp"
+                        android:src="@drawable/ic_menu_upload"
+                        app:tint="@color/dull_secondary"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="No files added yet"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/_16sdp"
+                        android:layout_marginBottom="@dimen/_8sdp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Tap the + button to add files"
+                        android:textColor="@color/dull_secondary"
+                        android:textSize="@dimen/_12sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Bottom Actions -->
+        <LinearLayout
+            android:id="@+id/bottom_actions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/_16sdp"
+            android:background="@color/white"
+            android:elevation="8dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_upload_all"
+                android:layout_width="0dp"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:drawableStart="@drawable/ic_menu_upload"
+                android:drawablePadding="@dimen/_8sdp"
+                android:text="Upload All"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_14sdp"
+                app:backgroundTint="@color/colorPrimary"
+                app:cornerRadius="@dimen/_16sdp"
+                app:elevation="4dp"
+                app:iconGravity="textStart"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_clear_all"
+                android:layout_width="0dp"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:drawableStart="@drawable/ic_menu_delete"
+                android:drawablePadding="@dimen/_8sdp"
+                android:text="Clear All"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_14sdp"
+                android:textColor="@color/colorPrimaryDark"
+                app:backgroundTint="@color/colorPrimaryLight"
+                app:cornerRadius="@dimen/_16sdp"
+                app:elevation="0dp"
+                app:iconGravity="textStart"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- FIXED: Simple FAB without anchor to gone view -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_open_files"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_12sdp"
-        android:layout_marginBottom="@dimen/_12sdp"
-        android:background="@color/purple_bg_light"
+        android:layout_margin="@dimen/_24sdp"
         android:src="@drawable/ic_add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:backgroundTint="@color/colorPrimary"
+        app:elevation="6dp"
+        app:layout_anchor="@id/bottom_actions"
+        app:layout_anchorGravity="top|end"
+        app:tint="@android:color/white" />
 
-    <!--<TextView
-        android:id="@+id/btn_upload_files"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_12sdp"
-        android:background="@drawable/background_pink_buttons"
-        android:drawableStart="@drawable/ic_file_upload"
-        android:gravity="center_horizontal"
-        android:padding="@dimen/_8sdp"
-        android:text="@string/str_upload_upload_to_cloud"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_open_files"
-        app:layout_constraintTop_toTopOf="parent" />-->
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
