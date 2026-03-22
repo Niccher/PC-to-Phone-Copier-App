@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +44,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
@@ -65,25 +68,29 @@ public class Adapter_Uploaded_Files extends RecyclerView.Adapter<Adapter_Uploade
     Helpers helpers = null;
 
     View view;
-    TextView hist_current, hist_all;
     int perm_storage_write = 102;
 
-    public Adapter_Uploaded_Files(ArrayList<Mod_List_File_Uploaded> list_file_infos, Context context) {
+    private final HashSet<Integer> selectedPositions = new HashSet<>();
+    private OnSelectionChangedListener selectionListener;
+
+    public interface OnSelectionChangedListener {
+        void onSelectionChanged(int count);
+    }
+
+    public Adapter_Uploaded_Files(ArrayList<Mod_List_File_Uploaded> list_file_infos, Context context, OnSelectionChangedListener listener) {
         this.list_file_infos = list_file_infos;
         this.context = context;
+        this.selectionListener = listener;
 
         kon = new Konstants();
         helpers = new Helpers();
-        gson = new GsonBuilder()
-                .setLenient()
-                .create();
+        gson = new GsonBuilder().setLenient().create();
 
         retrofit_download = new Retrofit.Builder()
                 .baseUrl(kon.str_file_upload_action)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(ServiceGenerator.getUnsafeOkHttpClient())
                 .build();
-
         interface_download = retrofit_download.create(RetrofitInterface.class);
 
         retrofit_delete = new Retrofit.Builder()
@@ -91,8 +98,27 @@ public class Adapter_Uploaded_Files extends RecyclerView.Adapter<Adapter_Uploade
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(ServiceGenerator.getUnsafeOkHttpClient())
                 .build();
-
         interface_delete = retrofit_delete.create(RetrofitInterface.class);
+    }
+
+    public void selectAll() {
+        for (int i = 0; i < list_file_infos.size(); i++) selectedPositions.add(i);
+        notifyDataSetChanged();
+        if (selectionListener != null) selectionListener.onSelectionChanged(selectedPositions.size());
+    }
+
+    public void clearSelection() {
+        selectedPositions.clear();
+        notifyDataSetChanged();
+        if (selectionListener != null) selectionListener.onSelectionChanged(0);
+    }
+
+    public List<Mod_List_File_Uploaded> getSelectedItems() {
+        List<Mod_List_File_Uploaded> result = new ArrayList<>();
+        for (int pos : selectedPositions) {
+            if (pos < list_file_infos.size()) result.add(list_file_infos.get(pos));
+        }
+        return result;
     }
 
     @NonNull
@@ -111,6 +137,16 @@ public class Adapter_Uploaded_Files extends RecyclerView.Adapter<Adapter_Uploade
         holder.part_ext.setText(list_file_infos.get(position).getUp_file_Extension());
         holder.part_date.setText(list_file_infos.get(position).getUp_file_Created_at());
         holder.part_mini_progress.setVisibility(View.GONE);
+
+        // Checkbox selection
+        holder.checkbox_select.setOnCheckedChangeListener(null); // prevent recursive triggers
+        holder.checkbox_select.setChecked(selectedPositions.contains(position));
+        holder.checkbox_select.setOnCheckedChangeListener((btn, isChecked) -> {
+            if (isChecked) selectedPositions.add(position);
+            else selectedPositions.remove(position);
+            if (selectionListener != null) selectionListener.onSelectionChanged(selectedPositions.size());
+        });
+        holder.itemView.setOnClickListener(v -> holder.checkbox_select.toggle());
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             File file_path = new File (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + list_file_infos.get(position).getUp_file_Name());
@@ -310,6 +346,7 @@ public class Adapter_Uploaded_Files extends RecyclerView.Adapter<Adapter_Uploade
         TextView part_name, part_type, part_ext, part_size, part_date;
         TextView part_mini_download, part_mini_delete;
         ProgressBar part_mini_progress;
+        CheckBox checkbox_select;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -322,6 +359,7 @@ public class Adapter_Uploaded_Files extends RecyclerView.Adapter<Adapter_Uploade
             part_mini_download = itemView.findViewById(R.id.f_info_download);
             part_mini_delete = itemView.findViewById(R.id.f_info_delete);
             part_mini_progress = itemView.findViewById(R.id.f_info_progress);
+            checkbox_select = itemView.findViewById(R.id.f_info_checkbox);
         }
     }
 }

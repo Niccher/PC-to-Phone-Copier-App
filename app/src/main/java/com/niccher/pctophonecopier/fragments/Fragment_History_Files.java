@@ -1,11 +1,14 @@
 package com.niccher.pctophonecopier.fragments;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +20,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.niccher.pctophonecopier.R;
@@ -28,67 +33,83 @@ import com.niccher.pctophonecopier.utils.Konstants;
 import com.niccher.pctophonecopier.utils.ResponseSummarizer;
 import com.niccher.pctophonecopier.utils.ServiceGenerator;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Fragment_History_Files extends Fragment {
+public class Fragment_History_Files extends Fragment implements Adapter_Uploaded_Files.OnSelectionChangedListener {
 
     Konstants kon;
-    Gson gson = null;
+    Gson gson;
     Helpers helpers;
 
-    RecyclerView rcy_files_current, rcy_files_all;
+    RecyclerView rcy_files_current;
+    CircularProgressIndicator progressSpinner;
+    CheckBox chkSelectAll;
+    TextView txtFileCount, txtEmptyState;
+    ExtendedFloatingActionButton fabBatchDownload;
 
     RetrofitInterface retrofitInterface;
-
     ResponseSummarizer responseSummarizer;
     ArrayList<Mod_List_File_Uploaded> summaryFileList;
-
     Adapter_Uploaded_Files adapterUploadedFiles;
 
     int perm_storage_write = 102;
-    int perm_storage_read = 104;
-
-    TextView hist_current,hist_all;
+    private int batchDownloadIndex = 0;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.frag_history_files, container, false);
 
-        rcy_files_current = view.findViewById(R.id.recycler_uploaded_files);
-        rcy_files_all = view.findViewById(R.id.recycler_uploaded_all_files);
+        rcy_files_current    = view.findViewById(R.id.recycler_uploaded_files);
+        progressSpinner      = view.findViewById(R.id.spinner_loading);
+        chkSelectAll         = view.findViewById(R.id.chk_select_all);
+        txtFileCount         = view.findViewById(R.id.txt_file_count);
+        txtEmptyState        = view.findViewById(R.id.txt_empty_state);
+        fabBatchDownload     = view.findViewById(R.id.fab_batch_download);
 
-        hist_current = view.findViewById(R.id.history_curr_session);
-        hist_all = view.findViewById(R.id.history_all_session);
-
-        rcy_files_current.setHasFixedSize(true);
+        rcy_files_current.setHasFixedSize(false);
         rcy_files_current.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        rcy_files_all.setHasFixedSize(true);
-        rcy_files_all.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         helpers = new Helpers();
-        kon = new Konstants();
-        gson = new GsonBuilder()
-                .setLenient()
-                .create();
+        kon     = new Konstants();
+        gson    = new GsonBuilder().setLenient().create();
+
+        fabBatchDownload.setVisibility(View.GONE);
+
+        chkSelectAll.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (adapterUploadedFiles != null) {
+                if (isChecked) adapterUploadedFiles.selectAll();
+                else adapterUploadedFiles.clearSelection();
+            }
+        });
+
+        fabBatchDownload.setOnClickListener(v -> startBatchDownload());
 
         filesListing();
-
         return view;
     }
 
     private void filesListing() {
+        progressSpinner.setVisibility(View.VISIBLE);
+        rcy_files_current.setVisibility(View.GONE);
+        txtEmptyState.setVisibility(View.GONE);
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(kon.str_file_list_uploaded)
                 .addConverterFactory(GsonConverterFactory.create(gson))
@@ -102,53 +123,133 @@ public class Fragment_History_Files extends Fragment {
         parameters.put("var_auth_code_id", Helpers.get_prefs_sess("auth_auth_code_id", getActivity()));
 
         Call<ResponseSummarizer> call = retrofitInterface.getFilesUploadedbySessDevid(parameters);
-
         call.enqueue(new Callback<ResponseSummarizer>() {
             @Override
             public void onResponse(Call<ResponseSummarizer> call, Response<ResponseSummarizer> response) {
-                ResponseSummarizer postResponse = response.body();
+                progressSpinner.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
-                    ResponseSummarizer summaryResponse = response.body();
-                    responseSummarizer = summaryResponse;
-                    hist_current.setVisibility(View.VISIBLE);
-                    hist_all.setVisibility(View.VISIBLE);
-                    parseFiles_current(responseSummarizer);
-                    parseFiles_all(responseSummarizer);
+                    responseSummarizer = response.body();
+                    parseFiles(responseSummarizer);
+                } else {
+                    showEmpty("Could not load files. Please try again.");
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseSummarizer> call, Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage() + "\nUnknown error occurred, please try again", Toast.LENGTH_LONG).show();
+                progressSpinner.setVisibility(View.GONE);
+                showEmpty("Network error: " + t.getMessage());
             }
         });
     }
 
-    private void parseFiles_current(ResponseSummarizer responseSummarizer) {
-        checkPermissions();
+    private void parseFiles(ResponseSummarizer rs) {
         try {
-            Fragment_History_Files.this.summaryFileList = new ArrayList<Mod_List_File_Uploaded>(Arrays.asList(responseSummarizer.getSummarizer()));
-            for (Mod_List_File_Uploaded filelist : Fragment_History_Files.this.summaryFileList) {
-                adapterUploadedFiles = new Adapter_Uploaded_Files(summaryFileList, getActivity());
-                rcy_files_current.setAdapter(adapterUploadedFiles);
-                adapterUploadedFiles.notifyDataSetChanged();
-            }
-        }catch (Exception es){}
+            summaryFileList = new ArrayList<>(Arrays.asList(rs.getSummarizer()));
+        } catch (Exception e) {
+            summaryFileList = new ArrayList<>();
+        }
+
+        if (summaryFileList.isEmpty()) {
+            showEmpty("No files uploaded yet for this session.");
+            return;
+        }
+
+        txtFileCount.setText(summaryFileList.size() + " file" + (summaryFileList.size() != 1 ? "s" : ""));
+        txtEmptyState.setVisibility(View.GONE);
+        rcy_files_current.setVisibility(View.VISIBLE);
+
+        adapterUploadedFiles = new Adapter_Uploaded_Files(summaryFileList, getActivity(), this);
+        rcy_files_current.setAdapter(adapterUploadedFiles);
     }
 
-    private void parseFiles_all(ResponseSummarizer responseSummarizer) {
-        checkPermissions();
-        try {
-            Fragment_History_Files.this.summaryFileList = new ArrayList<Mod_List_File_Uploaded>(Arrays.asList(responseSummarizer.getSummarizerAll()));
-            for (Mod_List_File_Uploaded filelist : Fragment_History_Files.this.summaryFileList) {
-                adapterUploadedFiles = new Adapter_Uploaded_Files(summaryFileList, getActivity());
-                rcy_files_all.setAdapter(adapterUploadedFiles);
-                adapterUploadedFiles.notifyDataSetChanged();
-            }
-        }catch (Exception es){}
+    private void showEmpty(String msg) {
+        rcy_files_current.setVisibility(View.GONE);
+        txtEmptyState.setVisibility(View.VISIBLE);
+        txtEmptyState.setText(msg);
+        txtFileCount.setText("0 files");
     }
 
-    private void checkPermissions(){
+    // --- Batch Download ---
+
+    @Override
+    public void onSelectionChanged(int count) {
+        if (count > 0) {
+            fabBatchDownload.setText("Download " + count + " file" + (count != 1 ? "s" : ""));
+            fabBatchDownload.setVisibility(View.VISIBLE);
+        } else {
+            fabBatchDownload.setVisibility(View.GONE);
+        }
+    }
+
+    private void startBatchDownload() {
+        if (adapterUploadedFiles == null) return;
+        List<Mod_List_File_Uploaded> selected = adapterUploadedFiles.getSelectedItems();
+        if (selected.isEmpty()) return;
+
+        checkPermissions();
+        batchDownloadIndex = 0;
+        fabBatchDownload.setEnabled(false);
+        fabBatchDownload.setText("Downloading…");
+        downloadNext(selected);
+    }
+
+    private void downloadNext(List<Mod_List_File_Uploaded> selected) {
+        if (batchDownloadIndex >= selected.size()) {
+            Toast.makeText(getActivity(), "All files downloaded!", Toast.LENGTH_SHORT).show();
+            fabBatchDownload.setEnabled(true);
+            fabBatchDownload.setText("Download " + selected.size() + " files");
+            return;
+        }
+
+        Mod_List_File_Uploaded item = selected.get(batchDownloadIndex);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(kon.str_file_upload_action)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(ServiceGenerator.getUnsafeOkHttpClient())
+                .build();
+
+        RetrofitInterface iface = retrofit.create(RetrofitInterface.class);
+
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("var_file_id", item.getUp_file_uuid());
+        parameters.put("var_dev_id", Helpers.get_prefs_dev("dev_uuid", getActivity()));
+        parameters.put("var_sess_id", Helpers.get_prefs_sess("auth_auth_code_id", getActivity()));
+
+        iface.getFilesUploadedbySessDevidDownloaded(parameters).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    try {
+                        File dest = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), item.getUp_file_Name());
+                        InputStream in = response.body().byteStream();
+                        OutputStream out = new FileOutputStream(dest);
+                        byte[] buf = new byte[4096];
+                        int read;
+                        while ((read = in.read(buf)) != -1) out.write(buf, 0, read);
+                        out.flush();
+                        in.close();
+                        out.close();
+                        Toast.makeText(getActivity(), "✓ " + item.getUp_file_Name(), Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        Toast.makeText(getActivity(), "✗ Failed: " + item.getUp_file_Name(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+                batchDownloadIndex++;
+                downloadNext(selected);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getActivity(), "✗ Error: " + item.getUp_file_Name(), Toast.LENGTH_SHORT).show();
+                batchDownloadIndex++;
+                downloadNext(selected);
+            }
+        });
+    }
+
+    private void checkPermissions() {
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(),

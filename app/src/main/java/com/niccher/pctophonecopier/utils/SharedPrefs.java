@@ -27,6 +27,14 @@ public class SharedPrefs {
         return prefs.getString(key, defaultValue);
     }
 
+    public void putBoolean(String key, boolean value) {
+        prefs.edit().putBoolean(key, value).apply();
+    }
+
+    public boolean getBoolean(String key, boolean defaultValue) {
+        return prefs.getBoolean(key, defaultValue);
+    }
+
     public void clearAll() {
         prefs.edit().clear().apply();
     }

@@ -1,104 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorSurface">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <!-- Header bar: Select All + file count -->
+    <LinearLayout
+        android:id="@+id/header_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/gradient_background_subtle">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/_12sdp"
+        android:paddingEnd="@dimen/_12sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp">
+
+        <CheckBox
+            android:id="@+id/chk_select_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select All"
+            android:textColor="@color/white"
+            android:buttonTint="@color/white"
+            android:layout_marginEnd="@dimen/_12sdp" />
 
         <TextView
-            android:id="@+id/reg_previous_session"
+            android:id="@+id/txt_file_count"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="0 files"
+            android:textColor="@color/colorPrimaryLight"
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <!-- Loading spinner (centered in remaining space) -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/spinner_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:indicatorColor="@color/colorPrimary" />
+
+        <!-- Empty state text -->
+        <TextView
+            android:id="@+id/txt_empty_state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:text="History for uploaded files"
-            android:textColor="@color/dull_primary"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="@dimen/_32sdp"
+            android:text="No files yet"
+            android:textColor="@color/dull_secondary"
+            android:textSize="@dimen/_14sdp"
+            android:visibility="gone" />
 
-        <ScrollView
-            android:id="@+id/file_scroll"
+        <!-- File list — starts immediately below the header -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_uploaded_files"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingBottom="80dp"
+            android:visibility="gone" />
+
+        <!-- Batch Download FAB -->
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fab_batch_download"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintTop_toBottomOf="@id/reg_previous_session">
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_margin="@dimen/_16sdp"
+            android:text="Download Selected"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/dull_success"
+            app:icon="@drawable/ic_download"
+            app:iconTint="@color/white"
+            android:visibility="gone"
+            app:elevation="8dp" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/hist_current_files"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:id="@+id/history_curr_session"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/hist_current_sess_files"
-                        android:textColor="@color/dull_primary"
-                        android:textStyle="bold"
-                        android:visibility="gone"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycler_uploaded_files"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_2sdp"
-                        app:layout_constraintTop_toBottomOf="@id/history_curr_session"
-                        tools:itemCount="2"
-                        tools:listitem="@layout/item_uploaded_file_info" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/hist_all_files"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/hist_current_files">
-
-                    <TextView
-                        android:id="@+id/history_all_session"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/hist_all_sess_files"
-                        android:textColor="@color/dull_primary"
-                        android:textStyle="bold"
-                        android:visibility="gone"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycler_uploaded_all_files"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_2sdp"
-                        app:layout_constraintTop_toBottomOf="@id/history_all_session"
-                        tools:itemCount="2"
-                        tools:listitem="@layout/item_uploaded_file_info" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </ScrollView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 
 </LinearLayout>
