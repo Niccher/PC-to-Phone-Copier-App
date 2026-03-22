@@ -23,22 +23,30 @@ public class Helpers {
         }else if ("dev_message".equals(ty)){
             id = devicePrefs.getDeviceMessageSync();
         }
+
+        if (id == null || id.isEmpty() || "undefined".equals(id)) {
+            Konstants kon = new Konstants();
+            android.content.SharedPreferences pref_dev = cntt.getSharedPreferences(kon.shared_pref_device, Context.MODE_PRIVATE);
+            id = pref_dev.getString(ty, "");
+        }
         return id;
     }
 
     public static void set_prefs_dev(String ty, String value, Context cntt){
-        // For now, keep using SharedPreferences for setters until DataStore is fully integrated
+        DevicePreferences devicePrefs = new DevicePreferences(cntt);
+        if ("dev_uuid".equals(ty)){
+            devicePrefs.saveDeviceUuidSync(value);
+        }else if ("dev_status".equals(ty)){
+            devicePrefs.saveDeviceStatusSync(value);
+        }else if ("dev_message".equals(ty)){
+            devicePrefs.saveDeviceMessageSync(value);
+        }
+
+        // Keep SharedPreferences for backward compatibility
         Konstants kon = new Konstants();
         android.content.SharedPreferences pref_dev = cntt.getSharedPreferences(kon.shared_pref_device, Context.MODE_PRIVATE);
         android.content.SharedPreferences.Editor editor = pref_dev.edit();
-
-        if ("dev_uuid".equals(ty)){
-            editor.putString("dev_uuid", value);
-        }else if ("dev_status".equals(ty)){
-            editor.putString("dev_status", value);
-        }else if ("dev_message".equals(ty)){
-            editor.putString("dev_message", value);
-        }
+        editor.putString(ty, value);
         editor.apply();
     }
 
@@ -52,22 +60,30 @@ public class Helpers {
         }else if ("auth_type".equals(ty)){
             id = authPrefs.getAuthTypeSync();
         }
+
+        if (id == null || id.isEmpty() || "undefined".equals(id)) {
+            Konstants kon = new Konstants();
+            android.content.SharedPreferences pref_auth = cntt.getSharedPreferences(kon.shared_pref_auth, Context.MODE_PRIVATE);
+            id = pref_auth.getString(ty, "");
+        }
         return id;
     }
 
     public static void set_prefs_sess(String ty, String value, Context cntt){
-        // For now, keep using SharedPreferences for setters until DataStore is fully integrated
-        Konstants kon = new Konstants();
-        android.content.SharedPreferences pref_dev = cntt.getSharedPreferences(kon.shared_pref_auth, Context.MODE_PRIVATE);
-        android.content.SharedPreferences.Editor editor = pref_dev.edit();
-
+        AuthPreferences authPrefs = new AuthPreferences(cntt);
         if ("auth_auth_code_id".equals(ty)){
-            editor.putString("auth_auth_code_id", value);
+            authPrefs.saveAuthCodeIdSync(value);
         }else if ("auth_auth_code".equals(ty)){
-            editor.putString("auth_auth_code", value);
+            authPrefs.saveAuthCodeSync(value);
         }else if ("auth_type".equals(ty)){
-            editor.putString("auth_type", value);
+            authPrefs.saveAuthTypeSync(value);
         }
+
+        // Keep SharedPreferences for backward compatibility
+        Konstants kon = new Konstants();
+        android.content.SharedPreferences pref_auth = cntt.getSharedPreferences(kon.shared_pref_auth, Context.MODE_PRIVATE);
+        android.content.SharedPreferences.Editor editor = pref_auth.edit();
+        editor.putString(ty, value);
         editor.apply();
     }
 
@@ -87,17 +103,34 @@ public class Helpers {
     }
 
     public static String[] getFileName(Uri uri, Context cnt) {
-        Cursor returnCursor = cnt.getContentResolver().query(uri, null, null, null, null);
+        String[] f_info_data = {"Unknown", "application/octet-stream", "0 B"};
+        try (Cursor returnCursor = cnt.getContentResolver().query(uri, null, null, null, null)) {
+            if (returnCursor != null && returnCursor.moveToFirst()) {
+                int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                int sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);
 
-        int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-        int sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);
-        returnCursor.moveToFirst();
+                String name = "Unknown";
+                if (nameIndex != -1) {
+                    name = returnCursor.getString(nameIndex);
+                }
 
-        //String[] f_info_data = {f_name, f_size, f_mime};
-        Long f_size = Long.valueOf(returnCursor.getString(sizeIndex));
-        String[] f_info_data = {returnCursor.getString(nameIndex), cnt.getContentResolver().getType(uri), humanReadableByteCountBin(f_size)};
-        returnCursor.close();
+                long size = 0;
+                if (sizeIndex != -1) {
+                    size = returnCursor.getLong(sizeIndex);
+                }
 
+                String mime = cnt.getContentResolver().getType(uri);
+                if (mime == null) {
+                    mime = "application/octet-stream";
+                }
+
+                f_info_data[0] = name;
+                f_info_data[1] = mime;
+                f_info_data[2] = humanReadableByteCountBin(size);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return f_info_data;
     }
 }

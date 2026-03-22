@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.exifinterface.media.ExifInterface;
+import android.os.Build;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
@@ -35,7 +36,9 @@ import com.niccher.pctophonecopier.utils.Konstants;
 import com.niccher.pctophonecopier.utils.ServiceGenerator;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import okhttp3.MediaType;
@@ -89,18 +92,19 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
     @Override
     public void onBindViewHolder(@NonNull Adapter_Sel_Files.ViewHolder holder, int position) {
         holder.part_name.setText(list_file_infos.get(position).getF_name());
-        //holder.part_type.setText(list_file_infos.get(position).getF_type());
+        holder.part_size.setText(list_file_infos.get(position).getF_size());
+        holder.part_type_full.setText(list_file_infos.get(position).getF_type());
+
         try {
             Uri file_uri = list_file_infos.get(position).getF_uri();
-            String file_path = String.valueOf(FileUtils.getFile(context, file_uri));
-            holder.part_type_icon.setImageBitmap(createAnyFileThumbnail(file_path));
-        }catch (Exception ex){
+            holder.part_type_icon.setImageBitmap(createAnyFileThumbnail(file_uri));
+            holder.part_type_icon.setVisibility(View.VISIBLE);
+            holder.part_type_text.setVisibility(View.INVISIBLE);
+        } catch (Exception ex) {
             holder.part_type_icon.setVisibility(View.INVISIBLE);
             holder.part_type_text.setVisibility(View.VISIBLE);
             holder.part_type_text.setText(list_file_infos.get(position).getF_type());
         }
-
-        holder.part_size.setText(list_file_infos.get(position).getF_size());
 
         holder.part_mini_remove.setVisibility(View.VISIBLE);
         holder.part_mini_delete.setVisibility(View.GONE);
@@ -109,49 +113,7 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
         holder.part_mini_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Uploading -> " + list_file_infos.get(position).getF_name(), Toast.LENGTH_SHORT).show();
-                Uri file_uri = list_file_infos.get(position).getF_uri();
-
-                File file_to_upload = FileUtils.getFile(context, file_uri);
-                holder.part_mini_progress.setVisibility(View.VISIBLE);
-
-                RequestBody requestFile = RequestBody.create(MediaType.parse( helpers.getFileName(file_uri, context)[1]), file_to_upload );
-                MultipartBody.Part body = MultipartBody.Part.createFormData("uploaded_file", file_to_upload.getName(), requestFile);
-
-                String part_dev_id = helpers.get_prefs_dev("dev_uuid", context);
-                String part_sess_id = helpers.get_prefs_sess("auth_auth_code_id", context);
-
-                RequestBody requestBody0 = RequestBody.create( okhttp3.MultipartBody.FORM, part_dev_id);
-                RequestBody requestBody1 = RequestBody.create( okhttp3.MultipartBody.FORM, part_sess_id);
-
-                // finally, execute the request
-                Call<Mod_File_Uploaded> call = interface_upload.filesUpload(requestBody0, requestBody1, body);
-                call.enqueue(new Callback<Mod_File_Uploaded>() {
-                    @Override
-                    public void onResponse(Call<Mod_File_Uploaded> call, Response<Mod_File_Uploaded> response) {
-                        Mod_File_Uploaded postResponse = response.body();
-
-                        try {
-                            if (postResponse.getStatus() == 0  || postResponse.getStatus() == 2 ) {
-                                Toast.makeText(context, postResponse.getMessage(), Toast.LENGTH_LONG).show();
-                            }else if (postResponse.getStatus() == 1 ) {
-                                Toast.makeText(context, postResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                                holder.part_mini_upload.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_file_upload, 0, 0, 0);
-                                holder.part_mini_upload.setEnabled(false);
-                                holder.part_mini_remove.setVisibility(View.GONE);
-                                holder.part_mini_upload.setVisibility(View.GONE);
-                                holder.part_mini_delete.setVisibility(View.VISIBLE);
-                                holder.part_mini_progress.setVisibility(View.GONE);
-                            }
-                        }catch (Exception ex){}
-                    }
-
-                    @Override
-                    public void onFailure(Call<Mod_File_Uploaded> call, Throwable t) {
-                        Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
-                        holder.part_mini_progress.setVisibility(View.GONE);
-                    }
-                });
+                performUpload(position, holder);
             }
         });
         holder.part_mini_remove.setOnClickListener(new View.OnClickListener() {
@@ -159,8 +121,7 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
             public void onClick(View view) {
                 Toast.makeText(context, "Removing " + list_file_infos.get(position).getF_name(), Toast.LENGTH_SHORT).show();
                 list_file_infos.remove(position);
-                notifyItemChanged(position);
-                notifyDataSetChanged();
+                notifyItemRemoved(position);
                 notifyItemRangeChanged(position, list_file_infos.size());
             }
         });
@@ -172,20 +133,118 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
         });
     }
 
-    private Bitmap createAnyFileThumbnail(String f_path) {
-        File file = new File(f_path);
-        String mimeType = getMimeType(file);
+    public void performUpload(int position, ViewHolder holder) {
+        if (position < 0 || position >= list_file_infos.size()) return;
+        
+        Mod_File_info fileInfo = list_file_infos.get(position);
+        Toast.makeText(context, "Uploading -> " + fileInfo.getF_name(), Toast.LENGTH_SHORT).show();
+        Uri file_uri = fileInfo.getF_uri();
 
-        if (mimeType != null) {
-            if (mimeType.startsWith("image")) {
-                return ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(f_path), 60, 40);
-            } else if (mimeType.startsWith("video")) {
-                return ThumbnailUtils.createVideoThumbnail(f_path, MediaStore.Video.Thumbnails.MINI_KIND);
+        File file_to_upload = FileUtils.getFile(context, file_uri);
+        if (file_to_upload == null) {
+            // Fallback: Copy URI content to a temporary file
+            try {
+                String[] fileInfoData = helpers.getFileName(file_uri, context);
+                String fileName = fileInfoData[0];
+                file_to_upload = new File(context.getCacheDir(), fileName);
+                try (InputStream is = context.getContentResolver().openInputStream(file_uri);
+                     FileOutputStream fos = new FileOutputStream(file_to_upload)) {
+                    byte[] buffer = new byte[4096];
+                    int read;
+                    while ((read = is.read(buffer)) != -1) {
+                        fos.write(buffer, 0, read);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(context, "Failed to prepare file for upload", Toast.LENGTH_SHORT).show();
+                if (holder != null) {
+                    holder.part_mini_progress.setVisibility(View.GONE);
+                }
+                return;
             }
-            // Add more conditions for other file types if needed
         }
 
-        // If no specific handling, return a default thumbnail or handle accordingly
+        if (holder != null) {
+            holder.part_mini_progress.setVisibility(View.VISIBLE);
+        }
+
+        String mimeType = helpers.getFileName(file_uri, context)[1];
+        if (mimeType == null) mimeType = "application/octet-stream";
+
+        RequestBody requestFile = RequestBody.create(MediaType.parse(mimeType), file_to_upload);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("uploaded_file", file_to_upload.getName(), requestFile);
+
+        String part_dev_id = helpers.get_prefs_dev("dev_uuid", context);
+        String part_sess_id = helpers.get_prefs_sess("auth_auth_code_id", context);
+
+        RequestBody requestBody0 = RequestBody.create(okhttp3.MultipartBody.FORM, part_dev_id);
+        RequestBody requestBody1 = RequestBody.create(okhttp3.MultipartBody.FORM, part_sess_id);
+
+        // finally, execute the request
+        Call<Mod_File_Uploaded> call = interface_upload.filesUpload(requestBody0, requestBody1, body);
+        call.enqueue(new Callback<Mod_File_Uploaded>() {
+            @Override
+            public void onResponse(Call<Mod_File_Uploaded> call, Response<Mod_File_Uploaded> response) {
+                Mod_File_Uploaded postResponse = response.body();
+
+                try {
+                    if (postResponse.getStatus() == 0 || postResponse.getStatus() == 2) {
+                        Toast.makeText(context, postResponse.getMessage(), Toast.LENGTH_LONG).show();
+                    } else if (postResponse.getStatus() == 1) {
+                        Toast.makeText(context, postResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        if (holder != null) {
+                            holder.part_mini_upload.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_file_upload, 0, 0, 0);
+                            holder.part_mini_upload.setEnabled(false);
+                            holder.part_mini_remove.setVisibility(View.GONE);
+                            holder.part_mini_upload.setVisibility(View.GONE);
+                            holder.part_mini_delete.setVisibility(View.VISIBLE);
+                            holder.part_mini_progress.setVisibility(View.GONE);
+                        }
+                    }
+                } catch (Exception ex) {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Mod_File_Uploaded> call, Throwable t) {
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+                if (holder != null) {
+                    holder.part_mini_progress.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    public void uploadAll(RecyclerView recyclerView) {
+        for (int i = 0; i < list_file_infos.size(); i++) {
+            ViewHolder holder = (ViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
+            performUpload(i, holder);
+        }
+    }
+
+    private Bitmap createAnyFileThumbnail(Uri uri) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                return context.getContentResolver().loadThumbnail(uri, new android.util.Size(120, 80), null);
+            } else {
+                String f_path = FileUtils.getPath(context, uri);
+                if (f_path == null) return getDefaultThumbnail();
+                
+                File file = new File(f_path);
+                String mimeType = getMimeType(file);
+
+                if (mimeType != null) {
+                    if (mimeType.startsWith("image")) {
+                        return ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(f_path), 120, 80);
+                    } else if (mimeType.startsWith("video")) {
+                        return ThumbnailUtils.createVideoThumbnail(f_path, MediaStore.Video.Thumbnails.MINI_KIND);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return getDefaultThumbnail();
     }
 
@@ -205,7 +264,7 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView part_name, part_size, part_type_text;
+        TextView part_name, part_size, part_type_text, part_type_full;
         ImageView part_type_icon;
         TextView part_mini_upload, part_mini_remove, part_mini_delete;
         ProgressBar part_mini_progress;
@@ -214,6 +273,7 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
             super(itemView);
             part_name = itemView.findViewById(R.id.f_info_name);
             part_type_text = itemView.findViewById(R.id.f_info_ext_text);
+            part_type_full = itemView.findViewById(R.id.f_info_type);
             part_type_icon = itemView.findViewById(R.id.f_info_ext_img);
             part_size = itemView.findViewById(R.id.f_info_size);
 

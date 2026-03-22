@@ -237,14 +237,12 @@ public class AuthSession extends AppCompatActivity {
                 } else {
                     try {
                         if (postResponse.getAuth_status().equals("True")) {
-                            sharedEditor = pref_Auth.edit();
-                            sharedEditor.putString("auth_status", postResponse.getAuth_status());
-                            sharedEditor.putString("auth_type", postResponse.getAuth_type());
-                            sharedEditor.putString("auth_auth_code", postResponse.getAuth_auth_code());
-                            sharedEditor.putString("auth_message", postResponse.getAuth_message());
-                            sharedEditor.putString("auth_auth_code_id", postResponse.getAuth_auth_code_id());
-                            sharedEditor.putString("auth_time", postResponse.getAuth_time());
-                            sharedEditor.apply();
+                            Helpers.set_prefs_sess("auth_status", postResponse.getAuth_status(), AuthSession.this);
+                            Helpers.set_prefs_sess("auth_type", postResponse.getAuth_type(), AuthSession.this);
+                            Helpers.set_prefs_sess("auth_auth_code", postResponse.getAuth_auth_code(), AuthSession.this);
+                            Helpers.set_prefs_sess("auth_message", postResponse.getAuth_message(), AuthSession.this);
+                            Helpers.set_prefs_sess("auth_auth_code_id", postResponse.getAuth_auth_code_id(), AuthSession.this);
+                            Helpers.set_prefs_sess("auth_time", postResponse.getAuth_time(), AuthSession.this);
 
                             Intent to_home = new Intent(AuthSession.this, HomePage.class);
                             to_home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

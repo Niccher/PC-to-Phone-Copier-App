@@ -65,6 +65,18 @@ class DevicePreferences(private val context: Context) {
         return runBlocking { deviceMessage.first() }
     }
 
+    fun saveDeviceUuidSync(uuid: String) {
+        runBlocking { saveDeviceUuid(uuid) }
+    }
+
+    fun saveDeviceStatusSync(status: String) {
+        runBlocking { saveDeviceStatus(status) }
+    }
+
+    fun saveDeviceMessageSync(message: String) {
+        runBlocking { saveDeviceMessage(message) }
+    }
+
     // Keep the original Flow properties for Kotlin code
     fun getDeviceUuidFlow(): kotlinx.coroutines.flow.Flow<String> = deviceUuid
     fun getDeviceStatusFlow(): kotlinx.coroutines.flow.Flow<String> = deviceStatus

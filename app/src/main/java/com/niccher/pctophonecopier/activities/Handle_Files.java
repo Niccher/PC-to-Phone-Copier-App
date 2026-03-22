@@ -86,6 +86,17 @@ public class Handle_Files extends AppCompatActivity {
         // Observe ViewModel LiveData
         fileViewModel.getSelectedFiles().observe(this, files -> {
             showAddedFile(new ArrayList<>(files));
+            
+            // Toggle empty state visibility
+            View emptyState = findViewById(R.id.empty_state);
+            if (emptyState != null) {
+                emptyState.setVisibility(files.isEmpty() ? View.VISIBLE : View.GONE);
+            }
+            // Toggle bottom actions visibility
+            View bottomActions = findViewById(R.id.bottom_actions);
+            if (bottomActions != null) {
+                bottomActions.setVisibility(files.isEmpty() ? View.GONE : View.VISIBLE);
+            }
         });
 
         fileViewModel.getErrorMessage().observe(this, error -> {
@@ -99,6 +110,17 @@ public class Handle_Files extends AppCompatActivity {
                 android.widget.Toast.makeText(this, "Files uploaded successfully!", android.widget.Toast.LENGTH_SHORT).show();
                 fileViewModel.clearFiles();
             }
+        });
+
+        // Set up action buttons
+        findViewById(R.id.btn_upload_all).setOnClickListener(v -> {
+            if (list_got_files != null) {
+                list_got_files.uploadAll(recyclerView_got_files);
+            }
+        });
+
+        findViewById(R.id.btn_clear_all).setOnClickListener(v -> {
+            fileViewModel.clearFiles();
         });
     }
 

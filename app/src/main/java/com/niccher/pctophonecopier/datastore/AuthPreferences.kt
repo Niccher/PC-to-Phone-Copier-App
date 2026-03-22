@@ -65,6 +65,18 @@ class AuthPreferences(private val context: Context) {
         return runBlocking { authType.first() }
     }
 
+    fun saveAuthCodeIdSync(codeId: String) {
+        runBlocking { saveAuthCodeId(codeId) }
+    }
+
+    fun saveAuthCodeSync(code: String) {
+        runBlocking { saveAuthCode(code) }
+    }
+
+    fun saveAuthTypeSync(type: String) {
+        runBlocking { saveAuthType(type) }
+    }
+
     // Keep the original Flow properties for Kotlin code
     fun getAuthCodeIdFlow(): kotlinx.coroutines.flow.Flow<String> = authCodeId
     fun getAuthCodeFlow(): kotlinx.coroutines.flow.Flow<String> = authCode

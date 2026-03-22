@@ -289,12 +289,11 @@
         android:id="@+id/fab_open_files"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/_24sdp"
         android:src="@drawable/ic_add"
         app:backgroundTint="@color/colorPrimary"
         app:elevation="6dp"
-        app:layout_anchor="@id/bottom_actions"
-        app:layout_anchorGravity="top|end"
         app:tint="@android:color/white" />
 
 
