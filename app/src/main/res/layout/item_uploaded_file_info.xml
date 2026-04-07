@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/_8sdp">
 
-            <!-- Extension Badge — anchored to top only, no bottom constraint -->
+            <!-- Extension Badge — anchored to top only -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_ext_badge"
                 android:layout_width="@dimen/_48sdp"
@@ -132,13 +132,15 @@
 
             <CheckBox
                 android:id="@+id/f_info_checkbox"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/_32sdp"
                 android:layout_marginTop="@dimen/_4sdp"
                 android:buttonTint="@color/colorPrimary"
                 android:gravity="center"
+                android:layout_gravity="center"
                 app:layout_constraintTop_toBottomOf="@id/f_info_date"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/f_info_delete"
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <!-- Progress bar (shown when downloading/deleting) -->

@@ -252,7 +252,7 @@ public class Adapter_Uploaded_Files extends RecyclerView.Adapter<Adapter_Uploade
 
                 holder.part_mini_progress.setVisibility(View.VISIBLE);
 
-                Call<Mod_File_Delete> call = interface_delete.setFileToDelete(parameters);
+                Call<Mod_File_Delete> call = interface_delete.getFilesUploadedbySessDevidDelete(parameters);
                 call.enqueue(new Callback<Mod_File_Delete>() {
                     @Override
                     public void onResponse(Call<Mod_File_Delete> call, Response<Mod_File_Delete> response) {

@@ -80,20 +80,45 @@
             android:paddingBottom="80dp"
             android:visibility="gone" />
 
-        <!-- Batch Download FAB -->
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/fab_batch_download"
-            android:layout_width="wrap_content"
+        <!-- Batch Action Buttons (Hidden by default) -->
+        <LinearLayout
+            android:id="@+id/layout_batch_actions"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_margin="@dimen/_16sdp"
-            android:text="Download Selected"
-            android:textColor="@color/white"
-            app:backgroundTint="@color/dull_success"
-            app:icon="@drawable/ic_download"
-            app:iconTint="@color/white"
-            android:visibility="gone"
-            app:elevation="8dp" />
+            android:layout_gravity="bottom"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="@dimen/_12sdp"
+            android:clipToPadding="false"
+            android:visibility="gone">
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/fab_batch_download"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:text="Download"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/dull_success"
+                app:icon="@drawable/ic_download"
+                app:iconTint="@color/white"
+                app:elevation="8dp" />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/fab_batch_delete"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:text="Delete"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/dull_error"
+                app:icon="@drawable/ic_delete"
+                app:iconTint="@color/white"
+                app:elevation="8dp" />
+
+        </LinearLayout>
 
     </FrameLayout>
 

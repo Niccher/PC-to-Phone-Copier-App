@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ import com.google.gson.GsonBuilder;
 import com.niccher.pctophonecopier.R;
 import com.niccher.pctophonecopier.adapters.Adapter_Uploaded_Files;
 import com.niccher.pctophonecopier.interfaces.RetrofitInterface;
+import com.niccher.pctophonecopier.model.Mod_File_Delete;
 import com.niccher.pctophonecopier.model.Mod_List_File_Uploaded;
 import com.niccher.pctophonecopier.utils.Helpers;
 import com.niccher.pctophonecopier.utils.Konstants;
@@ -61,7 +63,8 @@ public class Fragment_History_Files extends Fragment implements Adapter_Uploaded
     CircularProgressIndicator progressSpinner;
     CheckBox chkSelectAll;
     TextView txtFileCount, txtEmptyState;
-    ExtendedFloatingActionButton fabBatchDownload;
+    LinearLayout layoutBatchActions;
+    ExtendedFloatingActionButton fabBatchDownload, fabBatchDelete;
 
     RetrofitInterface retrofitInterface;
     ResponseSummarizer responseSummarizer;
@@ -81,7 +84,9 @@ public class Fragment_History_Files extends Fragment implements Adapter_Uploaded
         chkSelectAll         = view.findViewById(R.id.chk_select_all);
         txtFileCount         = view.findViewById(R.id.txt_file_count);
         txtEmptyState        = view.findViewById(R.id.txt_empty_state);
+        layoutBatchActions   = view.findViewById(R.id.layout_batch_actions);
         fabBatchDownload     = view.findViewById(R.id.fab_batch_download);
+        fabBatchDelete       = view.findViewById(R.id.fab_batch_delete);
 
         rcy_files_current.setHasFixedSize(false);
         rcy_files_current.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -90,7 +95,7 @@ public class Fragment_History_Files extends Fragment implements Adapter_Uploaded
         kon     = new Konstants();
         gson    = new GsonBuilder().setLenient().create();
 
-        fabBatchDownload.setVisibility(View.GONE);
+        layoutBatchActions.setVisibility(View.GONE);
 
         chkSelectAll.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (adapterUploadedFiles != null) {
@@ -100,6 +105,7 @@ public class Fragment_History_Files extends Fragment implements Adapter_Uploaded
         });
 
         fabBatchDownload.setOnClickListener(v -> startBatchDownload());
+        fabBatchDelete.setOnClickListener(v -> startBatchDelete());
 
         filesListing();
         return view;
@@ -170,15 +176,16 @@ public class Fragment_History_Files extends Fragment implements Adapter_Uploaded
         txtFileCount.setText("0 files");
     }
 
-    // --- Batch Download ---
+    // --- Batch Actions ---
 
     @Override
     public void onSelectionChanged(int count) {
         if (count > 0) {
-            fabBatchDownload.setText("Download " + count + " file" + (count != 1 ? "s" : ""));
-            fabBatchDownload.setVisibility(View.VISIBLE);
+            fabBatchDownload.setText("Download (" + count + ")");
+            fabBatchDelete.setText("Delete (" + count + ")");
+            layoutBatchActions.setVisibility(View.VISIBLE);
         } else {
-            fabBatchDownload.setVisibility(View.GONE);
+            layoutBatchActions.setVisibility(View.GONE);
         }
     }
 
@@ -190,15 +197,18 @@ public class Fragment_History_Files extends Fragment implements Adapter_Uploaded
         checkPermissions();
         batchDownloadIndex = 0;
         fabBatchDownload.setEnabled(false);
+        fabBatchDelete.setEnabled(false);
         fabBatchDownload.setText("Downloading…");
         downloadNext(selected);
     }
 
     private void downloadNext(List<Mod_List_File_Uploaded> selected) {
         if (batchDownloadIndex >= selected.size()) {
-            Toast.makeText(getActivity(), "All files downloaded!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "All downloads complete!", Toast.LENGTH_SHORT).show();
             fabBatchDownload.setEnabled(true);
-            fabBatchDownload.setText("Download " + selected.size() + " files");
+            fabBatchDelete.setEnabled(true);
+            fabBatchDownload.setText("Download (" + selected.size() + ")");
+            adapterUploadedFiles.clearSelection();
             return;
         }
 
@@ -245,6 +255,69 @@ public class Fragment_History_Files extends Fragment implements Adapter_Uploaded
                 Toast.makeText(getActivity(), "✗ Error: " + item.getUp_file_Name(), Toast.LENGTH_SHORT).show();
                 batchDownloadIndex++;
                 downloadNext(selected);
+            }
+        });
+    }
+
+    private void startBatchDelete() {
+        if (adapterUploadedFiles == null) return;
+        List<Mod_List_File_Uploaded> selected = adapterUploadedFiles.getSelectedItems();
+        if (selected.isEmpty()) return;
+
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Confirm Deletion")
+                .setMessage("Are you sure you want to delete " + selected.size() + " files? This action cannot be undone.")
+                .setPositiveButton("Delete", (dialog, which) -> {
+                    batchDownloadIndex = 0;
+                    fabBatchDownload.setEnabled(false);
+                    fabBatchDelete.setEnabled(false);
+                    fabBatchDelete.setText("Deleting…");
+                    deleteNext(selected);
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    private void deleteNext(List<Mod_List_File_Uploaded> selected) {
+        if (batchDownloadIndex >= selected.size()) {
+            Toast.makeText(getActivity(), "Deletion complete!", Toast.LENGTH_SHORT).show();
+            fabBatchDownload.setEnabled(true);
+            fabBatchDelete.setEnabled(true);
+            adapterUploadedFiles.clearSelection();
+            filesListing(); // Refresh the list
+            return;
+        }
+
+        Mod_List_File_Uploaded item = selected.get(batchDownloadIndex);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(kon.str_file_upload_action)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(ServiceGenerator.getUnsafeOkHttpClient())
+                .build();
+
+        RetrofitInterface iface = retrofit.create(RetrofitInterface.class);
+
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("var_file_id", item.getUp_file_uuid());
+        parameters.put("var_dev_id", Helpers.get_prefs_dev("dev_uuid", getActivity()));
+        parameters.put("var_sess_id", Helpers.get_prefs_sess("auth_auth_code_id", getActivity()));
+
+        iface.getFilesUploadedbySessDevidDelete(parameters).enqueue(new Callback<Mod_File_Delete>() {
+            @Override
+            public void onResponse(Call<Mod_File_Delete> call, Response<Mod_File_Delete> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Toast.makeText(getActivity(), "✓ Deleted " + item.getUp_file_Name(), Toast.LENGTH_SHORT).show();
+                }
+                batchDownloadIndex++;
+                deleteNext(selected);
+            }
+
+            @Override
+            public void onFailure(Call<Mod_File_Delete> call, Throwable t) {
+                Toast.makeText(getActivity(), "✗ Error: " + item.getUp_file_Name(), Toast.LENGTH_SHORT).show();
+                batchDownloadIndex++;
+                deleteNext(selected);
             }
         });
     }
