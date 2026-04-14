@@ -13,6 +13,7 @@ import com.niccher.pctophonecopier.activities.BiometricLockActivity
 import com.niccher.pctophonecopier.activities.Regista
 import com.niccher.pctophonecopier.utils.BiometricHelper
 import com.niccher.pctophonecopier.utils.Konstants
+import com.niccher.pctophonecopier.utils.SharedPrefs
 
 class Splasher : AppCompatActivity() {
 
@@ -45,10 +46,13 @@ class Splasher : AppCompatActivity() {
     private fun navigateNext() {
         if (isAuthenticated()) {
             val biometricHelper = BiometricHelper(this)
-            if (biometricHelper.isBiometricAvailable()) {
+            val sharedPrefs = SharedPrefs(this)
+            val isBiometricEnabled = sharedPrefs.getBoolean("biometric_enabled", true)
+
+            if (isBiometricEnabled && biometricHelper.isBiometricAvailable()) {
                 proceedToIntent(Intent(this, BiometricLockActivity::class.java))
             } else {
-                // Biometrics not available, proceed anyway or require PIN
+                // Biometrics not available or disabled, proceed anyway
                 proceedToIntent(Intent(this, Auth_New_Or_Continue::class.java))
             }
         } else {

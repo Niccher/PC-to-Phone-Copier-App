@@ -10,6 +10,7 @@
     <color name="colorSurface">#F3F4FB</color>
     <color name="colorOnSurface">#1A1C3A</color>
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 
     <!-- Card / background tones -->
     <color name="col_bg_lite_gray">#ECEEF9</color>
@@ -23,6 +24,7 @@
     <!-- Semantic / readable tones -->
     <color name="dull_primary">#2C2D5B</color>
     <color name="dull_secondary">#5C5F82</color>
+    <color name="colorTextSecondary">#666B91</color>
     <color name="dull_accent">#9FA8DA</color>
     <color name="dull_success">#00897B</color>
     <color name="dull_warning">#F4A200</color>

@@ -1,0 +1,260 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_16sdp">
+
+            <!-- Title Section (Home Style) -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_24sdp"
+                app:cardCornerRadius="@dimen/_16sdp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/colorPrimaryLight">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/_16sdp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        app:cardCornerRadius="24dp"
+                        app:cardBackgroundColor="@color/colorPrimary"
+                        app:cardElevation="0dp"
+                        android:layout_marginEnd="@dimen/_16sdp">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_settings_fill"
+                            android:tint="@color/white"
+                            android:importantForAccessibility="no"/>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="App Settings"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/_18sdp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Secure &amp; Theme preferences"
+                            android:textColor="@color/dull_secondary"
+                            android:textSize="@dimen/_12sdp"
+                            android:maxLines="1"
+                            android:ellipsize="end"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Toggles Section -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="General Preferences"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold"
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:layout_marginStart="@dimen/_4sdp"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_biometric"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_16sdp"
+                app:cardCornerRadius="@dimen/_16sdp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/col_bg_dark_gray"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@color/col_bg_lite_gray">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_16sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Biometric Lock"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:text="Secure app access on startup"
+                        android:textColor="@color/dull_secondary"
+                        android:textSize="@dimen/_11sdp" />
+
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/toggle_group_biometric"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:singleSelection="true"
+                        app:selectionRequired="true">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_bio_enable"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Enabled" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_bio_disable"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Disabled" />
+
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_dark_theme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/_16sdp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/col_bg_dark_gray"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@color/col_bg_lite_gray"
+                android:layout_marginBottom="@dimen/_16sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_16sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dark Theme"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:text="Toggle night mode appearance"
+                        android:textColor="@color/dull_secondary"
+                        android:textSize="@dimen/_11sdp" />
+
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/toggle_group_dark_theme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:singleSelection="true"
+                        app:selectionRequired="true">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_dark_enable"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Enabled" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_dark_disable"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Disabled" />
+
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Quick Info Tip (Home Style) -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/_16sdp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/white"
+                app:strokeColor="@color/dull_accent"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/_12sdp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="@dimen/_12sdp"
+                        android:src="@drawable/ic_menu_help"
+                        android:tint="@color/colorPrimary"
+                        android:importantForAccessibility="no"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Settings are applied instantly across the app."
+                        android:textColor="@color/dull_primary"
+                        android:textSize="@dimen/_12sdp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

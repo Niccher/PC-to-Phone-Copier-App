@@ -1,0 +1,203 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_16sdp">
+
+            <!-- Title Section (Home Style) -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_24sdp"
+                app:cardCornerRadius="@dimen/_16sdp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/colorPrimaryLight">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/_16sdp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        app:cardCornerRadius="24dp"
+                        app:cardBackgroundColor="@color/colorPrimary"
+                        app:cardElevation="0dp"
+                        android:layout_marginEnd="@dimen/_16sdp">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_menu_save"
+                            android:tint="@color/white"
+                            android:importantForAccessibility="no"/>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="App Credits"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/_18sdp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Libraries &amp; Community"
+                            android:textColor="@color/dull_secondary"
+                            android:textSize="@dimen/_12sdp"
+                            android:maxLines="1"
+                            android:ellipsize="end"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Credits Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/_16sdp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/col_bg_dark_gray"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@color/col_bg_lite_gray"
+                android:layout_marginBottom="@dimen/_24sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_16sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Retrofit &amp; OkHttp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:text="Powerful networking client for handling API requests and secure file transfers."
+                        android:textColor="@color/colorTextSecondary"
+                        android:textSize="@dimen/_11sdp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ZXing (Zebra Crossing)"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:text="Enables fast and reliable QR code scanning for seamless device pairing."
+                        android:textColor="@color/colorTextSecondary"
+                        android:textSize="@dimen/_11sdp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ML Kit &amp; Firebase"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:text="Advanced text recognition to extract and transfer data from physical documents."
+                        android:textColor="@color/colorTextSecondary"
+                        android:textSize="@dimen/_11sdp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="AndroidX Biometric"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:text="Standardized authentication for secure app access and user privacy."
+                        android:textColor="@color/colorTextSecondary"
+                        android:textSize="@dimen/_11sdp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Material Components"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:text="Modern UI components following Google&apos;s latest Material Design guidelines."
+                        android:textColor="@color/colorTextSecondary"
+                        android:textSize="@dimen/_11sdp" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Special Thanks"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold"
+                android:layout_marginBottom="@dimen/_12sdp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="To the Android community for the continuous inspiration and tools."
+                android:textColor="@color/colorTextSecondary"
+                android:textSize="@dimen/_12sdp" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

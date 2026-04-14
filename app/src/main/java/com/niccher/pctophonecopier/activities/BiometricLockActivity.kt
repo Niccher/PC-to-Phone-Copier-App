@@ -35,7 +35,10 @@ class BiometricLockActivity : AppCompatActivity() {
     }
 
     private fun startAuthentication() {
-        if (biometricHelper.isBiometricAvailable()) {
+        val sharedPrefs = com.niccher.pctophonecopier.utils.SharedPrefs(this)
+        val isBiometricEnabled = sharedPrefs.getBoolean("biometric_enabled", true)
+
+        if (isBiometricEnabled && biometricHelper.isBiometricAvailable()) {
             biometricHelper.showBiometricPrompt(
                 listener = object : BiometricHelper.BiometricAuthListener {
                     override fun onAuthSuccess() {
@@ -52,8 +55,7 @@ class BiometricLockActivity : AppCompatActivity() {
                 }
             )
         } else {
-            // If biometrics/PIN missing, we shouldn't lock the user out permanently
-            // In a real hardened app, we might require a separate app password
+            // If biometrics/PIN missing or disabled, proceed
             navigateToMain()
         }
     }
