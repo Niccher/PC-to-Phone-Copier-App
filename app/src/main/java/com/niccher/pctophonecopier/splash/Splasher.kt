@@ -9,7 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.niccher.pctophonecopier.R
 import com.niccher.pctophonecopier.activities.Auth_New_Or_Continue
+import com.niccher.pctophonecopier.activities.BiometricLockActivity
 import com.niccher.pctophonecopier.activities.Regista
+import com.niccher.pctophonecopier.utils.BiometricHelper
 import com.niccher.pctophonecopier.utils.Konstants
 
 class Splasher : AppCompatActivity() {
@@ -41,18 +43,25 @@ class Splasher : AppCompatActivity() {
     }
 
     private fun navigateNext() {
-        val intent = if (isAuthenticated()) {
-            Intent(this, Auth_New_Or_Continue::class.java)
+        if (isAuthenticated()) {
+            val biometricHelper = BiometricHelper(this)
+            if (biometricHelper.isBiometricAvailable()) {
+                proceedToIntent(Intent(this, BiometricLockActivity::class.java))
+            } else {
+                // Biometrics not available, proceed anyway or require PIN
+                proceedToIntent(Intent(this, Auth_New_Or_Continue::class.java))
+            }
         } else {
-            Intent(this, Regista::class.java)
+            proceedToIntent(Intent(this, Regista::class.java))
         }
+    }
 
+    private fun proceedToIntent(intent: Intent) {
         intent.addFlags(
             Intent.FLAG_ACTIVITY_CLEAR_TOP or
                     Intent.FLAG_ACTIVITY_CLEAR_TASK or
                     Intent.FLAG_ACTIVITY_NEW_TASK
         )
-
         startActivity(intent)
         finish()
     }
