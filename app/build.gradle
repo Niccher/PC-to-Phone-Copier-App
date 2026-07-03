@@ -7,7 +7,7 @@ android {
     buildToolsVersion "35.0.0"
 
     defaultConfig {
-        namespace 'com.niccher.pctophonecopier'
+        namespace = "com.niccher.p2p_copier_app"
         minSdkVersion 24
         targetSdkVersion 35
         versionCode 1
