@@ -9,6 +9,7 @@
     <!-- Surfaces -->
     <color name="colorSurface">#F3F4FB</color>
     <color name="colorOnSurface">#1A1C3A</color>
+    <color name="colorOnSurfaceVariant">#666B91</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
 

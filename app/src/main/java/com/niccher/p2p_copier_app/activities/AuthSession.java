@@ -25,6 +25,7 @@ import com.niccher.p2p_copier_app.HomePage;
 import com.niccher.p2p_copier_app.R;
 import com.niccher.p2p_copier_app.interfaces.RetrofitInterface;
 import com.niccher.p2p_copier_app.model.Mod_Auth;
+import com.niccher.p2p_copier_app.model.api.ApiResponse;
 import com.niccher.p2p_copier_app.model.Mod_Device_Id;
 import com.niccher.p2p_copier_app.utils.Helpers;
 import com.niccher.p2p_copier_app.utils.Konstants;
@@ -61,6 +62,17 @@ public class AuthSession extends AppCompatActivity {
         btn_scan_verify_code = findViewById(R.id.btn_auth_verify_code);
         btn_scan_qr = findViewById(R.id.btn_auth_scan_qr);
         typed_auth_code = findViewById(R.id.ed_auth_scan_code);
+        Button btnBackendConfig = findViewById(R.id.btn_auth_backend_config);
+
+        if (btnBackendConfig != null) {
+            btnBackendConfig.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent configIntent = new Intent(AuthSession.this, BackendConfigActivity.class);
+                    startActivity(configIntent);
+                }
+            });
+        }
 
         kon = new Konstants();
         gson = new GsonBuilder()
@@ -200,65 +212,61 @@ public class AuthSession extends AppCompatActivity {
             Toast.makeText(AuthSession.this, "Registered", Toast.LENGTH_LONG).show();
         }else {
             Toast.makeText(AuthSession.this, "Un Registered", Toast.LENGTH_LONG).show();
-            Retrofit retrof = new Retrofit.Builder()
-                    .baseUrl(kon.str_device_action)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .client(ServiceGenerator.getUnsafeOkHttpClient())
-                    .build();
-
-            retrofitInterface = retrof.create(RetrofitInterface.class);
+            retrofitInterface = ServiceGenerator.createService(RetrofitInterface.class, this);
             createDeviceID();
         }
     }
 
     private void tryAuth(String auth_type, String auth_code) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(kon.str_auth_action)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .client(ServiceGenerator.getUnsafeOkHttpClient())
-                .build();
-
-        retrofitInterface = retrofit.create(RetrofitInterface.class);
+        retrofitInterface = ServiceGenerator.createService(RetrofitInterface.class, this);
 
         Map<String, String> parameters = new HashMap<>();
         parameters.put("var_auth_type", auth_type);
         parameters.put("var_auth_code", auth_code);
         parameters.put("var_dev_uuid", Helpers.get_prefs_dev("dev_uuid", this));
 
-        Call<Mod_Auth> call = retrofitInterface.createRegister(parameters);
+        Call<ApiResponse<Mod_Auth>> call = retrofitInterface.createRegister(parameters);
 
-        call.enqueue(new Callback<Mod_Auth>() {
+        call.enqueue(new Callback<ApiResponse<Mod_Auth>>() {
             @Override
-            public void onResponse(Call<Mod_Auth> call, Response<Mod_Auth> response) {
-                Mod_Auth postResponse = response.body();
+            public void onResponse(Call<ApiResponse<Mod_Auth>> call, Response<ApiResponse<Mod_Auth>> response) {
+                if (!response.isSuccessful() || response.body() == null) {
+                    Toast.makeText(AuthSession.this, "Authentication failed (Server HTTP " + response.code() + ")", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
-                if (postResponse.getAuth_type().equals("False") || postResponse.getAuth_message().equals("unknown error")) {
-                    Toast.makeText(AuthSession.this, "Unexpected request, please try again", Toast.LENGTH_LONG).show();
-                } else {
-                    try {
-                        if (postResponse.getAuth_status().equals("True")) {
-                            Helpers.set_prefs_sess("auth_status", postResponse.getAuth_status(), AuthSession.this);
-                            Helpers.set_prefs_sess("auth_type", postResponse.getAuth_type(), AuthSession.this);
-                            Helpers.set_prefs_sess("auth_auth_code", postResponse.getAuth_auth_code(), AuthSession.this);
-                            Helpers.set_prefs_sess("auth_message", postResponse.getAuth_message(), AuthSession.this);
-                            Helpers.set_prefs_sess("auth_auth_code_id", postResponse.getAuth_auth_code_id(), AuthSession.this);
-                            Helpers.set_prefs_sess("auth_time", postResponse.getAuth_time(), AuthSession.this);
+                ApiResponse<Mod_Auth> apiResponse = response.body();
+                Mod_Auth postResponse = apiResponse.getData();
 
-                            Intent to_home = new Intent(AuthSession.this, HomePage.class);
-                            to_home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(to_home);
-                            AuthSession.this.finish();
-                        }else{
-                            Toast.makeText(AuthSession.this, "Verification failed. \nPlease try again", Toast.LENGTH_LONG).show();
-                        }
-                    } catch (Exception ex) {
-                        Toast.makeText(AuthSession.this, ex.getMessage() + "Unknown error occurred", Toast.LENGTH_LONG).show();
+                if (!apiResponse.isSuccess() || postResponse == null || "False".equalsIgnoreCase(postResponse.getAuth_status())) {
+                    String msg = apiResponse.getMessage() != null ? apiResponse.getMessage() : "Verification failed. Please try again";
+                    Toast.makeText(AuthSession.this, msg, Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                try {
+                    if ("True".equalsIgnoreCase(postResponse.getAuth_status())) {
+                        Helpers.set_prefs_sess("auth_status", postResponse.getAuth_status(), AuthSession.this);
+                        Helpers.set_prefs_sess("auth_type", postResponse.getAuth_type(), AuthSession.this);
+                        Helpers.set_prefs_sess("auth_auth_code", postResponse.getAuth_auth_code(), AuthSession.this);
+                        Helpers.set_prefs_sess("auth_message", postResponse.getAuth_message(), AuthSession.this);
+                        Helpers.set_prefs_sess("auth_auth_code_id", postResponse.getAuth_auth_code_id(), AuthSession.this);
+                        Helpers.set_prefs_sess("auth_time", postResponse.getAuth_time(), AuthSession.this);
+
+                        Intent to_home = new Intent(AuthSession.this, HomePage.class);
+                        to_home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(to_home);
+                        AuthSession.this.finish();
+                    } else {
+                        Toast.makeText(AuthSession.this, "Verification failed. \nPlease try again", Toast.LENGTH_LONG).show();
                     }
+                } catch (Exception ex) {
+                    Toast.makeText(AuthSession.this, ex.getMessage() + " - Unknown error occurred", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<Mod_Auth> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<Mod_Auth>> call, Throwable t) {
                 Toast.makeText(AuthSession.this, t.getMessage() + "\nUnknown error occurred, please try again", Toast.LENGTH_LONG).show();
             }
         });

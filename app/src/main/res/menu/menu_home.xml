@@ -3,14 +3,14 @@
 
     <item
         android:id="@+id/menu_current_token"
-        android:title="Current Token"
+        android:title="Current Session Token"
         android:icon="@drawable/ic_menu_key"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/menu_logout"
-        android:title="Logout"
-        android:icon="@drawable/ic_menu_logout"
+        android:id="@+id/menu_backend_config"
+        android:title="Backend Config"
+        android:icon="@drawable/ic_settings_fill"
         app:showAsAction="never" />
 
     <item
@@ -21,8 +21,14 @@
 
     <item
         android:id="@+id/menu_about"
-        android:title="About App"
+        android:title="About App &amp; Technical Specs"
         android:icon="@drawable/ic_menu_info_outline"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_logout"
+        android:title="Logout / Disconnect"
+        android:icon="@drawable/ic_menu_logout"
         app:showAsAction="never" />
 
     <item

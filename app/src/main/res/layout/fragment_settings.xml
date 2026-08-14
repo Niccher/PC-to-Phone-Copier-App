@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/colorSurface">
 
 
 
@@ -212,6 +212,57 @@
                             android:text="Disabled" />
 
                     </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Backend Server Configuration Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_backend_config"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/_16sdp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/col_bg_dark_gray"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@color/col_bg_lite_gray"
+                android:layout_marginBottom="@dimen/_16sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_16sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Backend Server URL"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:text="Configure server endpoint and port"
+                        android:textColor="@color/dull_secondary"
+                        android:textSize="@dimen/_11sdp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_open_backend_config"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:text="Configure Server URL"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        app:backgroundTint="@color/colorPrimary"
+                        app:cornerRadius="@dimen/_12sdp"
+                        app:icon="@drawable/ic_settings_fill"
+                        app:iconGravity="textStart"
+                        app:iconTint="@color/white" />
 
                 </LinearLayout>
 

@@ -4,31 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/colorSurface"
     android:fitsSystemWindows="true">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:elevation="0dp">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/transparent"
-            app:navigationIcon="@drawable/ic_arrow_back"
-            app:title="Connect to PC"
-            app:titleTextColor="@color/colorPrimaryDark" />
-
-    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,16 +24,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:layout_marginBottom="@dimen/_32sdp">
+                android:layout_marginBottom="@dimen/_28sdp">
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="88dp"
+                    android:layout_height="88dp"
                     android:layout_marginBottom="@dimen/_16sdp"
-                    app:cardCornerRadius="50dp"
-                    app:cardElevation="8dp"
-                    app:cardBackgroundColor="@color/colorPrimaryLight"
-                    app:cardMaxElevation="12dp">
+                    app:cardCornerRadius="44dp"
+                    app:cardElevation="6dp"
+                    app:cardBackgroundColor="@color/colorPrimaryLight">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -60,11 +41,11 @@
                         android:background="@color/colorPrimary">
 
                         <ImageView
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:src="@mipmap/app_logo"
                             android:scaleType="fitCenter"
-                            android:tint="@android:color/white"/>
+                            app:tint="@android:color/white"/>
 
                     </LinearLayout>
 
@@ -74,19 +55,20 @@
                     android:id="@+id/reg_brand"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Connect Your Devices"
+                    android:text="Connect to PC"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/_22sdp"
                     android:textStyle="bold"
-                    android:layout_marginBottom="@dimen/_8sdp"/>
+                    android:layout_marginBottom="@dimen/_6sdp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Choose a method to pair with your PC"
+                    android:text="Choose your preferred pairing method to connect your phone and desktop browser"
                     android:textColor="@color/dull_secondary"
-                    android:textSize="@dimen/_14sdp"/>
+                    android:textSize="@dimen/_13sdp"
+                    android:lineSpacingExtra="2dp"/>
 
             </LinearLayout>
 
@@ -99,32 +81,32 @@
                 app:strokeColor="@color/col_bg_dark_gray"
                 app:strokeWidth="1dp"
                 app:cardBackgroundColor="@color/col_bg_lite_gray"
-                android:layout_marginBottom="@dimen/_24sdp">
+                android:layout_marginBottom="@dimen/_20sdp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="@dimen/_20sdp">
+                    android:padding="@dimen/_18sdp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center_vertical"
-                        android:layout_marginBottom="@dimen/_12sdp">
+                        android:layout_marginBottom="@dimen/_10sdp">
 
                         <com.google.android.material.card.MaterialCardView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            app:cardCornerRadius="24dp"
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            app:cardCornerRadius="22dp"
                             app:cardBackgroundColor="@color/white"
                             app:cardElevation="2dp"
-                            android:layout_marginEnd="@dimen/_16sdp">
+                            android:layout_marginEnd="@dimen/_12sdp">
 
                             <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
                                 android:layout_gravity="center"
                                 android:src="@mipmap/img_qr"
                                 app:tint="@color/colorPrimaryDark"/>
@@ -134,9 +116,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="QR Code Scan"
+                            android:text="QR Code Scanner"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="@dimen/_16sdp"
+                            android:textSize="@dimen/_15sdp"
                             android:textStyle="bold"/>
 
                     </LinearLayout>
@@ -147,20 +129,20 @@
                         android:layout_height="wrap_content"
                         android:text="@string/txt_auth_qr_scan"
                         android:textColor="@color/dull_primary"
-                        android:textSize="@dimen/_13sdp"
-                        android:lineSpacingExtra="4dp"
-                        android:layout_marginBottom="@dimen/_20sdp"/>
+                        android:textSize="@dimen/_12sdp"
+                        android:lineSpacingExtra="3dp"
+                        android:layout_marginBottom="@dimen/_16sdp"/>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_auth_scan_qr"
                         android:layout_width="match_parent"
-                        android:layout_height="64dp"
+                        android:layout_height="56dp"
                         android:text="Scan QR Code"
                         android:textAllCaps="false"
                         android:textSize="@dimen/_14sdp"
                         android:textColor="@color/white"
                         app:backgroundTint="@color/colorPrimary"
-                        app:cornerRadius="@dimen/_16sdp"
+                        app:cornerRadius="@dimen/_14sdp"
                         app:elevation="4dp"
                         app:icon="@mipmap/img_qr"
                         app:iconGravity="textStart"
@@ -180,32 +162,32 @@
                 app:strokeColor="@color/col_bg_dark_gray"
                 app:strokeWidth="1dp"
                 app:cardBackgroundColor="@color/col_bg_lite_gray"
-                android:layout_marginBottom="@dimen/_24sdp">
+                android:layout_marginBottom="@dimen/_20sdp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="@dimen/_20sdp">
+                    android:padding="@dimen/_18sdp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center_vertical"
-                        android:layout_marginBottom="@dimen/_12sdp">
+                        android:layout_marginBottom="@dimen/_10sdp">
 
                         <com.google.android.material.card.MaterialCardView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            app:cardCornerRadius="24dp"
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            app:cardCornerRadius="22dp"
                             app:cardBackgroundColor="@color/white"
                             app:cardElevation="2dp"
-                            android:layout_marginEnd="@dimen/_16sdp">
+                            android:layout_marginEnd="@dimen/_12sdp">
 
                             <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
                                 android:layout_gravity="center"
                                 android:src="@drawable/ic_lock_lock"
                                 app:tint="@color/colorPrimaryDark"/>
@@ -215,9 +197,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Manual Code"
+                            android:text="Manual 6-Digit Code"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="@dimen/_16sdp"
+                            android:textSize="@dimen/_15sdp"
                             android:textStyle="bold"/>
 
                     </LinearLayout>
@@ -228,14 +210,14 @@
                         android:layout_height="wrap_content"
                         android:text="@string/txt_auth_code_scan"
                         android:textColor="@color/dull_primary"
-                        android:textSize="@dimen/_13sdp"
-                        android:lineSpacingExtra="4dp"
-                        android:layout_marginBottom="@dimen/_16sdp"/>
+                        android:textSize="@dimen/_12sdp"
+                        android:lineSpacingExtra="3dp"
+                        android:layout_marginBottom="@dimen/_14sdp"/>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/ed_auth_hint_code"
+                        android:hint="Enter 6-digit code from PC browser"
                         app:hintTextColor="@color/dull_secondary"
                         app:boxBackgroundMode="outline"
                         app:boxStrokeColor="@color/colorPrimary"
@@ -245,15 +227,19 @@
                         app:boxCornerRadiusTopEnd="@dimen/_12sdp"
                         app:boxCornerRadiusBottomEnd="@dimen/_12sdp"
                         app:boxCornerRadiusBottomStart="@dimen/_12sdp"
-                        android:layout_marginBottom="@dimen/_16sdp">
+                        android:layout_marginBottom="@dimen/_14sdp">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/ed_auth_scan_code"
                             android:layout_width="match_parent"
-                            android:layout_height="60dp"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
                             android:inputType="number"
                             android:maxLength="8"
+                            android:paddingStart="@dimen/_16sdp"
+                            android:paddingEnd="@dimen/_16sdp"
+                            android:paddingTop="@dimen/_14sdp"
+                            android:paddingBottom="@dimen/_14sdp"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/_18sdp"
                             android:textStyle="bold"/>
@@ -263,13 +249,13 @@
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_auth_verify_code"
                         android:layout_width="match_parent"
-                        android:layout_height="64dp"
+                        android:layout_height="56dp"
                         android:text="Verify Code"
                         android:textAllCaps="false"
                         android:textSize="@dimen/_14sdp"
                         android:textColor="@color/white"
                         app:backgroundTint="@color/colorPrimaryDark"
-                        app:cornerRadius="@dimen/_16sdp"
+                        app:cornerRadius="@dimen/_14sdp"
                         app:elevation="4dp"
                         app:icon="@drawable/ic_lock_lock"
                         app:iconGravity="textStart"
@@ -286,7 +272,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_marginBottom="@dimen/_24sdp">
+                android:layout_marginBottom="@dimen/_20sdp">
 
                 <View
                     android:layout_width="0dp"
@@ -297,10 +283,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="OR"
+                    android:text="ADDITIONAL CONNECTION METHODS"
                     android:textColor="@color/dull_secondary"
-                    android:textSize="@dimen/_11sdp"
-                    android:paddingHorizontal="@dimen/_16sdp"/>
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="bold"
+                    android:paddingHorizontal="@dimen/_12sdp"/>
 
                 <View
                     android:layout_width="0dp"
@@ -310,61 +297,63 @@
 
             </LinearLayout>
 
-            <!-- Alternative Options -->
+            <!-- Expounded Alternative Connection Options -->
+            <!-- WiFi Direct Option -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="@dimen/_16sdp"
+                app:cardCornerRadius="@dimen/_14sdp"
                 app:cardElevation="0dp"
-                app:cardBackgroundColor="@color/col_bg_lite_gray">
+                app:strokeColor="@color/col_bg_dark_gray"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@color/col_bg_lite_gray"
+                android:layout_marginBottom="@dimen/_12sdp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/_16sdp">
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_14sdp"
+                    android:gravity="center_vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Other Options"
-                        android:textColor="@color/dull_primary"
-                        android:textSize="@dimen/_13sdp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="@dimen/_12sdp"/>
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        app:cardCornerRadius="20dp"
+                        app:cardBackgroundColor="@color/colorPrimaryLight"
+                        app:cardElevation="0dp"
+                        android:layout_marginEnd="@dimen/_12sdp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_menu_set_as"
+                            app:tint="@color/colorPrimaryDark"/>
+
+                    </com.google.android.material.card.MaterialCardView>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-                        <com.google.android.material.button.MaterialButton
-                            android:layout_width="0dp"
-                            android:layout_height="56dp"
-                            android:layout_weight="1"
-                            android:layout_marginEnd="@dimen/_6sdp"
-                            android:text="WiFi Direct"
-                            android:textSize="@dimen/_12sdp"
-                            android:textColor="@color/dull_primary"
-                            app:backgroundTint="@color/col_bg_dark_gray"
-                            app:cornerRadius="@dimen/_12sdp"
-                            app:icon="@drawable/ic_menu_set_as"
-                            app:iconTint="@color/dull_primary"
-                            app:iconGravity="textStart"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Wi-Fi Direct"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/_14sdp"
+                            android:textStyle="bold"/>
 
-                        <com.google.android.material.button.MaterialButton
-                            android:layout_width="0dp"
-                            android:layout_height="56dp"
-                            android:layout_weight="1"
-                            android:layout_marginStart="@dimen/_6sdp"
-                            android:text="Bluetooth"
-                            android:textSize="@dimen/_12sdp"
-                            android:textColor="@color/dull_primary"
-                            app:backgroundTint="@color/col_bg_dark_gray"
-                            app:cornerRadius="@dimen/_12sdp"
-                            app:icon="@drawable/ic_menu_set_as"
-                            app:iconTint="@color/dull_primary"
-                            app:iconGravity="textStart"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="High-speed peer-to-peer transfer over local Wi-Fi router or hotspot without requiring internet connectivity."
+                            android:textColor="@color/dull_secondary"
+                            android:textSize="@dimen/_11sdp"
+                            android:layout_marginTop="@dimen/_2sdp"/>
 
                     </LinearLayout>
 
@@ -372,12 +361,93 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Bluetooth Option -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/_14sdp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/col_bg_dark_gray"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@color/col_bg_lite_gray">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_14sdp"
+                    android:gravity="center_vertical">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        app:cardCornerRadius="20dp"
+                        app:cardBackgroundColor="@color/colorPrimaryLight"
+                        app:cardElevation="0dp"
+                        android:layout_marginEnd="@dimen/_12sdp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_menu_set_as"
+                            app:tint="@color/colorPrimaryDark"/>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Bluetooth Pairing"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/_14sdp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Offline short-range connection for sharing text clips and small files when local network is unavailable."
+                            android:textColor="@color/dull_secondary"
+                            android:textSize="@dimen/_11sdp"
+                            android:layout_marginTop="@dimen/_2sdp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Server Configuration Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_auth_backend_config"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="Configure Server URL"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_13sdp"
+                android:textColor="@color/colorPrimary"
+                app:strokeColor="@color/colorPrimary"
+                app:strokeWidth="1dp"
+                app:cornerRadius="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                app:icon="@drawable/ic_settings_fill"
+                app:iconGravity="textStart"
+                app:iconPadding="@dimen/_8sdp"
+                app:iconTint="@color/colorPrimary"/>
+
             <!-- Help Text -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Need help connecting? Visit our help center"
+                android:text="Need help connecting? Visit our online help guide"
                 android:textColor="@color/dull_secondary"
                 android:textSize="@dimen/_11sdp"
                 android:layout_marginTop="@dimen/_24sdp"/>

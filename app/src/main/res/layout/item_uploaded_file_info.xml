@@ -10,8 +10,10 @@
         android:layout_marginEnd="@dimen/_8sdp"
         android:layout_marginBottom="@dimen/_6sdp"
         app:cardCornerRadius="@dimen/_12sdp"
-        app:cardElevation="2dp"
-        app:cardBackgroundColor="@color/col_bg_dark_gray">
+        app:strokeColor="@color/col_bg_dark_gray"
+        app:strokeWidth="1dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/col_bg_lite_gray">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/all_options"

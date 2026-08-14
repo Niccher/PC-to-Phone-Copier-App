@@ -7,27 +7,10 @@
     android:background="@color/white"
     android:fitsSystemWindows="true">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:elevation="0dp">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/transparent"
-            app:title=""
-            app:titleTextColor="@android:color/white" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -231,7 +214,6 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Get Started Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/reg_get_started"
                 android:layout_width="match_parent"
@@ -248,6 +230,24 @@
                 app:iconGravity="textStart"
                 app:iconPadding="@dimen/_8sdp"
                 app:iconTint="@android:color/white"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_reg_backend_config"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="Configure Server URL"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_14sdp"
+                android:textColor="@color/colorPrimary"
+                app:strokeColor="@color/colorPrimary"
+                app:strokeWidth="1dp"
+                app:cornerRadius="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                app:icon="@drawable/ic_settings_fill"
+                app:iconGravity="textStart"
+                app:iconPadding="@dimen/_8sdp"
+                app:iconTint="@color/colorPrimary"/>
 
             <!-- Terms -->
             <TextView

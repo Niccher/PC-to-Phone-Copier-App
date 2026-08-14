@@ -17,7 +17,7 @@
         android:layout_marginTop="22dp"
         android:gravity="center_horizontal"
         android:paddingTop="@dimen/_40sdp"
-        android:text="Pc to Phone text copier"
+        android:text="P2P Copier"
         android:textColor="@color/dull_primary"
         android:textSize="@dimen/_26sdp"
         android:textStyle="bold" />

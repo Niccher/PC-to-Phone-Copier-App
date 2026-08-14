@@ -7,6 +7,18 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.niccher.p2p_copier_app.interfaces.RetrofitInterface;
+import com.niccher.p2p_copier_app.utils.Helpers;
+import com.niccher.p2p_copier_app.utils.ServiceGenerator;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class TextViewModel extends AndroidViewModel {
 
     private final MutableLiveData<String> textContent = new MutableLiveData<>();
@@ -40,12 +52,11 @@ public class TextViewModel extends AndroidViewModel {
         textContent.setValue(text);
     }
 
-    public void pasteFromClipboard() {
-        // TODO: Implement clipboard access
-        // This would require Activity context, so we'll handle it in the activity
+    public void uploadText() {
+        uploadTextWithDetails("Android Text", null);
     }
 
-    public void uploadText() {
+    public void uploadTextWithDetails(String source, String title) {
         String text = textContent.getValue();
         if (text == null || text.trim().isEmpty()) {
             errorMessage.setValue("Please enter some text to upload");
@@ -53,12 +64,36 @@ public class TextViewModel extends AndroidViewModel {
         }
 
         isLoading.setValue(true);
-        // TODO: Implement actual text upload logic
-        // For now, simulate upload success
-        new android.os.Handler().postDelayed(() -> {
-            isLoading.setValue(false);
-            uploadSuccess.setValue(true);
-        }, 1500);
+
+        RetrofitInterface retrofitInterface = ServiceGenerator.createService(RetrofitInterface.class, getApplication());
+
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("var_dev_uuid", Helpers.get_prefs_dev("dev_uuid", getApplication()));
+        parameters.put("var_auth_code_id", Helpers.get_prefs_sess("auth_auth_code_id", getApplication()));
+        parameters.put("text_content", text.trim());
+        parameters.put("text_source", source != null ? source : "Android Text");
+        if (title != null && !title.trim().isEmpty()) {
+            parameters.put("text_title", title.trim());
+        }
+
+        Call<ResponseBody> call = retrofitInterface.setTextToUpload(parameters);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                isLoading.setValue(false);
+                if (response.isSuccessful()) {
+                    uploadSuccess.setValue(true);
+                } else {
+                    errorMessage.setValue("Failed to upload text. Server response code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                isLoading.setValue(false);
+                errorMessage.setValue("Upload error: " + t.getMessage());
+            }
+        });
     }
 
     public void clearText() {

@@ -1,108 +1,174 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/colorSurface"
+    android:fillViewport="true">
 
-
-
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <LinearLayout
+        <!-- App Identity Card -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/_16sdp">
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:strokeWidth="0dp">
 
-            <!-- Title Section (Home Style) -->
-            <com.google.android.material.card.MaterialCardView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_24sdp"
-                app:cardCornerRadius="@dimen/_16sdp"
-                app:cardElevation="0dp"
-                app:cardBackgroundColor="@color/colorPrimaryLight">
+                android:background="@drawable/gradient_card_background"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:background="@drawable/background_oval"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:padding="14dp"
+                    android:src="@drawable/ic_menu_help"
+                    app:tint="@color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:padding="@dimen/_16sdp">
+                    android:layout_marginTop="12dp"
+                    android:text="P2P Copier"
+                    android:textColor="@color/colorOnSurface"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        app:cardCornerRadius="24dp"
-                        app:cardBackgroundColor="@color/colorPrimary"
-                        app:cardElevation="0dp"
-                        android:layout_marginEnd="@dimen/_16sdp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Seamless PC-to-Phone Clipboard &amp; File Synchronizer"
+                    android:textColor="@color/colorOnSurfaceVariant"
+                    android:textSize="13sp" />
 
-                        <ImageView
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_menu_help"
-                            android:tint="@color/white"
-                            android:importantForAccessibility="no"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/background_rect"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="4dp"
+                    android:text="Version 1.1 (Build 2)"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-                    </com.google.android.material.card.MaterialCardView>
+        <!-- How It Works Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="How It Works"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="1dp">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="About App"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textSize="@dimen/_18sdp"
-                            android:textStyle="bold"/>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Mission &amp; Capabilities"
-                            android:textColor="@color/dull_secondary"
-                            android:textSize="@dimen/_12sdp"
-                            android:maxLines="1"
-                            android:ellipsize="end"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Description Card -->
-            <com.google.android.material.card.MaterialCardView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="@dimen/_16sdp"
-                app:cardElevation="0dp"
-                app:strokeColor="@color/col_bg_dark_gray"
-                app:strokeWidth="1dp"
-                app:cardBackgroundColor="@color/col_bg_lite_gray">
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:lineSpacingExtra="6dp"
-                    android:padding="@dimen/_20sdp"
-                    android:text="P2P Copier is designed to bridge the gap between your workstation and mobile device. \n\nEasily transfer text snippets, complex codes, and files with end-to-end security. No cables required, just a seamless connection that keeps your productivity flowing."
-                    android:textColor="@color/colorTextSecondary"
-                    android:textSize="@dimen/_13sdp" />
-            </com.google.android.material.card.MaterialCardView>
+                    android:lineSpacingExtra="4dp"
+                    android:text="1. Pair Devices:\nScan the QR code on the P2P Copier Web App or type the 6-digit session code.\n\n2. Sync Text &amp; Files:\nCopy text from PC or phone, upload files, or use Camera OCR to extract and share image text instantly.\n\n3. Secure Telemetry:\nDevice authentication headers (X-Device-UUID) secure all versioned API transactions."
+                    android:textColor="@color/colorOnSurface"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+        <!-- Architecture & Backend Tech Stack -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Backend &amp; Infrastructure"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="4dp"
+                    android:text="• Backend Framework: CodeIgniter 4 (PHP 8.3)\n• Database: MySQL 8 (1:1 strict migration architecture)\n• REST Endpoints: Versioned /api/v1/* architecture\n• Server Container: Apache 2.4 (Debian/Docker)"
+                    android:textColor="@color/colorOnSurface"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Open Source Libraries Used -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Third-Party Open Source Libraries"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="4dp"
+                    android:text="• Retrofit 2 &amp; OkHttp 4 — Square, Inc. (Apache 2.0)\n• Gson — Google LLC (Apache 2.0)\n• ZXing Embedded — JourneyApps (Apache 2.0)\n• Material Components M3 — Google LLC (Apache 2.0)\n• AndroidX Jetpack — Google LLC (Apache 2.0)"
+                    android:textColor="@color/colorOnSurface"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

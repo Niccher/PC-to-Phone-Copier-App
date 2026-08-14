@@ -19,26 +19,20 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 
+import com.niccher.p2p_copier_app.model.api.ApiResponse;
+
 public interface RetrofitInterface {
 
-    /*@FormUrlEncoded
-    @POST("register")
-    Call<Mod_User_Auth> createRegister(
-            @Field("varUsername") String varUsername,
-            @Field("varEmail") String varEmail,
-            @Field("varPassword") String varPassword
-    );;*/
+    @FormUrlEncoded
+    @POST("api/v1/auth/pair")
+    Call<ApiResponse<Mod_Auth>> createRegister(@FieldMap Map<String, String> fields);
 
     @FormUrlEncoded
-    @POST("register")
-    Call<Mod_Auth> createRegister(@FieldMap Map<String, String> fields);
-
-    @FormUrlEncoded
-    @POST("register")
+    @POST("api/v1/device/register")
     Call<Mod_Device_Id> createDevice(@FieldMap Map<String, String> fields);
 
     @Multipart
-    @POST("upload")
+    @POST("api/v1/files")
     Call<Mod_File_Uploaded> filesUpload(
             @Part("varDevId") RequestBody device_id,
             @Part("varSessId") RequestBody sess_id,
@@ -62,7 +56,15 @@ public interface RetrofitInterface {
     Call<Mod_File_Delete> getFilesUploadedbySessDevidDelete(@FieldMap Map<String, String> fields);
 
     @FormUrlEncoded
-    @POST("set_files_to_delete")
-    Call<Mod_File_Delete> setTextToUpload(@FieldMap Map<String, String> fields);
+    @POST("api/v1/texts")
+    Call<ResponseBody> setTextToUpload(@FieldMap Map<String, String> fields);
+
+    @FormUrlEncoded
+    @POST("api/v1/texts")
+    Call<ResponseBody> getTextsUploadedbySessDevid(@FieldMap Map<String, String> fields);
+
+    @FormUrlEncoded
+    @POST("api/v1/device/metrics")
+    Call<ResponseBody> logDeviceMetrics(@FieldMap Map<String, String> fields);
 
 }

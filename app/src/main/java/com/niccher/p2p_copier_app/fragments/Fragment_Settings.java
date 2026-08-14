@@ -46,6 +46,14 @@ public class Fragment_Settings extends Fragment {
         toggleBiometric = view.findViewById(R.id.toggle_group_biometric);
         toggleDarkTheme = view.findViewById(R.id.toggle_group_dark_theme);
 
+        View btnBackend = view.findViewById(R.id.btn_open_backend_config);
+        if (btnBackend != null) {
+            btnBackend.setOnClickListener(v -> {
+                android.content.Intent intent = new android.content.Intent(requireContext(), com.niccher.p2p_copier_app.activities.BackendConfigActivity.class);
+                startActivity(intent);
+            });
+        }
+
         // Initial States
         boolean bioEnabled = prefs.getBoolean("biometric_enabled", true);
         boolean darkEnabled = prefs.getBoolean("dark_theme", false);

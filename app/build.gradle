@@ -10,8 +10,8 @@ android {
         namespace = "com.niccher.p2p_copier_app"
         minSdkVersion 24
         targetSdkVersion 35
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -87,6 +87,12 @@ dependencies {
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.exifinterface:exifinterface:1.3.6'
     implementation 'androidx.biometric:biometric:1.1.0'
+
+    // Room Database
+    def room_version = "2.6.1"
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 
 }
 repositories {

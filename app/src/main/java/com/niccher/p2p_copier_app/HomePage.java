@@ -23,7 +23,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.niccher.p2p_copier_app.activities.Auth_New_Or_Continue;
 import com.niccher.p2p_copier_app.fragments.Fragment_History_Files;
+import com.niccher.p2p_copier_app.fragments.Fragment_History_Overview;
 import com.niccher.p2p_copier_app.fragments.Fragment_Home;
+import com.niccher.p2p_copier_app.fragments.Fragment_Profile;
 import com.niccher.p2p_copier_app.fragments.Fragment_History_Text;
 import com.niccher.p2p_copier_app.fragments.Fragment_Settings;
 import com.niccher.p2p_copier_app.fragments.Fragment_About;
@@ -80,6 +82,10 @@ public class HomePage extends AppCompatActivity {
                 fragmentTag = "home";
             } else if (itemId == R.id.navigation_history_files) {
                 fragmentTag = "history_files";
+            } else if (itemId == R.id.navigation_history_overview) {
+                fragmentTag = "history_overview";
+            } else if (itemId == R.id.navigation_profile) {
+                fragmentTag = "profile";
             } else {
                 fragmentTag = "home";
             }
@@ -98,6 +104,11 @@ public class HomePage extends AppCompatActivity {
         if (getSupportActionBar() == null) return;
 
         boolean isSubPage = tag.equals("settings") || tag.equals("about") || tag.equals("credits");
+
+        if (toolbar != null) {
+            toolbar.setVisibility(android.view.View.VISIBLE);
+        }
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(isSubPage);
         getSupportActionBar().setHomeButtonEnabled(isSubPage);
 
@@ -105,9 +116,11 @@ public class HomePage extends AppCompatActivity {
         switch (tag) {
             case "home": title = "Home"; break;
             case "settings": title = "Settings"; break;
-            case "about": title = "About App"; break;
+            case "about": title = "About App & Technical Specs"; break;
             case "credits": title = "App Credits"; break;
-            case "history_files": title = "File History"; break;
+            case "history_files": title = "Uploaded Files"; break;
+            case "history_overview": title = "Activity Log"; break;
+            case "profile": title = "Profile & Session"; break;
         }
         getSupportActionBar().setTitle(title);
         
@@ -137,18 +150,22 @@ public class HomePage extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         String currentFragment = viewModel.getSelectedFragment().getValue();
-        boolean isHome = "home".equals(currentFragment);
+        boolean isMainTab = "home".equals(currentFragment) || "history_files".equals(currentFragment)
+                || "history_overview".equals(currentFragment) || "profile".equals(currentFragment);
         
-        // Only show settings/info items on Home screen
         MenuItem itemToken = menu.findItem(R.id.menu_current_token);
+        MenuItem itemBackend = menu.findItem(R.id.menu_backend_config);
         MenuItem itemSettings = menu.findItem(R.id.menu_settings);
         MenuItem itemAbout = menu.findItem(R.id.menu_about);
+        MenuItem itemLogout = menu.findItem(R.id.menu_logout);
         MenuItem itemCredits = menu.findItem(R.id.menu_credits);
         
-        if (itemToken != null) itemToken.setVisible(isHome);
-        if (itemSettings != null) itemSettings.setVisible(isHome);
-        if (itemAbout != null) itemAbout.setVisible(isHome);
-        if (itemCredits != null) itemCredits.setVisible(isHome);
+        if (itemToken != null) itemToken.setVisible(isMainTab);
+        if (itemBackend != null) itemBackend.setVisible(isMainTab);
+        if (itemSettings != null) itemSettings.setVisible(isMainTab);
+        if (itemAbout != null) itemAbout.setVisible(isMainTab);
+        if (itemLogout != null) itemLogout.setVisible(isMainTab);
+        if (itemCredits != null) itemCredits.setVisible(isMainTab);
         
         return super.onPrepareOptionsMenu(menu);
     }
@@ -177,12 +194,39 @@ public class HomePage extends AppCompatActivity {
                     .show();
             return true;
 
+        } else if (id == R.id.menu_backend_config) {
+            Intent configIntent = new Intent(this, com.niccher.p2p_copier_app.activities.BackendConfigActivity.class);
+            startActivity(configIntent);
+            return true;
+
         } else if (id == R.id.menu_settings) {
             viewModel.selectFragment("settings");
             return true;
 
         } else if (id == R.id.menu_about) {
             viewModel.selectFragment("about");
+            return true;
+
+        } else if (id == R.id.menu_logout) {
+            new MaterialAlertDialogBuilder(this)
+                    .setTitle("Disconnect Session?")
+                    .setMessage("Are you sure you want to log out from the active session?")
+                    .setPositiveButton("Logout", (dialog, which) -> {
+                        Helpers.set_prefs_sess("auth_status", "False", this);
+                        Helpers.set_prefs_sess("auth_type", "", this);
+                        Helpers.set_prefs_sess("auth_auth_code", "", this);
+                        Helpers.set_prefs_sess("auth_message", "", this);
+                        Helpers.set_prefs_sess("auth_auth_code_id", "", this);
+                        Helpers.set_prefs_sess("auth_time", "", this);
+
+                        Toast.makeText(this, "Session disconnected", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(this, Auth_New_Or_Continue.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    })
+                    .setNegativeButton("Cancel", null)
+                    .show();
             return true;
 
         } else if (id == R.id.menu_credits) {
@@ -199,6 +243,10 @@ public class HomePage extends AppCompatActivity {
                 return new Fragment_Home();
             case "history_files":
                 return new Fragment_History_Files();
+            case "history_overview":
+                return new Fragment_History_Overview();
+            case "profile":
+                return new Fragment_Profile();
             case "settings":
                 return new Fragment_Settings();
             case "about":

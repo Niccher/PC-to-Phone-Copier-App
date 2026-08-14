@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name='PC to Phone copier'
+rootProject.name='P2P Copier'

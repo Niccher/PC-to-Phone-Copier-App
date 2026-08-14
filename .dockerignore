@@ -1,0 +1,12 @@
+.git
+.gradle
+.idea
+.vscode
+build
+app/build
+local.properties
+*.apk
+*.aab
+*.log
+.DS_Store
+Thumbs.db

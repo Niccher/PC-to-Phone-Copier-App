@@ -31,6 +31,8 @@ class Splasher : AppCompatActivity() {
         progressBar = findViewById(R.id.progress_bar)
         kon = Konstants()
 
+        Konstants.loadBackendConfig(this)
+
         startSplash()
     }
 

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorSurface"
+    android:fitsSystemWindows="true">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_24sdp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/_16sdp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/col_bg_dark_gray"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@color/col_bg_lite_gray"
+                android:layout_marginBottom="@dimen/_24sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_20sdp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Backend Server Settings"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/_18sdp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/_16sdp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Server URL (without http/https)"
+                        android:textColor="@color/dull_secondary"
+                        android:textSize="@dimen/_13sdp"
+                        android:layout_marginBottom="@dimen/_8sdp"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_marginBottom="@dimen/_16sdp"
+                        app:boxCornerRadiusTopStart="@dimen/_12sdp"
+                        app:boxCornerRadiusTopEnd="@dimen/_12sdp"
+                        app:boxCornerRadiusBottomStart="@dimen/_12sdp"
+                        app:boxCornerRadiusBottomEnd="@dimen/_12sdp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_backend_url"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="e.g., p2p.chegecache.co.ke"
+                            android:singleLine="true"
+                            android:inputType="textUri" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Port"
+                        android:textColor="@color/dull_secondary"
+                        android:textSize="@dimen/_13sdp"
+                        android:layout_marginBottom="@dimen/_8sdp"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_marginBottom="@dimen/_24sdp"
+                        app:boxCornerRadiusTopStart="@dimen/_12sdp"
+                        app:boxCornerRadiusTopEnd="@dimen/_12sdp"
+                        app:boxCornerRadiusBottomStart="@dimen/_12sdp"
+                        app:boxCornerRadiusBottomEnd="@dimen/_12sdp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_backend_port"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="443"
+                            android:singleLine="true"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/tv_current_url"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Current URL: https://p2p.chegecache.co.ke"
+                        android:textColor="@color/dull_secondary"
+                        android:textSize="@dimen/_12sdp"
+                        android:layout_marginBottom="@dimen/_8sdp"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/_16sdp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/col_bg_dark_gray"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@color/white"
+                android:layout_marginBottom="@dimen/_16sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/_16sdp">
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:visibility="gone"
+                        android:layout_marginEnd="@dimen/_12sdp"
+                        android:indeterminate="true" />
+
+                    <TextView
+                        android:id="@+id/tv_status"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Not tested yet"
+                        android:textColor="@color/dull_secondary"
+                        android:textSize="@dimen/_13sdp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_test_connection"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="Test Connection"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@android:color/white"
+                app:backgroundTint="@color/dull_primary"
+                app:cornerRadius="@dimen/_12sdp"
+                app:elevation="2dp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                app:icon="@drawable/ic_home"
+                app:iconGravity="textStart"
+                app:iconPadding="@dimen/_8sdp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_save_config"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="Save Configuration"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@android:color/white"
+                app:backgroundTint="@color/colorPrimary"
+                app:cornerRadius="@dimen/_12sdp"
+                app:elevation="2dp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                app:icon="@drawable/ic_menu_save"
+                app:iconGravity="textStart"
+                app:iconPadding="@dimen/_8sdp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_test_and_save"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="Test &amp; Save"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@android:color/white"
+                app:backgroundTint="@color/dull_success"
+                app:cornerRadius="@dimen/_12sdp"
+                app:elevation="2dp"
+                app:icon="@drawable/ic_home"
+                app:iconGravity="textStart"
+                app:iconPadding="@dimen/_8sdp"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
