@@ -2,186 +2,152 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_4sdp"
-        app:cardCornerRadius="@dimen/_6sdp"
-        app:cardElevation="@dimen/_2sdp">
+        android:layout_marginBottom="@dimen/_8sdp"
+        app:cardCornerRadius="@dimen/_12sdp"
+        app:strokeColor="@color/col_bg_dark_gray"
+        app:strokeWidth="1dp"
+        app:cardElevation="1dp"
+        app:cardBackgroundColor="@color/white">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/all_options"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_4sdp"
-            android:background="@drawable/gradient_card_background">
+            android:orientation="vertical"
+            android:padding="@dimen/_10sdp">
 
-            <ImageView
-                android:id="@+id/f_info_ext_img"
-                android:layout_width="@dimen/_60sdp"
-                android:layout_height="@dimen/_40sdp"
-                android:scaleType="centerCrop"
-                android:contentDescription="File Thumbnail"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/f_info_ext_text"
-                android:layout_width="@dimen/_60sdp"
-                android:layout_height="@dimen/_40sdp"
-                android:background="@color/dull_accent"
-                android:gravity="center"
-                android:text="@string/app_name_1"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/_10sdp"
-                android:textStyle="bold"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/f_info_name"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_6sdp"
-                android:layout_marginEnd="@dimen/_8sdp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="@string/app_name_1"
-                android:textColor="@color/dull_primary"
-                android:textSize="@dimen/_14sdp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/f_info_ext_img"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
-<!--            <TextView-->
-<!--                android:id="@+id/f_info_name"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="@dimen/_8sdp"-->
-<!--                android:layout_marginTop="@dimen/_6sdp"-->
-<!--                android:ellipsize="end"-->
-<!--                android:maxLines="1"-->
-<!--                android:text="@string/app_name_1"-->
-<!--                android:textColor="@color/dull_primary"-->
-<!--                android:textSize="@dimen/_14sdp"-->
-<!--                android:textStyle="bold"-->
-<!--                app:layout_constraintEnd_toStartOf="@id/f_info_upload"-->
-<!--                app:layout_constraintStart_toEndOf="@id/f_info_ext_img"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
+                <FrameLayout
+                    android:layout_width="@dimen/_44sdp"
+                    android:layout_height="@dimen/_44sdp">
 
-            <TextView
-                android:id="@+id/f_info_size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:ellipsize="end"
-                android:text="@string/app_name_1"
-                android:textColor="@color/dull_secondary"
-                android:textSize="@dimen/_10sdp"
-                android:textStyle="italic"
-                app:layout_constraintStart_toEndOf="@id/f_info_ext_img"
-                app:layout_constraintTop_toBottomOf="@id/f_info_name" />
+                    <ImageView
+                        android:id="@+id/f_info_ext_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="File Thumbnail" />
 
-            <TextView
-                android:id="@+id/f_info_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:ellipsize="end"
-                android:text="Type"
-                android:textColor="@color/dull_secondary"
-                android:textSize="@dimen/_10sdp"
-                app:layout_constraintStart_toEndOf="@id/f_info_size"
-                app:layout_constraintTop_toTopOf="@id/f_info_size"
-                app:layout_constraintBottom_toBottomOf="@id/f_info_size" />
+                    <TextView
+                        android:id="@+id/f_info_ext_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:text="?"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/_10sdp"
+                        android:textStyle="bold"
+                        android:visibility="visible" />
+                </FrameLayout>
 
-<!--            <ProgressBar-->
-<!--                android:id="@+id/f_info_progress"-->
-<!--                style="?android:attr/progressBarStyleHorizontal"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="@dimen/_8sdp"-->
-<!--                android:layout_marginTop="@dimen/_2sdp"-->
-<!--                android:layout_marginEnd="@dimen/_6sdp"-->
-<!--                android:indeterminate="true"-->
-<!--                android:indeterminateTint="@drawable/gradient_progress"-->
-<!--                android:max="100"-->
-<!--                android:progressTint="@drawable/gradient_progress"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toStartOf="@id/f_info_upload"-->
-<!--                app:layout_constraintStart_toEndOf="@id/f_info_ext_img"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/f_info_size" />-->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/f_info_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/colorOnSurface"
+                        android:textSize="@dimen/_13sdp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="2dp">
+
+                        <TextView
+                            android:id="@+id/f_info_size"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/_10sdp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="  •  "
+                            android:textColor="@color/colorOnSurfaceVariant"
+                            android:textSize="@dimen/_10sdp" />
+
+                        <TextView
+                            android:id="@+id/f_info_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorOnSurfaceVariant"
+                            android:textSize="@dimen/_10sdp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- Actions -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/f_info_upload"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:drawableStart="@drawable/ic_file_upload_green"
+                        android:padding="6dp"
+                        android:textColor="@color/dull_success" />
+
+                    <TextView
+                        android:id="@+id/f_info_remove"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:drawableStart="@drawable/ic_cancel"
+                        android:padding="6dp"
+                        android:textColor="@color/dull_warning" />
+
+                    <TextView
+                        android:id="@+id/f_info_delete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:drawableStart="@drawable/ic_delete"
+                        android:padding="6dp"
+                        android:textColor="@color/dull_error" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/f_info_progress"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="4dp"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:layout_marginEnd="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_6sdp"
                 android:indeterminate="true"
+                android:visibility="gone"
                 app:indicatorColor="@color/colorPrimary"
-                app:trackColor="@color/col_bg_dark_gray"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/f_info_upload"
-                app:layout_constraintStart_toEndOf="@id/f_info_ext_img"
-                app:layout_constraintTop_toBottomOf="@id/f_info_size" />
+                app:trackColor="@color/col_bg_dark_gray" />
 
+        </LinearLayout>
 
-            <TextView
-                android:id="@+id/f_info_upload"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:background="?android:attr/selectableItemBackground"
-                android:drawableStart="@drawable/ic_file_upload_green"
-                android:padding="@dimen/_2sdp"
-                android:paddingStart="@dimen/_8sdp"
-                android:paddingEnd="@dimen/_8sdp"
-                android:textColor="@color/dull_success"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/f_info_remove" />
-
-            <TextView
-                android:id="@+id/f_info_remove"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:background="?android:attr/selectableItemBackground"
-                android:drawableStart="@drawable/ic_cancel"
-                android:padding="@dimen/_2sdp"
-                android:paddingStart="@dimen/_8sdp"
-                android:paddingEnd="@dimen/_8sdp"
-                android:textColor="@color/dull_warning"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/f_info_delete" />
-
-            <TextView
-                android:id="@+id/f_info_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:background="?android:attr/selectableItemBackground"
-                android:drawableStart="@drawable/ic_delete"
-                android:padding="@dimen/_2sdp"
-                android:paddingStart="@dimen/_8sdp"
-                android:paddingEnd="@dimen/_8sdp"
-                android:textColor="@color/dull_error"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 </layout>

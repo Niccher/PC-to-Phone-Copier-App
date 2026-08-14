@@ -50,7 +50,7 @@
     <string name="str_upload_select_a_file">Select a file/s</string>
     <string name="str_upload_upload_to_cloud">Upload</string>
     <string name="home_menu_history_text">Text</string>
-    <string name="home_menu_history_files">Uploaded Files</string>
+    <string name="home_menu_history_files">Uploaded</string>
     <string name="home_menu_profile">Profile</string>
     <string name="home_menu_home">Home</string>
     <string name="hist_current_sess_files">Current Session</string>

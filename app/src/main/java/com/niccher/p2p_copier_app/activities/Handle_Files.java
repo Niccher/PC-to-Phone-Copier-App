@@ -86,7 +86,32 @@ public class Handle_Files extends AppCompatActivity {
         // Observe ViewModel LiveData
         fileViewModel.getSelectedFiles().observe(this, files -> {
             showAddedFile(new ArrayList<>(files));
-            
+
+            int count = files.size();
+            double totalSizeMb = 0.0;
+            for (Mod_File_info info : files) {
+                try {
+                    String sizeStr = info.getF_size();
+                    if (sizeStr != null && sizeStr.contains(" ")) {
+                        String[] parts = sizeStr.split(" ");
+                        double num = Double.parseDouble(parts[0]);
+                        String unit = parts[1].toUpperCase();
+                        if (unit.contains("KB")) num /= 1024.0;
+                        else if (unit.contains("GB")) num *= 1024.0;
+                        else if (unit.contains("B") && !unit.contains("M")) num /= (1024.0 * 1024.0);
+                        totalSizeMb += num;
+                    }
+                } catch (Exception ignored) {}
+            }
+
+            android.widget.TextView txtCount = findViewById(R.id.txt_file_mgr_count);
+            android.widget.TextView txtSize = findViewById(R.id.txt_file_mgr_size);
+            android.widget.TextView txtUploading = findViewById(R.id.txt_file_mgr_uploading);
+
+            if (txtCount != null) txtCount.setText(String.valueOf(count));
+            if (txtSize != null) txtSize.setText(String.format(java.util.Locale.US, "%.1f", totalSizeMb));
+            if (txtUploading != null) txtUploading.setText("0");
+
             // Toggle empty state visibility
             View emptyState = findViewById(R.id.empty_state);
             if (emptyState != null) {
@@ -112,16 +137,15 @@ public class Handle_Files extends AppCompatActivity {
             }
         });
 
-        // Set up action buttons
-        findViewById(R.id.btn_upload_all).setOnClickListener(v -> {
-            if (list_got_files != null) {
-                list_got_files.uploadAll(recyclerView_got_files);
-            }
-        });
-
-        findViewById(R.id.btn_clear_all).setOnClickListener(v -> {
-            fileViewModel.clearFiles();
-        });
+        // Set up action button
+        View btnUpload = findViewById(R.id.btn_upload_all);
+        if (btnUpload != null) {
+            btnUpload.setOnClickListener(v -> {
+                if (list_got_files != null) {
+                    list_got_files.uploadAll(recyclerView_got_files);
+                }
+            });
+        }
     }
 
     @Override
@@ -136,9 +160,15 @@ public class Handle_Files extends AppCompatActivity {
     }
 
     public void showAddedFile(ArrayList<Mod_File_info> my_got_file_passed) {
-        list_got_files = new Adapter_Sel_Files(my_got_file_passed, getApplication());
+        list_got_files = new Adapter_Sel_Files(my_got_file_passed, this);
         recyclerView_got_files.setAdapter(list_got_files);
         list_got_files.notifyDataSetChanged();
+    }
+
+    public void removeUploadedFile(Mod_File_info targetFile) {
+        if (fileViewModel != null && targetFile != null) {
+            fileViewModel.removeFile(targetFile);
+        }
     }
 
     private void selPermissions() {

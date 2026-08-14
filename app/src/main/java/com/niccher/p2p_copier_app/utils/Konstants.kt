@@ -14,10 +14,10 @@ class Konstants {
     var str_auth_action: String = "${active_base_url.trimEnd('/')}/auth/"
 
     @JvmField
-    var str_file_list_uploaded: String = "${active_base_url.trimEnd('/')}/home/phone/"
+    var str_file_list_uploaded: String = active_base_url
 
     @JvmField
-    var str_file_upload_action: String = "${active_base_url.trimEnd('/')}/home/phone/"
+    var str_file_upload_action: String = active_base_url
 
     @JvmField
     var TAGGED: String = "P2P_Copier"

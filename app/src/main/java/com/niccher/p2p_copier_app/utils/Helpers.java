@@ -105,4 +105,77 @@ public class Helpers {
         }
         return f_info_data;
     }
+
+    public static void logoutSession(Context context) {
+        if (context == null) return;
+        set_prefs_sess("auth_status", "False", context);
+        set_prefs_sess("auth_type", "", context);
+        set_prefs_sess("auth_auth_code", "", context);
+        set_prefs_sess("auth_message", "", context);
+        set_prefs_sess("auth_auth_code_id", "", context);
+        set_prefs_sess("auth_time", "", context);
+
+        SharedPrefs prefs = new SharedPrefs(context);
+        prefs.saveInt("stat_count_files", 0);
+        prefs.saveInt("stat_count_texts", 0);
+        prefs.saveInt("stat_count_qr", 0);
+        prefs.saveInt("stat_count_ocr", 0);
+        prefs.saveString("stat_last_sync", "");
+        prefs.saveString("stat_last_upload", "");
+        prefs.saveString("stat_last_download", "");
+
+        android.widget.Toast.makeText(context, "Session disconnected", android.widget.Toast.LENGTH_SHORT).show();
+
+        android.content.Intent intent = new android.content.Intent(context, com.niccher.p2p_copier_app.activities.Auth_New_Or_Continue.class);
+        intent.addFlags(android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP | android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK | android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    public static void deleteAllAppDataAndReset(Context context) {
+        if (context == null) return;
+        Konstants kon = new Konstants();
+
+        // 1. Clear session preferences
+        context.getSharedPreferences(kon.shared_pref_auth, Context.MODE_PRIVATE).edit().clear().apply();
+
+        // 2. Clear device preferences
+        context.getSharedPreferences(kon.shared_pref_device, Context.MODE_PRIVATE).edit().clear().apply();
+
+        // 3. Clear general app preferences
+        context.getSharedPreferences(Konstants.PREFS_NAME, Context.MODE_PRIVATE).edit().clear().apply();
+        context.getSharedPreferences("p2p_copier_prefs", Context.MODE_PRIVATE).edit().clear().apply();
+
+        // 4. Clear internal & external cache
+        try {
+            java.io.File cacheDir = context.getCacheDir();
+            if (cacheDir != null && cacheDir.isDirectory()) {
+                deleteDirRecursive(cacheDir);
+            }
+            java.io.File extCacheDir = context.getExternalCacheDir();
+            if (extCacheDir != null && extCacheDir.isDirectory()) {
+                deleteDirRecursive(extCacheDir);
+            }
+        } catch (Exception ignored) {}
+
+        android.widget.Toast.makeText(context, "All app data deleted and reset", android.widget.Toast.LENGTH_LONG).show();
+
+        android.content.Intent intent = new android.content.Intent(context, com.niccher.p2p_copier_app.activities.Auth_New_Or_Continue.class);
+        intent.addFlags(android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP | android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK | android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    private static boolean deleteDirRecursive(java.io.File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            if (children != null) {
+                for (String child : children) {
+                    boolean success = deleteDirRecursive(new java.io.File(dir, child));
+                    if (!success) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return dir != null && dir.delete();
+    }
 }

@@ -118,7 +118,7 @@ public class HomePage extends AppCompatActivity {
             case "settings": title = "Settings"; break;
             case "about": title = "About App & Technical Specs"; break;
             case "credits": title = "App Credits"; break;
-            case "history_files": title = "Uploaded Files"; break;
+            case "history_files": title = "Uploaded"; break;
             case "history_overview": title = "Activity Log"; break;
             case "profile": title = "Profile & Session"; break;
         }
@@ -211,20 +211,7 @@ public class HomePage extends AppCompatActivity {
             new MaterialAlertDialogBuilder(this)
                     .setTitle("Disconnect Session?")
                     .setMessage("Are you sure you want to log out from the active session?")
-                    .setPositiveButton("Logout", (dialog, which) -> {
-                        Helpers.set_prefs_sess("auth_status", "False", this);
-                        Helpers.set_prefs_sess("auth_type", "", this);
-                        Helpers.set_prefs_sess("auth_auth_code", "", this);
-                        Helpers.set_prefs_sess("auth_message", "", this);
-                        Helpers.set_prefs_sess("auth_auth_code_id", "", this);
-                        Helpers.set_prefs_sess("auth_time", "", this);
-
-                        Toast.makeText(this, "Session disconnected", Toast.LENGTH_SHORT).show();
-
-                        Intent intent = new Intent(this, Auth_New_Or_Continue.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                    })
+                    .setPositiveButton("Logout", (dialog, which) -> Helpers.logoutSession(this))
                     .setNegativeButton("Cancel", null)
                     .show();
             return true;

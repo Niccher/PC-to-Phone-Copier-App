@@ -89,21 +89,22 @@
             android:textStyle="bold"
             android:layout_marginBottom="@dimen/_16sdp"/>
 
-        <!-- Row 1 - 3 items -->
+        <!-- Row 1 - 2 items -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="@dimen/_12sdp"
-            android:weightSum="3">
+            android:weightSum="2">
 
+            <!-- Text Transfer (Type & Paste) -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/option_1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginEnd="@dimen/_4sdp"
-                app:cardCornerRadius="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
+                app:cardCornerRadius="@dimen/_12sdp"
                 app:strokeColor="@color/col_bg_dark_gray"
                 app:strokeWidth="1dp"
                 app:cardElevation="0dp"
@@ -117,20 +118,20 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:gravity="center"
-                    android:padding="@dimen/_8sdp">
+                    android:padding="@dimen/_12sdp">
 
                     <com.google.android.material.card.MaterialCardView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        app:cardCornerRadius="24dp"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        app:cardCornerRadius="22dp"
                         app:cardBackgroundColor="@color/white"
-                        app:cardElevation="2dp"
-                        android:layout_marginBottom="@dimen/_12sdp">
+                        app:cardElevation="1dp"
+                        android:layout_marginBottom="@dimen/_8sdp">
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/img_describe_1"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
                             android:layout_gravity="center"
                             android:src="@mipmap/home_type_text"
                             android:tint="@color/colorPrimary"/>
@@ -141,7 +142,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Type"
+                        android:text="Text Transfer"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold"
@@ -152,69 +153,14 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/option_2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="@dimen/_3sdp"
-                android:layout_marginEnd="@dimen/_3sdp"
-                app:cardCornerRadius="@dimen/_16sdp"
-                app:strokeColor="@color/col_bg_dark_gray"
-                app:strokeWidth="1dp"
-                app:cardElevation="0dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/col_bg_lite_gray">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="@dimen/_8sdp">
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        app:cardCornerRadius="24dp"
-                        app:cardBackgroundColor="@color/white"
-                        app:cardElevation="2dp"
-                        android:layout_marginBottom="@dimen/_12sdp">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/img_describe_2"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_gravity="center"
-                            android:src="@mipmap/home_copy_paste"
-                            android:tint="@color/colorPrimary"/>
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="Paste"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="@dimen/_12sdp"
-                        android:textStyle="bold"
-                        android:maxLines="1"
-                        android:ellipsize="end"/>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
+            <!-- OCR Image -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/option_3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginStart="@dimen/_4sdp"
-                app:cardCornerRadius="@dimen/_16sdp"
+                android:layout_marginStart="@dimen/_6sdp"
+                app:cardCornerRadius="@dimen/_12sdp"
                 app:strokeColor="@color/col_bg_dark_gray"
                 app:strokeWidth="1dp"
                 app:cardElevation="0dp"
@@ -228,20 +174,20 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:gravity="center"
-                    android:padding="@dimen/_8sdp">
+                    android:padding="@dimen/_12sdp">
 
                     <com.google.android.material.card.MaterialCardView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        app:cardCornerRadius="24dp"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        app:cardCornerRadius="22dp"
                         app:cardBackgroundColor="@color/white"
-                        app:cardElevation="2dp"
-                        android:layout_marginBottom="@dimen/_12sdp">
+                        app:cardElevation="1dp"
+                        android:layout_marginBottom="@dimen/_8sdp">
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/img_describe_3"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
                             android:layout_gravity="center"
                             android:src="@mipmap/home_img_to_text"
                             android:tint="@color/colorPrimary"/>
@@ -252,7 +198,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="OCR"
+                        android:text="OCR Image"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold"
@@ -273,13 +219,14 @@
             android:layout_marginBottom="@dimen/_24sdp"
             android:weightSum="2">
 
+            <!-- QR Scan -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/option_4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginEnd="@dimen/_4sdp"
-                app:cardCornerRadius="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
+                app:cardCornerRadius="@dimen/_12sdp"
                 app:strokeColor="@color/col_bg_dark_gray"
                 app:strokeWidth="1dp"
                 app:cardElevation="0dp"
@@ -293,20 +240,20 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:gravity="center"
-                    android:padding="@dimen/_8sdp">
+                    android:padding="@dimen/_12sdp">
 
                     <com.google.android.material.card.MaterialCardView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        app:cardCornerRadius="24dp"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        app:cardCornerRadius="22dp"
                         app:cardBackgroundColor="@color/white"
-                        app:cardElevation="2dp"
-                        android:layout_marginBottom="@dimen/_12sdp">
+                        app:cardElevation="1dp"
+                        android:layout_marginBottom="@dimen/_8sdp">
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/img_describe_4"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
                             android:layout_gravity="center"
                             android:src="@mipmap/img_qr"
                             android:tint="@color/colorPrimary"/>
@@ -328,13 +275,14 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Files -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/option_5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginStart="@dimen/_4sdp"
-                app:cardCornerRadius="@dimen/_16sdp"
+                android:layout_marginStart="@dimen/_6sdp"
+                app:cardCornerRadius="@dimen/_12sdp"
                 app:strokeColor="@color/col_bg_dark_gray"
                 app:strokeWidth="1dp"
                 app:cardElevation="0dp"
@@ -348,20 +296,20 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:gravity="center"
-                    android:padding="@dimen/_8sdp">
+                    android:padding="@dimen/_12sdp">
 
                     <com.google.android.material.card.MaterialCardView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        app:cardCornerRadius="24dp"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        app:cardCornerRadius="22dp"
                         app:cardBackgroundColor="@color/white"
-                        app:cardElevation="2dp"
-                        android:layout_marginBottom="@dimen/_12sdp">
+                        app:cardElevation="1dp"
+                        android:layout_marginBottom="@dimen/_8sdp">
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/img_describe_5"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
                             android:layout_gravity="center"
                             android:src="@mipmap/home_file_upload"
                             android:tint="@color/colorPrimary"/>
@@ -372,7 +320,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Files"
+                        android:text="File Manager"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold"
@@ -571,23 +519,6 @@
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
-
-        <!-- Tutorial Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_tutorial"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="View Tutorial"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/_14sdp"
-            android:gravity="center"
-            android:backgroundTint="@android:color/transparent"
-            android:foreground="?attr/selectableItemBackground"
-            app:icon="@drawable/ic_menu_play_clip"
-            app:iconGravity="textStart"
-            app:iconTint="@color/colorPrimary"
-            app:cornerRadius="@dimen/_12sdp"
-            android:layout_marginBottom="@dimen/_16sdp"/>
 
     </LinearLayout>
 

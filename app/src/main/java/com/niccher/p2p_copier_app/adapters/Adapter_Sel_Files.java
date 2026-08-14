@@ -68,17 +68,7 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
 
         kon = new Konstants();
         helpers = new Helpers();
-        gson = new GsonBuilder()
-                .setLenient()
-                .create();
-
-        retrofit_upload = new Retrofit.Builder()
-                .baseUrl(kon.str_file_upload_action)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .client(ServiceGenerator.getUnsafeOkHttpClient())
-                .build();
-
-        interface_upload = retrofit_upload.create(RetrofitInterface.class);
+        interface_upload = ServiceGenerator.createService(RetrofitInterface.class, context);
     }
 
     @NonNull
@@ -172,8 +162,10 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
         String mimeType = helpers.getFileName(file_uri, context)[1];
         if (mimeType == null) mimeType = "application/octet-stream";
 
-        RequestBody requestFile = RequestBody.create(MediaType.parse(mimeType), file_to_upload);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("uploaded_file", file_to_upload.getName(), requestFile);
+        final File tempFile = file_to_upload;
+
+        RequestBody requestFile = RequestBody.create(MediaType.parse(mimeType), tempFile);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("uploaded_file", tempFile.getName(), requestFile);
 
         String part_dev_id = helpers.get_prefs_dev("dev_uuid", context);
         String part_sess_id = helpers.get_prefs_sess("auth_auth_code_id", context);
@@ -189,20 +181,34 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
                 Mod_File_Uploaded postResponse = response.body();
 
                 try {
-                    if (postResponse.getStatus() == 0 || postResponse.getStatus() == 2) {
+                    boolean isSuccess = (postResponse != null && postResponse.getStatus() == 1) || response.isSuccessful();
+                    if (isSuccess) {
+                        Mod_File_info targetFile = (position >= 0 && position < list_file_infos.size()) ? list_file_infos.get(position) : null;
+                        String fileName = targetFile != null ? targetFile.getF_name() : "file";
+
+                        Toast.makeText(context, "removing file " + fileName + " after successful upload", Toast.LENGTH_SHORT).show();
+
+                        if (context instanceof com.niccher.p2p_copier_app.activities.Handle_Files && targetFile != null) {
+                            ((com.niccher.p2p_copier_app.activities.Handle_Files) context).removeUploadedFile(targetFile);
+                        } else if (targetFile != null) {
+                            int idx = list_file_infos.indexOf(targetFile);
+                            if (idx != -1) {
+                                list_file_infos.remove(idx);
+                                notifyItemRemoved(idx);
+                            }
+                        }
+
+                        if (tempFile != null && tempFile.exists()) {
+                            tempFile.delete();
+                        }
+                    } else if (postResponse != null && (postResponse.getStatus() == 0 || postResponse.getStatus() == 2)) {
                         Toast.makeText(context, postResponse.getMessage(), Toast.LENGTH_LONG).show();
-                    } else if (postResponse.getStatus() == 1) {
-                        Toast.makeText(context, postResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         if (holder != null) {
-                            holder.part_mini_upload.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_file_upload, 0, 0, 0);
-                            holder.part_mini_upload.setEnabled(false);
-                            holder.part_mini_remove.setVisibility(View.GONE);
-                            holder.part_mini_upload.setVisibility(View.GONE);
-                            holder.part_mini_delete.setVisibility(View.VISIBLE);
                             holder.part_mini_progress.setVisibility(View.GONE);
                         }
                     }
                 } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
 

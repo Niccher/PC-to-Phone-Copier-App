@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/_16sdp"
+    app:cardElevation="@dimen/_12sdp"
+    app:cardBackgroundColor="@color/colorSurface"
+    app:strokeColor="@color/dull_secondary"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/_16sdp">
+
+        <!-- Top Header: Badge, Title & Date -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/dialog_text_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gradient_button_primary"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:text="TEXT"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11sdp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="@dimen/_10sdp">
+
+                <TextView
+                    android:id="@+id/dialog_text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Text Details"
+                    android:textColor="@color/colorOnSurface"
+                    android:textSize="@dimen/_15sdp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/dialog_text_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2026-08-14 12:45:00"
+                    android:textColor="@color/dull_secondary"
+                    android:textSize="@dimen/_10sdp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dull_secondary"
+            android:alpha="0.25"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_12sdp" />
+
+        <!-- Scrollable Text Content inside a styled container -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/col_bg_lite_gray"
+            app:strokeColor="@color/dull_secondary"
+            app:strokeWidth="1dp">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="280dp"
+                android:padding="@dimen/_10sdp">
+
+                <TextView
+                    android:id="@+id/dialog_text_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="true"
+                    android:textColor="@color/colorOnSurface"
+                    android:textSize="@dimen/_13sdp"
+                    android:lineSpacingExtra="4dp" />
+
+            </ScrollView>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Actions Row: Copy, Delete, Close -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginTop="@dimen/_16sdp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_dialog_copy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Copy"
+                android:textSize="@dimen/_11sdp"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/colorPrimary"
+                app:icon="@drawable/ic_menu_paste"
+                app:iconTint="@color/white"
+                app:cornerRadius="@dimen/_8sdp"
+                android:paddingStart="@dimen/_12sdp"
+                android:paddingEnd="@dimen/_12sdp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_dialog_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:text="Delete"
+                android:textSize="@dimen/_11sdp"
+                android:textColor="@color/white"
+                app:backgroundTint="#D32F2F"
+                app:icon="@drawable/ic_delete"
+                app:iconTint="@color/white"
+                app:cornerRadius="@dimen/_8sdp"
+                android:paddingStart="@dimen/_12sdp"
+                android:paddingEnd="@dimen/_12sdp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_dialog_close"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:text="Close"
+                android:textSize="@dimen/_11sdp"
+                android:textColor="@color/colorOnSurface"
+                app:cornerRadius="@dimen/_8sdp"
+                android:paddingStart="@dimen/_12sdp"
+                android:paddingEnd="@dimen/_12sdp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

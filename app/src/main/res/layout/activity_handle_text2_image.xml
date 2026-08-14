@@ -271,46 +271,21 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <LinearLayout
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_upload_ocr"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <com.google.android.material.button.MaterialButton
-                            android:layout_width="0dp"
-                            android:layout_height="56dp"
-                            android:layout_weight="1"
-                            android:layout_marginEnd="@dimen/_6sdp"
-                            android:text="Copy"
-                            android:textColor="@color/dull_primary"
-                            android:textSize="@dimen/_12sdp"
-                            app:backgroundTint="@color/col_bg_lite_gray"
-                            app:strokeColor="@color/col_bg_dark_gray"
-                            app:strokeWidth="1dp"
-                            app:elevation="0dp"
-                            app:cornerRadius="@dimen/_12sdp"
-                            app:icon="@drawable/ic_menu_save"
-                            app:iconTint="@color/dull_primary"
-                            app:iconGravity="textStart"/>
-
-                        <com.google.android.material.button.MaterialButton
-                            android:layout_width="0dp"
-                            android:layout_height="56dp"
-                            android:layout_weight="1"
-                            android:layout_marginStart="@dimen/_6sdp"
-                            android:text="Share"
-                            android:textColor="@color/dull_primary"
-                            android:textSize="@dimen/_12sdp"
-                            app:backgroundTint="@color/col_bg_lite_gray"
-                            app:strokeColor="@color/col_bg_dark_gray"
-                            app:strokeWidth="1dp"
-                            app:elevation="0dp"
-                            app:cornerRadius="@dimen/_12sdp"
-                            app:icon="@drawable/ic_menu_share"
-                            app:iconTint="@color/dull_primary"
-                            app:iconGravity="textStart"/>
-
-                    </LinearLayout>
+                        android:layout_height="56dp"
+                        android:text="Upload Extracted Text"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14sdp"
+                        app:backgroundTint="@color/colorPrimary"
+                        app:cornerRadius="@dimen/_12sdp"
+                        app:elevation="2dp"
+                        app:icon="@drawable/ic_menu_upload"
+                        app:iconGravity="textStart"
+                        app:iconTint="@color/white"
+                        app:iconPadding="@dimen/_8sdp" />
 
                 </LinearLayout>
 

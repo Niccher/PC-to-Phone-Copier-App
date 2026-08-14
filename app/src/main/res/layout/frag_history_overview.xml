@@ -69,32 +69,48 @@
                     android:orientation="vertical"
                     android:padding="14dp">
 
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:background="@drawable/background_oval"
-                        android:backgroundTint="#E0F2F1"
-                        android:padding="5dp"
-                        android:src="@drawable/ic_file_upload"
-                        app:tint="#00897B" />
-
-                    <TextView
-                        android:id="@+id/txt_count_files"
-                        android:layout_width="wrap_content"
+                    <!-- Top Row: Icon (50%) + Number (50%) -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/colorOnSurface"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        tools:text="14" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
+                        <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:background="@drawable/background_oval"
+                                android:backgroundTint="#E0F2F1"
+                                android:padding="6dp"
+                                android:src="@drawable/ic_file_upload"
+                                app:tint="#00897B" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/txt_count_files"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:textColor="@color/colorOnSurface"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            tools:text="14" />
+                    </LinearLayout>
+
+                    <!-- Bottom Row: Description (100% Width) -->
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="Uploaded Files"
+                        android:layout_marginTop="8dp"
+                        android:text="Uploaded"
                         android:textColor="@color/colorOnSurfaceVariant"
-                        android:textSize="12sp" />
+                        android:textSize="13sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -113,32 +129,48 @@
                     android:orientation="vertical"
                     android:padding="14dp">
 
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:background="@drawable/background_oval"
-                        android:backgroundTint="#FFF3E0"
-                        android:padding="5dp"
-                        android:src="@drawable/ic_menu_paste"
-                        app:tint="#F57C00" />
-
-                    <TextView
-                        android:id="@+id/txt_count_texts"
-                        android:layout_width="wrap_content"
+                    <!-- Top Row: Icon (50%) + Number (50%) -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/colorOnSurface"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        tools:text="28" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
+                        <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:background="@drawable/background_oval"
+                                android:backgroundTint="#FFF3E0"
+                                android:padding="6dp"
+                                android:src="@drawable/ic_menu_paste"
+                                app:tint="#F57C00" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/txt_count_texts"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:textColor="@color/colorOnSurface"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            tools:text="28" />
+                    </LinearLayout>
+
+                    <!-- Bottom Row: Description (100% Width) -->
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="8dp"
                         android:text="Text Synced"
                         android:textColor="@color/colorOnSurfaceVariant"
-                        android:textSize="12sp" />
+                        android:textSize="13sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
@@ -164,32 +196,48 @@
                     android:orientation="vertical"
                     android:padding="14dp">
 
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:background="@drawable/background_oval"
-                        android:backgroundTint="#E8EAF6"
-                        android:padding="5dp"
-                        android:src="@drawable/ic_qr"
-                        app:tint="#3949AB" />
-
-                    <TextView
-                        android:id="@+id/txt_count_qr"
-                        android:layout_width="wrap_content"
+                    <!-- Top Row: Icon (50%) + Number (50%) -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/colorOnSurface"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        tools:text="8" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
+                        <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:background="@drawable/background_oval"
+                                android:backgroundTint="#E8EAF6"
+                                android:padding="6dp"
+                                android:src="@drawable/ic_qr"
+                                app:tint="#3949AB" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/txt_count_qr"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:textColor="@color/colorOnSurface"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            tools:text="8" />
+                    </LinearLayout>
+
+                    <!-- Bottom Row: Description (100% Width) -->
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="8dp"
                         android:text="QR Code Scans"
                         android:textColor="@color/colorOnSurfaceVariant"
-                        android:textSize="12sp" />
+                        android:textSize="13sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -208,32 +256,48 @@
                     android:orientation="vertical"
                     android:padding="14dp">
 
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:background="@drawable/background_oval"
-                        android:backgroundTint="#FCE4EC"
-                        android:padding="5dp"
-                        android:src="@drawable/ic_menu_camera"
-                        app:tint="#C2185B" />
-
-                    <TextView
-                        android:id="@+id/txt_count_ocr"
-                        android:layout_width="wrap_content"
+                    <!-- Top Row: Icon (50%) + Number (50%) -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/colorOnSurface"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        tools:text="5" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
+                        <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:background="@drawable/background_oval"
+                                android:backgroundTint="#FCE4EC"
+                                android:padding="6dp"
+                                android:src="@drawable/ic_menu_camera"
+                                app:tint="#C2185B" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/txt_count_ocr"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:textColor="@color/colorOnSurface"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            tools:text="5" />
+                    </LinearLayout>
+
+                    <!-- Bottom Row: Description (100% Width) -->
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="8dp"
                         android:text="OCR Text Extractions"
                         android:textColor="@color/colorOnSurfaceVariant"
-                        android:textSize="12sp" />
+                        android:textSize="13sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>

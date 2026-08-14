@@ -35,7 +35,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/_16sdp"
+            app:cardCornerRadius="@dimen/_12sdp"
             app:cardElevation="0dp"
             app:strokeColor="@color/col_bg_dark_gray"
             app:strokeWidth="1dp"
@@ -56,11 +56,12 @@
                     android:gravity="center">
 
                     <TextView
+                        android:id="@+id/txt_file_mgr_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="5"
+                        android:text="0"
                         android:textColor="@color/colorPrimaryDark"
-                        android:textSize="@dimen/_24sdp"
+                        android:textSize="@dimen/_20sdp"
                         android:textStyle="bold"/>
 
                     <TextView
@@ -68,14 +69,14 @@
                         android:layout_height="wrap_content"
                         android:text="Files"
                         android:textColor="@color/dull_secondary"
-                        android:textSize="@dimen/_12sdp"/>
+                        android:textSize="@dimen/_11sdp"/>
 
                 </LinearLayout>
 
                 <View
                     android:layout_width="1dp"
-                    android:layout_height="40dp"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
+                    android:layout_height="36dp"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
                     android:background="@color/dull_accent"/>
 
                 <LinearLayout
@@ -86,11 +87,12 @@
                     android:gravity="center">
 
                     <TextView
+                        android:id="@+id/txt_file_mgr_size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="48.2"
+                        android:text="0.0"
                         android:textColor="@color/colorPrimaryDark"
-                        android:textSize="@dimen/_24sdp"
+                        android:textSize="@dimen/_20sdp"
                         android:textStyle="bold"/>
 
                     <TextView
@@ -98,14 +100,14 @@
                         android:layout_height="wrap_content"
                         android:text="MB Total"
                         android:textColor="@color/dull_secondary"
-                        android:textSize="@dimen/_12sdp"/>
+                        android:textSize="@dimen/_11sdp"/>
 
                 </LinearLayout>
 
                 <View
                     android:layout_width="1dp"
-                    android:layout_height="40dp"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
+                    android:layout_height="36dp"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
                     android:background="@color/dull_accent"/>
 
                 <LinearLayout
@@ -116,11 +118,12 @@
                     android:gravity="center">
 
                     <TextView
+                        android:id="@+id/txt_file_mgr_uploading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2"
+                        android:text="0"
                         android:textColor="@color/colorPrimaryDark"
-                        android:textSize="@dimen/_24sdp"
+                        android:textSize="@dimen/_20sdp"
                         android:textStyle="bold"/>
 
                     <TextView
@@ -128,7 +131,7 @@
                         android:layout_height="wrap_content"
                         android:text="Uploading"
                         android:textColor="@color/dull_secondary"
-                        android:textSize="@dimen/_12sdp"/>
+                        android:textSize="@dimen/_11sdp"/>
 
                 </LinearLayout>
 
@@ -141,7 +144,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            app:cardCornerRadius="@dimen/_24sdp"
+            app:cardCornerRadius="@dimen/_12sdp"
             app:cardElevation="0dp"
             app:strokeColor="@color/col_bg_dark_gray"
             app:strokeWidth="1dp"
@@ -158,27 +161,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="@dimen/_16sdp"
+                    android:padding="@dimen/_14sdp"
                     android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Your Files"
+                        android:text="Pending Files"
                         android:textColor="@color/colorPrimaryDark"
-                        android:textSize="@dimen/_18sdp"
+                        android:textSize="@dimen/_16sdp"
                         android:textStyle="bold"/>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Select All"
-                        android:textColor="@color/dull_primary"
-                        android:textSize="@dimen/_12sdp"
-                        app:backgroundTint="@color/col_bg_dark_gray"
-                        app:elevation="0dp"
-                        app:cornerRadius="@dimen/_8sdp"/>
 
                 </LinearLayout>
 
@@ -194,7 +187,7 @@
                     android:layout_weight="1"
                     android:padding="@dimen/_8sdp"
                     android:clipToPadding="false"
-                    tools:itemCount="5"
+                    tools:itemCount="0"
                     tools:listitem="@layout/item_file_info" />
 
                 <LinearLayout
@@ -207,9 +200,9 @@
                     android:visibility="gone">
 
                     <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_marginBottom="@dimen/_16sdp"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_marginBottom="@dimen/_12sdp"
                         android:src="@drawable/ic_menu_upload"
                         app:tint="@color/dull_secondary"/>
 
@@ -220,14 +213,14 @@
                         android:text="No files added yet"
                         android:textColor="@color/colorPrimaryDark"
                         android:textStyle="bold"
-                        android:textSize="@dimen/_16sdp"
-                        android:layout_marginBottom="@dimen/_8sdp"/>
+                        android:textSize="@dimen/_15sdp"
+                        android:layout_marginBottom="@dimen/_6sdp"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Tap the + button to add files"
+                        android:text="Tap the + button below to select files"
                         android:textColor="@color/dull_secondary"
                         android:textSize="@dimen/_12sdp"/>
 
@@ -243,41 +236,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="@dimen/_16sdp"
+            android:padding="@dimen/_12sdp"
             android:background="@color/white"
-            android:elevation="8dp">
+            android:elevation="4dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_upload_all"
-                android:layout_width="0dp"
-                android:layout_height="64dp"
-                android:layout_weight="1"
-                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
                 android:drawableStart="@drawable/ic_menu_upload"
                 android:drawablePadding="@dimen/_8sdp"
-                android:text="Upload All"
+                android:text="Upload to Server"
                 android:textAllCaps="false"
                 android:textSize="@dimen/_14sdp"
                 app:backgroundTint="@color/colorPrimary"
-                app:cornerRadius="@dimen/_16sdp"
-                app:elevation="4dp"
-                app:iconGravity="textStart"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_clear_all"
-                android:layout_width="0dp"
-                android:layout_height="64dp"
-                android:layout_weight="1"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:drawableStart="@drawable/ic_menu_delete"
-                android:drawablePadding="@dimen/_8sdp"
-                android:text="Clear All"
-                android:textAllCaps="false"
-                android:textSize="@dimen/_14sdp"
-                android:textColor="@color/colorPrimaryDark"
-                app:backgroundTint="@color/colorPrimaryLight"
-                app:cornerRadius="@dimen/_16sdp"
-                app:elevation="0dp"
+                app:cornerRadius="@dimen/_12sdp"
+                app:elevation="2dp"
                 app:iconGravity="textStart"/>
 
         </LinearLayout>

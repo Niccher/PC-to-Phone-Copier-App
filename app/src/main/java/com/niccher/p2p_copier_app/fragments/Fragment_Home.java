@@ -1,6 +1,5 @@
 package com.niccher.p2p_copier_app.fragments;
 
-import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -25,13 +24,25 @@ import com.niccher.p2p_copier_app.R;
 import com.niccher.p2p_copier_app.activities.Handle_Files;
 import com.niccher.p2p_copier_app.activities.Handle_Text_2_Image;
 import com.niccher.p2p_copier_app.activities.Handle_Texts;
+import com.niccher.p2p_copier_app.interfaces.RetrofitInterface;
+import com.niccher.p2p_copier_app.model.Mod_Analytics_Summary;
+import com.niccher.p2p_copier_app.model.api.ApiResponse;
+import com.niccher.p2p_copier_app.utils.Helpers;
+import com.niccher.p2p_copier_app.utils.ServiceGenerator;
 import com.niccher.p2p_copier_app.utils.SharedPrefs;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Fragment_Home extends Fragment {
 
     // UI Components
-    private CardView cardTypeText, cardPasteClipboard, cardImageScan, cardQRScan, cardFileUpload;
-    private MaterialButton btnTutorial, btnConnect;
+    private CardView cardTypeText, cardImageScan, cardQRScan, cardFileUpload;
+    private MaterialButton btnConnect;
     private TextView txtTransfersCount, txtFilesCount, txtTextsCount;
 
     // Preferences
@@ -49,6 +60,7 @@ public class Fragment_Home extends Fragment {
         initViews(view);
         setupClickListeners();
         updateStats();
+        fetchBackendStats();
 
         return view;
     }
@@ -56,13 +68,11 @@ public class Fragment_Home extends Fragment {
     private void initViews(View view) {
         // Card views
         cardTypeText = view.findViewById(R.id.option_1);
-        cardPasteClipboard = view.findViewById(R.id.option_2);
         cardImageScan = view.findViewById(R.id.option_3);
         cardQRScan = view.findViewById(R.id.option_4);
         cardFileUpload = view.findViewById(R.id.option_5);
 
         // Buttons
-        btnTutorial = view.findViewById(R.id.btn_tutorial);
         btnConnect = view.findViewById(R.id.btn_connect);
 
         // Stats
@@ -72,40 +82,11 @@ public class Fragment_Home extends Fragment {
     }
 
     private void setupClickListeners() {
-        // Type Text
-        cardTypeText.setOnClickListener(v -> {
-            navigateWithAnimation(Handle_Texts.class);
-        });
-
-        // Paste Clipboard
-        cardPasteClipboard.setOnClickListener(v -> {
-            navigateWithAnimation(Handle_Texts.class);
-        });
-
-        // Image to Text
-        cardImageScan.setOnClickListener(v -> {
-            navigateWithAnimation(Handle_Text_2_Image.class);
-        });
-
-        // QR Scan
-        cardQRScan.setOnClickListener(v -> {
-            initQRScanner();
-        });
-
-        // File Upload
-        cardFileUpload.setOnClickListener(v -> {
-            navigateWithAnimation(Handle_Files.class);
-        });
-
-        // Tutorial Button
-        btnTutorial.setOnClickListener(v -> {
-            showTutorialDialog();
-        });
-
-        // Connect Button
-        btnConnect.setOnClickListener(v -> {
-            showConnectDialog();
-        });
+        cardTypeText.setOnClickListener(v -> navigateWithAnimation(Handle_Texts.class));
+        cardImageScan.setOnClickListener(v -> navigateWithAnimation(Handle_Text_2_Image.class));
+        cardQRScan.setOnClickListener(v -> initQRScanner());
+        cardFileUpload.setOnClickListener(v -> navigateWithAnimation(Handle_Files.class));
+        btnConnect.setOnClickListener(v -> showConnectDialog());
     }
 
     private void navigateWithAnimation(Class<?> activityClass) {
@@ -126,28 +107,7 @@ public class Fragment_Home extends Fragment {
         integrator.setBarcodeImageEnabled(false);
         integrator.initiateScan();
 
-        // Update stats
         incrementTransferCount();
-    }
-
-    private void showTutorialDialog() {
-        new MaterialAlertDialogBuilder(requireContext())
-                .setTitle("How to Use P2P Copier")
-                .setMessage("1. Connect to the website using QR or code\n\n" +
-                        "2. Choose a transfer method:\n" +
-                        "   • Type text manually\n" +
-                        "   • Paste from clipboard\n" +
-                        "   • Extract text from images\n" +
-                        "   • Scan QR codes\n" +
-                        "   • Upload files\n\n" +
-                        "3. Your data will sync across devices instantly!")
-                .setPositiveButton("Got it", (dialog, which) -> dialog.dismiss())
-                .setNegativeButton("Watch Video", (dialog, which) -> {
-                    dialog.dismiss();
-                    Toast.makeText(getContext(), "Opening tutorial video...", Toast.LENGTH_SHORT).show();
-                })
-                .setIcon(R.mipmap.app_logo)
-                .show();
     }
 
     private void showConnectDialog() {
@@ -178,7 +138,6 @@ public class Fragment_Home extends Fragment {
                 .setTitle("Enter Connection Code")
                 .setView(dialogView)
                 .setPositiveButton("Connect", (dialog, which) -> {
-                    // Handle code validation
                     Toast.makeText(getContext(), "Connecting...", Toast.LENGTH_SHORT).show();
                     incrementTransferCount();
                 })
@@ -194,6 +153,36 @@ public class Fragment_Home extends Fragment {
         txtTransfersCount.setText(String.valueOf(transfers));
         txtFilesCount.setText(String.valueOf(files));
         txtTextsCount.setText(String.valueOf(texts));
+    }
+
+    private void fetchBackendStats() {
+        if (getContext() == null) return;
+        try {
+            RetrofitInterface api = ServiceGenerator.createService(RetrofitInterface.class, requireContext());
+            Map<String, String> parameters = new HashMap<>();
+            parameters.put("var_dev_uuid", Helpers.get_prefs_dev("dev_uuid", requireContext()));
+            parameters.put("var_auth_code_id", Helpers.get_prefs_sess("auth_auth_code_id", requireContext()));
+
+            api.getAnalyticsSummary(parameters).enqueue(new Callback<ApiResponse<Mod_Analytics_Summary>>() {
+                @Override
+                public void onResponse(Call<ApiResponse<Mod_Analytics_Summary>> call, Response<ApiResponse<Mod_Analytics_Summary>> response) {
+                    if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
+                        Mod_Analytics_Summary data = response.body().getData();
+                        txtFilesCount.setText(String.valueOf(data.getTotalFiles()));
+                        txtTextsCount.setText(String.valueOf(data.getTotalTexts()));
+                        int totalTransfers = data.getTotalFiles() + data.getTotalTexts() + data.getTotalQrScans();
+                        txtTransfersCount.setText(String.valueOf(totalTransfers));
+
+                        prefs.saveInt("transfer_count", totalTransfers);
+                        prefs.saveInt("file_count", data.getTotalFiles());
+                        prefs.saveInt("text_count", data.getTotalTexts());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ApiResponse<Mod_Analytics_Summary>> call, Throwable t) {}
+            });
+        } catch (Exception ignored) {}
     }
 
     private void incrementTransferCount() {
@@ -266,5 +255,6 @@ public class Fragment_Home extends Fragment {
     public void onResume() {
         super.onResume();
         updateStats();
+        fetchBackendStats();
     }
 }

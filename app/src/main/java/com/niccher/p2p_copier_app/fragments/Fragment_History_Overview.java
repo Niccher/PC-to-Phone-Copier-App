@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.niccher.p2p_copier_app.R;
 import com.niccher.p2p_copier_app.interfaces.RetrofitInterface;
+import com.niccher.p2p_copier_app.model.api.ApiResponse;
 import com.niccher.p2p_copier_app.utils.Helpers;
 import com.niccher.p2p_copier_app.utils.ResponseSummarizer;
 import com.niccher.p2p_copier_app.utils.ServiceGenerator;
@@ -65,18 +66,22 @@ public class Fragment_History_Overview extends Fragment {
         fetchFileCountFromBackend();
     }
 
+    private String formatItemsCount(int count) {
+        return count + " item" + (count == 1 ? "" : "s");
+    }
+
     private void loadActivityStats() {
         Context context = requireContext();
 
-        int textCount = prefs.getInt("stat_count_texts", 12);
-        int qrCount = prefs.getInt("stat_count_qr", 6);
-        int ocrCount = prefs.getInt("stat_count_ocr", 4);
-        int fileCount = prefs.getInt("stat_count_files", 3);
+        int textCount = prefs.getInt("stat_count_texts", 0);
+        int qrCount = prefs.getInt("stat_count_qr", 0);
+        int ocrCount = prefs.getInt("stat_count_ocr", 0);
+        int fileCount = prefs.getInt("stat_count_files", 0);
 
-        txtCountFiles.setText(String.valueOf(fileCount));
-        txtCountTexts.setText(String.valueOf(textCount));
-        txtCountQr.setText(String.valueOf(qrCount));
-        txtCountOcr.setText(String.valueOf(ocrCount));
+        txtCountFiles.setText(formatItemsCount(fileCount));
+        txtCountTexts.setText(formatItemsCount(textCount));
+        txtCountQr.setText(formatItemsCount(qrCount));
+        txtCountOcr.setText(formatItemsCount(ocrCount));
 
         String now = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
         String lastSync = prefs.getString("stat_last_sync", now);
@@ -97,18 +102,30 @@ public class Fragment_History_Overview extends Fragment {
             parameters.put("var_dev_uuid", Helpers.get_prefs_dev("dev_uuid", requireContext()));
             parameters.put("var_auth_code_id", Helpers.get_prefs_sess("auth_auth_code_id", requireContext()));
 
-            api.getFilesUploadedbySessDevid(parameters).enqueue(new Callback<ResponseSummarizer>() {
+            api.getAnalyticsSummary(parameters).enqueue(new Callback<ApiResponse<com.niccher.p2p_copier_app.model.Mod_Analytics_Summary>>() {
                 @Override
-                public void onResponse(Call<ResponseSummarizer> call, Response<ResponseSummarizer> response) {
-                    if (response.isSuccessful() && response.body() != null && response.body().getSummarizer() != null) {
-                        int count = response.body().getSummarizer().length;
-                        txtCountFiles.setText(String.valueOf(count));
-                        prefs.saveInt("stat_count_files", count);
+                public void onResponse(Call<ApiResponse<com.niccher.p2p_copier_app.model.Mod_Analytics_Summary>> call, Response<ApiResponse<com.niccher.p2p_copier_app.model.Mod_Analytics_Summary>> response) {
+                    if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
+                        com.niccher.p2p_copier_app.model.Mod_Analytics_Summary data = response.body().getData();
+
+                        txtCountFiles.setText(formatItemsCount(data.getTotalFiles()));
+                        txtCountTexts.setText(formatItemsCount(data.getTotalTexts()));
+                        txtCountQr.setText(formatItemsCount(data.getTotalQrScans()));
+                        txtCountOcr.setText(formatItemsCount(data.getTotalOcrExtractions()));
+
+                        txtTimeLastSync.setText(data.getLastSync());
+                        txtTimeLastUpload.setText(data.getLastUpload());
+                        txtTimeLastDownload.setText(data.getLastDownload());
+
+                        prefs.saveInt("stat_count_files", data.getTotalFiles());
+                        prefs.saveInt("stat_count_texts", data.getTotalTexts());
+                        prefs.saveInt("stat_count_qr", data.getTotalQrScans());
+                        prefs.saveInt("stat_count_ocr", data.getTotalOcrExtractions());
                     }
                 }
 
                 @Override
-                public void onFailure(Call<ResponseSummarizer> call, Throwable t) {
+                public void onFailure(Call<ApiResponse<com.niccher.p2p_copier_app.model.Mod_Analytics_Summary>> call, Throwable t) {
                     // Retain cached count
                 }
             });

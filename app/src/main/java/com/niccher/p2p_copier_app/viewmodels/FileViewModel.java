@@ -73,6 +73,14 @@ public class FileViewModel extends AndroidViewModel {
         }
     }
 
+    public void removeFile(Mod_File_info targetFile) {
+        List<Mod_File_info> currentFiles = selectedFiles.getValue();
+        if (currentFiles != null && targetFile != null) {
+            currentFiles.remove(targetFile);
+            selectedFiles.setValue(currentFiles);
+        }
+    }
+
     public void clearFiles() {
         selectedFiles.setValue(new ArrayList<>());
     }

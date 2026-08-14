@@ -40,19 +40,19 @@ public interface RetrofitInterface {
     );
 
     @FormUrlEncoded
-    @POST("get_files_uploaded_by_session")
+    @POST("api/v1/files/list")
     Call<Mod_List_File_Uploaded> getFilesUploadedbySessDevid0(@FieldMap Map<String, String> fields);
 
     @FormUrlEncoded
-    @POST("get_files_uploaded_by_session")
+    @POST("api/v1/files/list")
     Call<ResponseSummarizer> getFilesUploadedbySessDevid(@FieldMap Map<String, String> fields);
 
     @FormUrlEncoded
-    @POST("get_files_uploaded_by_session_download")
+    @POST("api/v1/files/download")
     Call<ResponseBody> getFilesUploadedbySessDevidDownloaded(@FieldMap Map<String, String> fields);
 
     @FormUrlEncoded
-    @POST("set_files_to_delete")
+    @POST("api/v1/files/delete")
     Call<Mod_File_Delete> getFilesUploadedbySessDevidDelete(@FieldMap Map<String, String> fields);
 
     @FormUrlEncoded
@@ -66,5 +66,33 @@ public interface RetrofitInterface {
     @FormUrlEncoded
     @POST("api/v1/device/metrics")
     Call<ResponseBody> logDeviceMetrics(@FieldMap Map<String, String> fields);
+
+    @FormUrlEncoded
+    @POST("api/v1/analytics/summary")
+    Call<ApiResponse<com.niccher.p2p_copier_app.model.Mod_Analytics_Summary>> getAnalyticsSummary(@FieldMap Map<String, String> fields);
+
+    @FormUrlEncoded
+    @POST("api/v1/auth/session-status")
+    Call<ApiResponse<com.google.gson.JsonObject>> checkSessionStatus(@FieldMap Map<String, String> fields);
+
+    @FormUrlEncoded
+    @POST("api/v1/telemetry/event")
+    Call<ResponseBody> sendTelemetryEvent(@FieldMap Map<String, String> fields);
+
+    @FormUrlEncoded
+    @POST("api/v1/files/batch-delete")
+    Call<ResponseBody> batchDeleteFiles(@FieldMap Map<String, String> fields);
+
+    @FormUrlEncoded
+    @POST("api/v1/texts/list")
+    Call<ApiResponse<com.niccher.p2p_copier_app.model.api.TextDataEnvelope>> getTextsUploaded(@FieldMap Map<String, String> fields);
+
+    @FormUrlEncoded
+    @POST("api/v1/uploaded")
+    Call<ApiResponse<com.niccher.p2p_copier_app.model.api.UploadedEnvelope>> getUploadedItems(@FieldMap Map<String, String> fields);
+
+    @FormUrlEncoded
+    @POST("api/v1/texts/delete")
+    Call<ResponseBody> deleteTextUploaded(@FieldMap Map<String, String> fields);
 
 }

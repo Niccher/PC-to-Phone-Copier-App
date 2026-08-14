@@ -20,10 +20,20 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.niccher.p2p_copier_app.R;
 import com.niccher.p2p_copier_app.activities.Auth_New_Or_Continue;
+import com.niccher.p2p_copier_app.interfaces.RetrofitInterface;
+import com.niccher.p2p_copier_app.model.api.ApiResponse;
 import com.niccher.p2p_copier_app.utils.DeviceMetricsHelper;
 import com.niccher.p2p_copier_app.utils.Helpers;
 import com.niccher.p2p_copier_app.utils.Konstants;
+import com.niccher.p2p_copier_app.utils.ServiceGenerator;
 import com.niccher.p2p_copier_app.utils.SharedPrefs;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Fragment_Profile extends Fragment {
 
@@ -61,19 +71,11 @@ public class Fragment_Profile extends Fragment {
         txtScreenRes = view.findViewById(R.id.txt_profile_screen_res);
         txtAppVersion = view.findViewById(R.id.txt_profile_app_version);
 
-        btnAbout = view.findViewById(R.id.btn_profile_about);
         btnLogout = view.findViewById(R.id.btn_profile_logout);
         btnDeleteAll = view.findViewById(R.id.btn_profile_delete_all);
 
         loadProfileData();
 
-        if (btnAbout != null) {
-            btnAbout.setOnClickListener(v -> {
-                new androidx.lifecycle.ViewModelProvider(requireActivity())
-                        .get(com.niccher.p2p_copier_app.viewmodels.HomeViewModel.class)
-                        .selectFragment("about");
-            });
-        }
         btnLogout.setOnClickListener(v -> confirmLogout());
         btnDeleteAll.setOnClickListener(v -> confirmDeleteAllData());
     }
@@ -99,6 +101,26 @@ public class Fragment_Profile extends Fragment {
             dotStatus.setBackgroundTintList(android.content.res.ColorStateList.valueOf(0xFF4CAF50));
             txtStatusLabel.setText("Connected (" + (authCode.isEmpty() ? "Session Active" : authCode) + ")");
             txtAuthCode.setText(authCode.isEmpty() ? "Active" : authCode);
+
+            try {
+                RetrofitInterface api = ServiceGenerator.createService(RetrofitInterface.class, context);
+                Map<String, String> params = new HashMap<>();
+                params.put("var_dev_uuid", uuid);
+                params.put("var_auth_code_id", Helpers.get_prefs_sess("auth_auth_code_id", context));
+
+                api.checkSessionStatus(params).enqueue(new Callback<ApiResponse<com.google.gson.JsonObject>>() {
+                    @Override
+                    public void onResponse(Call<ApiResponse<com.google.gson.JsonObject>> call, Response<ApiResponse<com.google.gson.JsonObject>> response) {
+                        if (!response.isSuccessful() || response.body() == null || !response.body().isSuccess()) {
+                            dotStatus.setBackgroundTintList(android.content.res.ColorStateList.valueOf(0xFFF44336));
+                            txtStatusLabel.setText("Session Expired / Revoked");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ApiResponse<com.google.gson.JsonObject>> call, Throwable t) {}
+                });
+            } catch (Exception ignored) {}
         } else {
             dotStatus.setBackgroundTintList(android.content.res.ColorStateList.valueOf(0xFFF44336));
             txtStatusLabel.setText("Disconnected");
@@ -118,53 +140,17 @@ public class Fragment_Profile extends Fragment {
         new MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Disconnect Session?")
                 .setMessage("Are you sure you want to log out from the active session? You will need to scan QR or enter a code to reconnect.")
-                .setPositiveButton("Logout", (dialog, which) -> performLogout())
+                .setPositiveButton("Logout", (dialog, which) -> Helpers.logoutSession(requireContext()))
                 .setNegativeButton("Cancel", null)
                 .show();
-    }
-
-    private void performLogout() {
-        Context context = requireContext();
-        Helpers.set_prefs_sess("auth_status", "False", context);
-        Helpers.set_prefs_sess("auth_type", "", context);
-        Helpers.set_prefs_sess("auth_auth_code", "", context);
-        Helpers.set_prefs_sess("auth_message", "", context);
-        Helpers.set_prefs_sess("auth_auth_code_id", "", context);
-        Helpers.set_prefs_sess("auth_time", "", context);
-
-        Toast.makeText(context, "Session disconnected", Toast.LENGTH_SHORT).show();
-
-        Intent intent = new Intent(context, Auth_New_Or_Continue.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
     }
 
     private void confirmDeleteAllData() {
         new MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Delete All App Data?")
-                .setMessage("WARNING: This will clear all saved session tokens, device metrics cache, and server configuration. This action cannot be undone.")
-                .setPositiveButton("Delete Everything", (dialog, which) -> performDeleteAllData())
+                .setTitle("Delete All App Data & Reset?")
+                .setMessage("WARNING: This will clear all saved session tokens, device identity cache, and server configuration. This action cannot be undone.")
+                .setPositiveButton("Delete Everything", (dialog, which) -> Helpers.deleteAllAppDataAndReset(requireContext()))
                 .setNegativeButton("Cancel", null)
                 .show();
-    }
-
-    private void performDeleteAllData() {
-        Context context = requireContext();
-        Konstants kon = new Konstants();
-
-        // Clear SharedPreferences
-        context.getSharedPreferences(kon.shared_pref_auth, Context.MODE_PRIVATE).edit().clear().apply();
-        context.getSharedPreferences(kon.shared_pref_device, Context.MODE_PRIVATE).edit().clear().apply();
-        context.getSharedPreferences(Konstants.PREFS_NAME, Context.MODE_PRIVATE).edit().clear().apply();
-
-        SharedPrefs customPrefs = new SharedPrefs(context);
-        customPrefs.putBoolean("dark_theme", false);
-        customPrefs.putBoolean("biometric_enabled", true);
-
-        Toast.makeText(context, "All app data cleared successfully", Toast.LENGTH_LONG).show();
-
-        Intent intent = new Intent(context, Auth_New_Or_Continue.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
     }
 }

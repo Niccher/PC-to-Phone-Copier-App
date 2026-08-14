@@ -70,9 +70,14 @@ public class TextViewModel extends AndroidViewModel {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("var_dev_uuid", Helpers.get_prefs_dev("dev_uuid", getApplication()));
         parameters.put("var_auth_code_id", Helpers.get_prefs_sess("auth_auth_code_id", getApplication()));
+        parameters.put("var_text_sess_id", Helpers.get_prefs_sess("auth_auth_code_id", getApplication()));
+        parameters.put("session_id", Helpers.get_prefs_sess("auth_auth_code_id", getApplication()));
+        parameters.put("var_text_content", text.trim());
         parameters.put("text_content", text.trim());
+        parameters.put("var_text_source", source != null ? source : "Android Text");
         parameters.put("text_source", source != null ? source : "Android Text");
         if (title != null && !title.trim().isEmpty()) {
+            parameters.put("var_text_title", title.trim());
             parameters.put("text_title", title.trim());
         }
 
