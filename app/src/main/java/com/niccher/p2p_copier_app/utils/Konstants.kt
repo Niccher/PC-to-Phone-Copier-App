@@ -38,6 +38,20 @@ class Konstants {
         const val KEY_BACKEND_CONFIGURED = "backend_configured"
         const val DEFAULT_BACKEND_URL = "https://p2p.chegecache.co.ke"
         const val DEFAULT_BACKEND_PORT = "443"
+        const val EMULATOR_BACKEND_URL = "http://10.0.2.2"
+        const val EMULATOR_BACKEND_PORT = "9004"
+
+        @JvmStatic
+        fun isEmulator(): Boolean {
+            return (android.os.Build.FINGERPRINT.startsWith("generic")
+                    || android.os.Build.FINGERPRINT.startsWith("unknown")
+                    || android.os.Build.MODEL.contains("google_sdk")
+                    || android.os.Build.MODEL.contains("Emulator")
+                    || android.os.Build.MODEL.contains("Android SDK built for x86")
+                    || android.os.Build.MANUFACTURER.contains("Genymotion")
+                    || (android.os.Build.BRAND.startsWith("generic") && android.os.Build.DEVICE.startsWith("generic"))
+                    || "google_sdk" == android.os.Build.PRODUCT)
+        }
 
         @JvmStatic
         var active_base_url: String = DEFAULT_BACKEND_URL
@@ -46,8 +60,11 @@ class Konstants {
         @JvmStatic
         fun loadBackendConfig(context: Context) {
             val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            val savedUrl = prefs.getString(KEY_BACKEND_URL, DEFAULT_BACKEND_URL) ?: DEFAULT_BACKEND_URL
-            val savedPort = prefs.getString(KEY_BACKEND_PORT, DEFAULT_BACKEND_PORT) ?: DEFAULT_BACKEND_PORT
+            val fallbackUrl = if (isEmulator()) EMULATOR_BACKEND_URL else DEFAULT_BACKEND_URL
+            val fallbackPort = if (isEmulator()) EMULATOR_BACKEND_PORT else DEFAULT_BACKEND_PORT
+
+            val savedUrl = prefs.getString(KEY_BACKEND_URL, fallbackUrl) ?: fallbackUrl
+            val savedPort = prefs.getString(KEY_BACKEND_PORT, fallbackPort) ?: fallbackPort
 
             active_base_url = buildBackendUrl(savedUrl, savedPort)
         }

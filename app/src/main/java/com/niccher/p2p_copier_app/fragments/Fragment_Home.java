@@ -133,16 +133,65 @@ public class Fragment_Home extends Fragment {
 
     private void showCodeInputDialog() {
         View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_code_input, null);
+        com.google.android.material.textfield.TextInputEditText etCode = dialogView.findViewById(R.id.et_connection_code);
 
         new MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Enter Connection Code")
                 .setView(dialogView)
                 .setPositiveButton("Connect", (dialog, which) -> {
-                    Toast.makeText(getContext(), "Connecting...", Toast.LENGTH_SHORT).show();
-                    incrementTransferCount();
+                    String code = (etCode != null && etCode.getText() != null) ? etCode.getText().toString().trim() : "";
+                    if (code.isEmpty()) {
+                        Toast.makeText(getContext(), "Please enter the pairing code", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    pairWithCode(code);
                 })
                 .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
                 .show();
+    }
+
+    private void pairWithCode(String code) {
+        if (getContext() == null) return;
+        Toast.makeText(getContext(), "Verifying pairing code...", Toast.LENGTH_SHORT).show();
+
+        RetrofitInterface api = ServiceGenerator.createService(RetrofitInterface.class, requireContext());
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("var_auth_type", "code_manual");
+        parameters.put("var_auth_code", code);
+        parameters.put("var_dev_uuid", Helpers.get_prefs_dev("dev_uuid", requireContext()));
+
+        api.createRegister(parameters).enqueue(new Callback<ApiResponse<com.niccher.p2p_copier_app.model.Mod_Auth>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<com.niccher.p2p_copier_app.model.Mod_Auth>> call, Response<ApiResponse<com.niccher.p2p_copier_app.model.Mod_Auth>> response) {
+                if (getContext() == null) return;
+                if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
+                    com.niccher.p2p_copier_app.model.Mod_Auth postResponse = response.body().getData();
+                    if (postResponse != null && "True".equalsIgnoreCase(postResponse.getAuth_status())) {
+                        Helpers.set_prefs_sess("auth_status", postResponse.getAuth_status(), getContext());
+                        Helpers.set_prefs_sess("auth_type", postResponse.getAuth_type(), getContext());
+                        Helpers.set_prefs_sess("auth_auth_code", postResponse.getAuth_auth_code(), getContext());
+                        Helpers.set_prefs_sess("auth_message", postResponse.getAuth_message(), getContext());
+                        Helpers.set_prefs_sess("auth_auth_code_id", postResponse.getAuth_auth_code_id(), getContext());
+                        Helpers.set_prefs_sess("auth_time", postResponse.getAuth_time(), getContext());
+
+                        Toast.makeText(getContext(), "Connected successfully to session!", Toast.LENGTH_SHORT).show();
+                        incrementTransferCount();
+                        fetchBackendStats();
+                    } else {
+                        Toast.makeText(getContext(), "Invalid pairing code. Please try again.", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Pairing failed. Please check the code.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<com.niccher.p2p_copier_app.model.Mod_Auth>> call, Throwable t) {
+                if (getContext() != null) {
+                    Toast.makeText(getContext(), "Connection error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void updateStats() {
@@ -219,21 +268,26 @@ public class Fragment_Home extends Fragment {
     }
 
     private void showQRResultDialog(String qrContent) {
-        new MaterialAlertDialogBuilder(requireContext())
-                .setTitle("QR Code Content")
-                .setMessage(qrContent)
-                .setPositiveButton("Copy", (dialog, which) -> {
-                    copyToClipboard(qrContent);
-                    Toast.makeText(getContext(), "Copied to clipboard!", Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
-                })
-                .setNegativeButton("Share", (dialog, which) -> {
-                    shareContent(qrContent);
-                    dialog.dismiss();
-                })
-                .setNeutralButton("Close", (dialog, which) -> dialog.dismiss())
-                .setIcon(R.mipmap.img_qr)
-                .show();
+        String trimmed = qrContent != null ? qrContent.trim() : "";
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext())
+                .setTitle("QR Code Scanned")
+                .setMessage(trimmed)
+                .setIcon(R.mipmap.img_qr);
+
+        builder.setPositiveButton("Connect & Pair", (dialog, which) -> {
+            pairWithCode(trimmed);
+            dialog.dismiss();
+        });
+        builder.setNegativeButton("Copy", (dialog, which) -> {
+            copyToClipboard(trimmed);
+            Toast.makeText(getContext(), "Copied to clipboard!", Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+        });
+        builder.setNeutralButton("Share", (dialog, which) -> {
+            shareContent(trimmed);
+            dialog.dismiss();
+        });
+        builder.show();
     }
 
     private void copyToClipboard(String text) {
