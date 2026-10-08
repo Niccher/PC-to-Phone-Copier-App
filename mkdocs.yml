@@ -1,0 +1,69 @@
+site_name: P2P Copier Android App Documentation
+site_description: Technical and architecture documentation for the P2P Copier Android client.
+site_url: https://github.com/niccher/PC-to-Phone-Copier-App
+repo_url: https://github.com/niccher/PC-to-Phone-Copier-App
+repo_name: niccher/PC-to-Phone-Copier-App
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: teal
+      accent: cyan
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: teal
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.expand
+    - content.code.copy
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - tables
+  - admonition
+  - pymdownx.details
+
+nav:
+  - Home: README.md
+  - User Guide:
+      - Setup & Run: user/setup-and-run.md
+      - Configuration: user/configuration.md
+      - Troubleshooting: user/troubleshooting.md
+  - Architecture:
+      - Client Overview: architecture/overview.md
+      - Communication & Retrofit: architecture/communication.md
+      - Data & Storage: architecture/data-and-storage.md
+      - Threat Model: architecture/threat-model.md
+  - Services:
+      - Android Service Guide: services/android.md
+  - Engineering:
+      - Local Development: engineering/local-development.md
+      - Making Changes: engineering/making-changes.md
+      - Database & Room: engineering/database.md
+      - Testing: engineering/testing.md
+      - Continuous Integration: engineering/ci.md
+      - Release & Versioning: engineering/release.md
+      - Security: engineering/security.md
+      - Troubleshooting: engineering/troubleshooting.md
+      - Contributing: engineering/contributing.md
+  - Architecture Decisions (ADR):
+      - "ADR-0001: Hybrid Pairing": adr/0001-hybrid-qr-numeric-pairing.md
+      - "ADR-0002: Unified Feed": adr/0002-unified-feed-aggregation.md
+      - "ADR-0003: On-Device OCR": adr/0003-on-device-ocr-via-ml-kit.md

@@ -1,12 +1,27 @@
-.git
-.gradle
-.idea
-.vscode
-build
-app/build
-local.properties
-*.apk
-*.aab
-*.log
+# Environments
+.env
+.env.*
+
+# IDEs
+.idea/
+.vscode/
+
+# Git
+.git/
+.gitignore
+
+# Dependencies
+vendor/
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+# Build
+build/
+dist/
+
+# OS
 .DS_Store
-Thumbs.db
