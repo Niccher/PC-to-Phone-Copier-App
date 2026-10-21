@@ -8,12 +8,6 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/menu_backend_config"
-        android:title="Backend Config"
-        android:icon="@drawable/ic_settings_fill"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/menu_settings"
         android:title="Settings"
         android:icon="@drawable/ic_settings_fill"

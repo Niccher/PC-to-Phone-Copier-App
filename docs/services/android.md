@@ -19,9 +19,8 @@ This guide details the internal structure, dependencies, UI components, and on-d
 ```
 app/src/main/java/com/niccher/p2p_copier_app/
 ├── activities/
-│   ├── AuthSession.java            # QR scanning, 6-digit code pairing & registration
+│   ├── AuthSession.java            # QR scanning, auto server discovery & pairing
 │   ├── Auth_New_Or_Continue.java   # First-run launcher and session chooser
-│   ├── BackendConfigActivity.java  # Runtime backend URL and port configurator
 │   ├── BiometricLockActivity.kt    # AndroidX Biometric gate
 │   ├── Handle_Files.java           # Document/media picker and upload manager
 │   ├── Handle_Text_2_Image.java    # Camera snapshot to ML Kit OCR pipeline

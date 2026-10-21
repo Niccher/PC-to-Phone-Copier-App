@@ -57,4 +57,4 @@ Configured in `com.niccher.p2p_copier_app.interfaces.RetrofitInterface`:
 
 Base URL resolution is managed dynamically via `ServiceGenerator.java` and `Konstants.kt`:
 - **Default Base URL**: Set initially via `Konstants.str_base_url`.
-- **Runtime Override**: The user or tester can switch host and port at runtime via `BackendConfigActivity`. The updated URL is persisted and reinitializes the OkHttpClient instance with updated connection pools and logging interceptors.
+- **Automatic QR Discovery**: Scanning the pairing QR code from the WebApp automatically extracts the server host and port, updates `Konstants.saveBackendFromUrl()`, and triggers `ServiceGenerator.rebuildService()` to point to the active host with zero manual server configuration.

@@ -231,24 +231,6 @@
                 app:iconPadding="@dimen/_8sdp"
                 app:iconTint="@android:color/white"/>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_reg_backend_config"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:text="Configure Server URL"
-                android:textAllCaps="false"
-                android:textSize="@dimen/_14sdp"
-                android:textColor="@color/colorPrimary"
-                app:strokeColor="@color/colorPrimary"
-                app:strokeWidth="1dp"
-                app:cornerRadius="@dimen/_14sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                app:icon="@drawable/ic_settings_fill"
-                app:iconGravity="textStart"
-                app:iconPadding="@dimen/_8sdp"
-                app:iconTint="@color/colorPrimary"/>
-
             <!-- Terms -->
             <TextView
                 android:layout_width="match_parent"

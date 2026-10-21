@@ -12,15 +12,14 @@ Software engineers: [docs/README.md](docs/README.md).
 | Screen / Flow | How to Open | Expected Behavior |
 |---|---|---|
 | **Splash / Launcher** | Launch App | Checks existing session; redirects to setup or main hub |
-| **Session Pairing** | Initial Launch / Profile | Displays QR Scanner and 6-digit numeric entry dialog |
+| **Session Pairing** | Initial Launch / Profile | Displays pure QR Scanner for instant 1-tap auto-discovery & pairing |
 | **Unified Feed** | "Uploaded" Tab | Lists synced files, text items, and OCR extractions |
-| **Backend Config** | Launcher Menu / Settings | In-app tester screen to set backend server URL and port |
 
 ## Prerequisites
 
 - **Android Device** (Android 7.0+ / API 24+) or **Android Emulator**
 - **Android Studio** Jellyfish+ with JDK 11+ (or command-line Gradle 8.7)
-- Running [P2P Copier WebApp](https://github.com/niccher/P2P_Copier_WebApp) backend (on local network or Docker)
+- Running [P2P Copier WebApp](https://github.com/niccher/P2P_Copier_WebApp) backend (on local network, Docker, or cloud)
 
 ## Setup and run
 
@@ -40,17 +39,15 @@ From a fresh machine, numbered, copy-pasteable:
    ./gradlew installDebug
    ```
 4. Connect to your backend:
-   - **On Android Emulator**: Open the in-app **Backend Configuration** screen and set URL to `http://10.0.2.2:9004/`.
-   - **On Physical Device (USB)**: Run `adb reverse tcp:9004 tcp:9004`, then set URL to `http://127.0.0.1:9004/`.
-   - **On Physical Device (Wi-Fi)**: Set URL to your PC's local LAN address (e.g. `http://192.168.1.50:9004/`).
-5. Scan the QR code or enter the 6-digit code displayed on the WebApp landing page.
+   - Simply open the **P2P Copier App** and tap **Scan QR Code**.
+   - Point the camera at the QR code displayed on the WebApp landing page.
+   - The app automatically discovers the server URL/port, registers the device, and pairs seamlessly.
 
 ## Configuration users may change
 
 | Setting | Location | Purpose |
 |---|---|---|
-| **Backend Server URL** | In-app Backend Configuration | Hostname or IP address of the relay server |
-| **Backend Port** | In-app Backend Configuration | Published port of the WebApp server (`9004`) |
+| **Server Connection** | Auto-configured via Pairing QR | Hostname, protocol, and port auto-detected on QR scan |
 | **Biometric Gate** | App Settings Tab | Enables fingerprint or face lock on launch |
 
 Full configuration reference: [docs/user/configuration.md](docs/user/configuration.md).

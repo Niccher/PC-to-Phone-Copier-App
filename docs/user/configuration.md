@@ -4,17 +4,15 @@ This document describes client configuration options, network endpoints, and set
 
 ---
 
-## 1. Backend Server Configuration
+## 1. Automated Server Discovery via QR Code
 
-The app includes an in-app configuration screen (`BackendConfigActivity`) that allows runtime adjustment of backend connections without modifying code.
+The app dynamically sets its server target directly when scanning the WebApp's pairing QR code. The QR code contains the dynamic server host and port, automatically configuring the client connection with zero manual input.
 
-### Configuration Fields
+### Dynamic Discovery Flow
 
-| Field | Example Value | Description |
-|---|---|---|
-| **Backend Base URL** | `http://10.0.2.2` | The protocol and hostname/IP of the CodeIgniter 4 WebApp server. |
-| **Backend Port** | `9004` | Published port of the WebApp server. |
-| **Connection Test** | Button ("Test Connection") | Sends an HTTP ping to `/api/v1/ping` and reports status code and latency. |
+1. **WebApp Host Resolution**: WebApp determines its active URL (e.g. `http://<LAN_IP>:80` or `https://p2p.chegecache.co.ke`) from HTTP headers and encodes it into the QR code.
+2. **Scan & Configure**: When scanned in the app, `Konstants.saveBackendFromUrl()` persists the URL and `ServiceGenerator.rebuildService()` immediately switches the active Retrofit client.
+3. **Instant Pairing**: The app registers the device on the detected server and establishes the session handshake in a single step.
 
 ### Network Presets by Environment
 

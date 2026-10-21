@@ -52,15 +52,8 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 
 ## 4. Connecting to the Backend
 
-1. Ensure the P2P Copier WebApp server is running on port 9004.
+1. Ensure the P2P Copier WebApp server is running.
 2. Launch P2P Copier App on your phone/emulator.
-3. If connecting to a local machine:
-   - **Emulator**: Use the in-app **Backend Configuration** screen to set the server URL to:
-     `http://10.0.2.2:9004/`
-   - **Physical Device via USB**: Run on host:
-     ```bash
-     adb reverse tcp:9004 tcp:9004
-     ```
-     Then set the server URL to `http://127.0.0.1:9004/`.
-   - **Physical Device over Wi-Fi**: Set the URL to your host's local IP address (e.g. `http://192.168.1.50:9004/`).
-4. On initial launch, scan the QR code or enter the 6-digit numeric pairing code displayed on the WebApp landing page.
+3. Open the WebApp in your browser (e.g. `http://localhost`, `http://<LAN_IP>`, or your public/GCP domain).
+4. On initial launch, tap **Scan QR Code** and point your device camera at the QR code displayed on the WebApp landing page.
+5. The app automatically detects the host and port, registers the hardware fingerprint, and establishes the pairing session immediately.

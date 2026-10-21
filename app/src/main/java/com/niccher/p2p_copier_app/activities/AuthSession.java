@@ -15,8 +15,9 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.material.textfield.TextInputEditText;
+import android.widget.TextView;
+import org.json.JSONException;
+import org.json.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -42,8 +43,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AuthSession extends AppCompatActivity {
 
-    Button btn_scan_qr, btn_scan_verify_code;
-    TextInputEditText typed_auth_code;
+    Button btn_scan_qr;
     AlertDialog.Builder builder;
     Konstants kon;
     Gson gson = null;
@@ -59,20 +59,7 @@ public class AuthSession extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth_session);
 
-        btn_scan_verify_code = findViewById(R.id.btn_auth_verify_code);
         btn_scan_qr = findViewById(R.id.btn_auth_scan_qr);
-        typed_auth_code = findViewById(R.id.ed_auth_scan_code);
-        Button btnBackendConfig = findViewById(R.id.btn_auth_backend_config);
-
-        if (btnBackendConfig != null) {
-            btnBackendConfig.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent configIntent = new Intent(AuthSession.this, BackendConfigActivity.class);
-                    startActivity(configIntent);
-                }
-            });
-        }
 
         kon = new Konstants();
         gson = new GsonBuilder()
@@ -90,19 +77,12 @@ public class AuthSession extends AppCompatActivity {
                 init_qr_scan();
             }
         });
-
-        btn_scan_verify_code.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                code_verify();
-            }
-        });
     }
 
     private void init_qr_scan() {
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
-        integrator.setPrompt("Scan the QR on the website");
+        integrator.setPrompt("Scan the QR code on your PC screen");
         integrator.setOrientationLocked(false);
         integrator.setCameraId(0);
         integrator.setBeepEnabled(true);
@@ -120,52 +100,68 @@ public class AuthSession extends AppCompatActivity {
         }
     }
 
-    private void code_verify() {
-        String auth_inserted_code = typed_auth_code.getText().toString().trim();
-
-        if (auth_inserted_code.isEmpty()) {
-            Toast.makeText(AuthSession.this, "Please type the code on the website.", Toast.LENGTH_LONG).show();
-        }else{
-            tryAuth("code_num", auth_inserted_code);
-        }
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        //super.onActivityResult(requestCode, resultCode, data);
         final IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             if (result.getContents() == null) {
-                Toast.makeText(this, "You cancelled the scanning", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Scanning cancelled", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
-                String auth_qr_code = String.valueOf(result.getContents());
-                tryAuth("code_qr", auth_qr_code);
-                Log.e("On Get", "Parsed data>: " + auth_qr_code);
+                String rawResult = String.valueOf(result.getContents()).trim();
+                Log.d("AuthSession", "Scanned raw QR: " + rawResult);
 
-                /*try {
-                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText("Kopied", auth_qr_code);
-                    if (clipboard == null || clip == null) return;
-                    clipboard.setPrimaryClip(clip);
-                    //Toast.makeText(getContext(), "Copied >\n"+selectedText, Toast.LENGTH_SHORT).show();
-                } catch (Exception ex) {
-                    ClipboardManager clipboard = null;
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                        clipboard = getSystemService(ClipboardManager.class);
+                String pairingCode = rawResult;
+                String serverUrl = null;
+
+                if (rawResult.startsWith("{") && rawResult.endsWith("}")) {
+                    try {
+                        JSONObject json = new JSONObject(rawResult);
+                        if (json.has("srv")) {
+                            serverUrl = json.optString("srv", "").trim();
+                        }
+                        if (json.has("code")) {
+                            pairingCode = json.optString("code", pairingCode).trim();
+                        } else if (json.has("sess")) {
+                            pairingCode = json.optString("sess", pairingCode).trim();
+                        }
+                    } catch (JSONException e) {
+                        Log.e("AuthSession", "JSON QR parse error", e);
                     }
-                    ClipData clip = ClipData.newPlainText("Kopied", auth_qr_code);
-                    if (clipboard == null || clip == null) return;
-                    clipboard.setPrimaryClip(clip);
-                }*/
+                } else if (rawResult.contains("---")) {
+                    pairingCode = rawResult.substring(0, rawResult.indexOf("---"));
+                }
 
+                if (serverUrl != null && !serverUrl.isEmpty()) {
+                    boolean saved = Konstants.saveBackendFromUrl(AuthSession.this, serverUrl);
+                    if (saved) {
+                        ServiceGenerator.rebuildService(AuthSession.this);
+                        Toast.makeText(AuthSession.this, "Server connected: " + serverUrl, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                tryAuthWithDeviceCheck("code_qr", pairingCode);
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
+    private void tryAuthWithDeviceCheck(final String authType, final String authCode) {
+        createDeviceID(new Runnable() {
+            @Override
+            public void run() {
+                tryAuth(authType, authCode);
+            }
+        });
+    }
+
     private void createDeviceID() {
+        createDeviceID(null);
+    }
+
+    private void createDeviceID(@Nullable final Runnable onComplete) {
+        retrofitInterface = ServiceGenerator.createService(RetrofitInterface.class, this);
+
         Map<String, String> parameters = new HashMap<>();
         parameters.put("device_Board", String.valueOf(Build.BOARD)+"");
         parameters.put("device_Bootloader", String.valueOf(Build.BOOTLOADER)+"");
@@ -189,18 +185,25 @@ public class AuthSession extends AppCompatActivity {
             @Override
             public void onResponse(Call<Mod_Device_Id> call, Response<Mod_Device_Id> response) {
                 Mod_Device_Id postResponse = response.body();
-
-                sharedEditor = pref_Device.edit();
-                sharedEditor.putString("dev_status", postResponse.getDev_status());
-                sharedEditor.putString("dev_time", postResponse.getDev_time());
-                sharedEditor.putString("dev_message", postResponse.getDev_message());
-                sharedEditor.putString("dev_uuid", postResponse.getDev_uuid());
-                sharedEditor.apply();
+                if (postResponse != null) {
+                    sharedEditor = pref_Device.edit();
+                    sharedEditor.putString("dev_status", postResponse.getDev_status());
+                    sharedEditor.putString("dev_time", postResponse.getDev_time());
+                    sharedEditor.putString("dev_message", postResponse.getDev_message());
+                    sharedEditor.putString("dev_uuid", postResponse.getDev_uuid());
+                    sharedEditor.apply();
+                }
+                if (onComplete != null) {
+                    onComplete.run();
+                }
             }
 
             @Override
             public void onFailure(Call<Mod_Device_Id> call, Throwable t) {
-                Toast.makeText(AuthSession.this,  t.getMessage()+"\nCreateDeviceID\nUnknown error occurred, please try again", Toast.LENGTH_LONG).show();
+                Log.e("AuthSession", "createDeviceID failure", t);
+                if (onComplete != null) {
+                    onComplete.run();
+                }
             }
         });
     }
@@ -209,9 +212,8 @@ public class AuthSession extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(kon.shared_pref_device, Context.MODE_PRIVATE);
         String state = sharedPreferences.getString("dev_status","failed");
         if (state.equals("success")){
-            Toast.makeText(AuthSession.this, "Registered", Toast.LENGTH_LONG).show();
+            // Device registered
         }else {
-            Toast.makeText(AuthSession.this, "Un Registered", Toast.LENGTH_LONG).show();
             retrofitInterface = ServiceGenerator.createService(RetrofitInterface.class, this);
             createDeviceID();
         }

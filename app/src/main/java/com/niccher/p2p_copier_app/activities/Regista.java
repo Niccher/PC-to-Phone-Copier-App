@@ -19,8 +19,6 @@ public class Regista extends AppCompatActivity {
         setContentView(R.layout.activity_regista);
 
         btn_get_started = findViewById(R.id.reg_get_started);
-        Button btn_backend_config = findViewById(R.id.btn_reg_backend_config);
-
         btn_get_started.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -29,15 +27,5 @@ public class Regista extends AppCompatActivity {
                 startActivity(auth);
             }
         });
-
-        if (btn_backend_config != null) {
-            btn_backend_config.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent config = new Intent(Regista.this, BackendConfigActivity.class);
-                    startActivity(config);
-                }
-            });
-        }
     }
 }

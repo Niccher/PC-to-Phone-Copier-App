@@ -154,14 +154,12 @@ public class HomePage extends AppCompatActivity {
                 || "history_overview".equals(currentFragment) || "profile".equals(currentFragment);
         
         MenuItem itemToken = menu.findItem(R.id.menu_current_token);
-        MenuItem itemBackend = menu.findItem(R.id.menu_backend_config);
         MenuItem itemSettings = menu.findItem(R.id.menu_settings);
         MenuItem itemAbout = menu.findItem(R.id.menu_about);
         MenuItem itemLogout = menu.findItem(R.id.menu_logout);
         MenuItem itemCredits = menu.findItem(R.id.menu_credits);
         
         if (itemToken != null) itemToken.setVisible(isMainTab);
-        if (itemBackend != null) itemBackend.setVisible(isMainTab);
         if (itemSettings != null) itemSettings.setVisible(isMainTab);
         if (itemAbout != null) itemAbout.setVisible(isMainTab);
         if (itemLogout != null) itemLogout.setVisible(isMainTab);
@@ -192,11 +190,6 @@ public class HomePage extends AppCompatActivity {
                     })
                     .setNegativeButton("Close", null)
                     .show();
-            return true;
-
-        } else if (id == R.id.menu_backend_config) {
-            Intent configIntent = new Intent(this, com.niccher.p2p_copier_app.activities.BackendConfigActivity.class);
-            startActivity(configIntent);
             return true;
 
         } else if (id == R.id.menu_settings) {

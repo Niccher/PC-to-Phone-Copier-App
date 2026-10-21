@@ -39,7 +39,7 @@ class Konstants {
         const val DEFAULT_BACKEND_URL = "https://p2p.chegecache.co.ke"
         const val DEFAULT_BACKEND_PORT = "443"
         const val EMULATOR_BACKEND_URL = "http://10.0.2.2"
-        const val EMULATOR_BACKEND_PORT = "9004"
+        const val EMULATOR_BACKEND_PORT = "80"
 
         @JvmStatic
         fun isEmulator(): Boolean {
@@ -73,17 +73,54 @@ class Konstants {
         fun saveBackendConfig(context: Context, url: String, port: String) {
             val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
             var cleanHost = url.trim()
-            if (cleanHost.startsWith("http://")) cleanHost = cleanHost.substring(7)
-            if (cleanHost.startsWith("https://")) cleanHost = cleanHost.substring(8)
+            val isHttps = cleanHost.startsWith("https://", ignoreCase = true) || port.trim() == "443"
+            if (cleanHost.startsWith("http://", ignoreCase = true)) cleanHost = cleanHost.substring(7)
+            if (cleanHost.startsWith("https://", ignoreCase = true)) cleanHost = cleanHost.substring(8)
             if (cleanHost.contains(":")) cleanHost = cleanHost.substringBefore(":")
             if (cleanHost.contains("/")) cleanHost = cleanHost.substringBefore("/")
 
+            val hostToSave = if (isHttps) "https://$cleanHost" else cleanHost
+
             prefs.edit()
-                .putString(KEY_BACKEND_URL, cleanHost)
+                .putString(KEY_BACKEND_URL, hostToSave)
                 .putString(KEY_BACKEND_PORT, port.trim())
                 .putBoolean(KEY_BACKEND_CONFIGURED, true)
                 .apply()
             loadBackendConfig(context)
+        }
+
+        @JvmStatic
+        fun saveBackendFromUrl(context: Context, fullUrl: String): Boolean {
+            var input = fullUrl.trim()
+            if (input.isEmpty()) return false
+
+            val isHttps = input.startsWith("https://", ignoreCase = true)
+            if (isHttps) {
+                input = input.substring(8)
+            } else if (input.startsWith("http://", ignoreCase = true)) {
+                input = input.substring(7)
+            }
+
+            if (input.contains("/")) {
+                input = input.substringBefore("/")
+            }
+
+            var host = input
+            var port = if (isHttps) "443" else "80"
+
+            if (input.contains(":")) {
+                host = input.substringBefore(":")
+                val parsedPort = input.substringAfter(":").trim()
+                if (parsedPort.isNotEmpty() && parsedPort.toIntOrNull() != null) {
+                    port = parsedPort
+                }
+            }
+
+            if (host.isEmpty()) return false
+
+            val prefix = if (isHttps) "https://" else "http://"
+            saveBackendConfig(context, prefix + host, port)
+            return true
         }
 
         @JvmStatic
@@ -132,10 +169,10 @@ class Konstants {
         private fun buildBackendUrl(url: String, port: String): String {
             var rawHost = url.trim()
             var scheme = "http"
-            if (rawHost.startsWith("https://")) {
+            if (rawHost.startsWith("https://", ignoreCase = true)) {
                 scheme = "https"
                 rawHost = rawHost.substring(8)
-            } else if (rawHost.startsWith("http://")) {
+            } else if (rawHost.startsWith("http://", ignoreCase = true)) {
                 scheme = "http"
                 rawHost = rawHost.substring(7)
             }
@@ -157,6 +194,10 @@ class Konstants {
 
             if (hostOnly.isEmpty()) {
                 hostOnly = "p2p.chegecache.co.ke"
+            }
+
+            if (parsedPort == 443) {
+                scheme = "https"
             }
 
             val portInt = parsedPort ?: (if (scheme == "https") 443 else 80)

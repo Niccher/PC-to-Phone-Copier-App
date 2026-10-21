@@ -54,11 +54,6 @@
         </activity>
         <activity android:name=".HomePage" />
         <activity android:name=".MainActivity" />
-        <activity
-            android:name=".activities.BackendConfigActivity"
-            android:exported="false"
-            android:theme="@style/Theme.P2P_Copier_NoAction"
-            android:label="Backend Configuration" />
         <activity android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
