@@ -2,6 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android'
 
+def versionFile = file("${rootDir}/VERSION")
+def appVersionName = versionFile.exists() ? versionFile.text.trim() : "2.1.0"
+def versionParts = appVersionName.tokenize('.')
+def major = versionParts.size() > 0 ? versionParts[0].toInteger() : 2
+def minor = versionParts.size() > 1 ? versionParts[1].toInteger() : 1
+def patch = versionParts.size() > 2 ? versionParts[2].toInteger() : 0
+def appVersionCode = major * 10000 + minor * 100 + patch
+
 android {
     compileSdk 35
     buildToolsVersion "35.0.0"
@@ -10,8 +18,10 @@ android {
         namespace = "com.niccher.p2p_copier_app"
         minSdkVersion 24
         targetSdkVersion 35
-        versionCode 2
-        versionName "1.1"
+        versionCode appVersionCode
+        versionName appVersionName
+        buildConfigField "String", "APP_VERSION", "\"${appVersionName}\""
+        buildConfigField "int", "APP_VERSION_CODE", "${appVersionCode}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

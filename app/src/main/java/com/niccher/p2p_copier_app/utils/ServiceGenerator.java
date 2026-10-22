@@ -99,7 +99,9 @@ public class ServiceGenerator {
                                 .header("X-Device-Brand", String.valueOf(Build.BRAND))
                                 .header("X-Device-Model", String.valueOf(Build.MODEL))
                                 .header("X-Device-OS", "Android " + Build.VERSION.RELEASE)
-                                .header("X-Device-Fingerprint", String.valueOf(Build.FINGERPRINT));
+                                .header("X-Device-Fingerprint", String.valueOf(Build.FINGERPRINT))
+                                .header("X-App-Version", com.niccher.p2p_copier_app.BuildConfig.APP_VERSION)
+                                .header("X-App-Build", String.valueOf(com.niccher.p2p_copier_app.BuildConfig.APP_VERSION_CODE));
 
                         return chain.proceed(reqBuilder.build());
                     }

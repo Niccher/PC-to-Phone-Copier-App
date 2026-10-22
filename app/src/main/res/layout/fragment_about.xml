@@ -57,6 +57,7 @@
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/tv_about_version"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -64,7 +65,7 @@
                     android:backgroundTint="@color/colorPrimary"
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="4dp"
-                    android:text="Version 1.1 (Build 2)"
+                    android:text="Version 2.1.0"
                     android:textColor="@color/white"
                     android:textSize="12sp"
                     android:textStyle="bold" />

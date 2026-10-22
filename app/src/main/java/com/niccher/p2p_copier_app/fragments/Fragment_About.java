@@ -33,6 +33,11 @@ public class Fragment_About extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
 
-
+        android.widget.TextView tvVersion = view.findViewById(R.id.tv_about_version);
+        if (tvVersion != null) {
+            String versionText = "Version " + com.niccher.p2p_copier_app.BuildConfig.APP_VERSION + 
+                    " (Build " + com.niccher.p2p_copier_app.BuildConfig.APP_VERSION_CODE + ")";
+            tvVersion.setText(versionText);
+        }
     }
 }
