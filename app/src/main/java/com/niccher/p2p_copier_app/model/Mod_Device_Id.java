@@ -3,6 +3,9 @@ package com.niccher.p2p_copier_app.model;
 public class Mod_Device_Id {
     public String dev_uuid, dev_status, dev_time, dev_message;
 
+    public Mod_Device_Id() {
+    }
+
     public Mod_Device_Id(String dev_uuid, String dev_status, String dev_time, String dev_message) {
         this.dev_uuid = dev_uuid;
         this.dev_status = dev_status;

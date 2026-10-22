@@ -179,19 +179,22 @@ public class AuthSession extends AppCompatActivity {
         parameters.put("device_User", String.valueOf(Build.USER)+"");
         parameters.put("device_Serial", String.valueOf(Build.SERIAL)+"");
 
-        Call<Mod_Device_Id> call = retrofitInterface.createDevice(parameters);
+        Call<ApiResponse<Mod_Device_Id>> call = retrofitInterface.createDevice(parameters);
 
-        call.enqueue(new Callback<Mod_Device_Id>() {
+        call.enqueue(new Callback<ApiResponse<Mod_Device_Id>>() {
             @Override
-            public void onResponse(Call<Mod_Device_Id> call, Response<Mod_Device_Id> response) {
-                Mod_Device_Id postResponse = response.body();
-                if (postResponse != null) {
-                    sharedEditor = pref_Device.edit();
-                    sharedEditor.putString("dev_status", postResponse.getDev_status());
-                    sharedEditor.putString("dev_time", postResponse.getDev_time());
-                    sharedEditor.putString("dev_message", postResponse.getDev_message());
-                    sharedEditor.putString("dev_uuid", postResponse.getDev_uuid());
-                    sharedEditor.apply();
+            public void onResponse(Call<ApiResponse<Mod_Device_Id>> call, Response<ApiResponse<Mod_Device_Id>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse<Mod_Device_Id> apiResponse = response.body();
+                    Mod_Device_Id postResponse = apiResponse.getData();
+                    if (postResponse != null) {
+                        Helpers.set_prefs_dev("dev_status", postResponse.getDev_status() != null ? postResponse.getDev_status() : "success", AuthSession.this);
+                        Helpers.set_prefs_dev("dev_time", postResponse.getDev_time() != null ? postResponse.getDev_time() : "", AuthSession.this);
+                        Helpers.set_prefs_dev("dev_message", postResponse.getDev_message() != null ? postResponse.getDev_message() : "", AuthSession.this);
+                        if (postResponse.getDev_uuid() != null && !postResponse.getDev_uuid().isEmpty()) {
+                            Helpers.set_prefs_dev("dev_uuid", postResponse.getDev_uuid(), AuthSession.this);
+                        }
+                    }
                 }
                 if (onComplete != null) {
                     onComplete.run();
@@ -199,7 +202,7 @@ public class AuthSession extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Mod_Device_Id> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<Mod_Device_Id>> call, Throwable t) {
                 Log.e("AuthSession", "createDeviceID failure", t);
                 if (onComplete != null) {
                     onComplete.run();

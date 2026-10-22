@@ -29,7 +29,7 @@ public interface RetrofitInterface {
 
     @FormUrlEncoded
     @POST("api/v1/device/register")
-    Call<Mod_Device_Id> createDevice(@FieldMap Map<String, String> fields);
+    Call<ApiResponse<Mod_Device_Id>> createDevice(@FieldMap Map<String, String> fields);
 
     @Multipart
     @POST("api/v1/files")
