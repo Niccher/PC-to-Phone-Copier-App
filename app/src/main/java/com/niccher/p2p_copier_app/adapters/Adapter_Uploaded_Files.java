@@ -435,6 +435,9 @@ public class Adapter_Uploaded_Files extends RecyclerView.Adapter<Adapter_Uploade
         Map<String, String> parameters = new HashMap<>();
         parameters.put("var_file_uuid", part_file_id);
         parameters.put("var_file_name", part_file_name);
+        parameters.put("var_sess_id", Helpers.get_prefs_sess("auth_session_uuid", context));
+        parameters.put("var_auth_code_id", Helpers.get_prefs_sess("auth_auth_code_id", context));
+        parameters.put("var_dev_uuid", Helpers.get_prefs_dev("dev_uuid", context));
 
         Call<Mod_File_Delete> call = interface_delete.getFilesUploadedbySessDevidDelete(parameters);
         call.enqueue(new Callback<Mod_File_Delete>() {
@@ -442,7 +445,7 @@ public class Adapter_Uploaded_Files extends RecyclerView.Adapter<Adapter_Uploade
             public void onResponse(Call<Mod_File_Delete> call, Response<Mod_File_Delete> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Mod_File_Delete mod_file_delete = response.body();
-                    if ("1".equals(mod_file_delete.getStatus())) {
+                    if (mod_file_delete.isSuccessful()) {
                         Toast.makeText(context, "File " + targetItem.getDisplayName() + " deleted", Toast.LENGTH_SHORT).show();
                         if (position < list_file_infos.size()) {
                             list_file_infos.remove(position);

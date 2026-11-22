@@ -3,11 +3,21 @@ package com.niccher.p2p_copier_app.model;
 public class Mod_File_Delete {
     String name, uuid, status, time;
 
+    @com.google.gson.annotations.SerializedName("success")
+    public Boolean success;
+
+    @com.google.gson.annotations.SerializedName("code")
+    public Integer code;
+
     public Mod_File_Delete(String name, String uuid, String status, String time) {
         this.name = name;
         this.uuid = uuid;
         this.status = status;
         this.time = time;
+    }
+
+    public boolean isSuccessful() {
+        return "1".equals(status) || Boolean.TRUE.equals(success);
     }
 
     public String getName() {

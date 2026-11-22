@@ -114,6 +114,7 @@ public class Fragment_History_Files extends Fragment implements Adapter_Uploaded
         Map<String, String> parameters = new HashMap<>();
         parameters.put("var_dev_uuid", Helpers.get_prefs_dev("dev_uuid", getActivity()));
         parameters.put("var_auth_code_id", Helpers.get_prefs_sess("auth_auth_code_id", getActivity()));
+        parameters.put("var_sess_id", Helpers.get_prefs_sess("auth_session_uuid", getActivity()));
 
         summaryFileList = new ArrayList<>();
 
@@ -215,25 +216,42 @@ public class Fragment_History_Files extends Fragment implements Adapter_Uploaded
         Map<String, String> parameters = new HashMap<>();
         parameters.put("var_file_id", item.getUp_file_uuid());
         parameters.put("var_dev_id", Helpers.get_prefs_dev("dev_uuid", getActivity()));
-        parameters.put("var_sess_id", Helpers.get_prefs_sess("auth_auth_code_id", getActivity()));
+
+        String sessUuid = Helpers.get_prefs_sess("auth_session_uuid", getActivity());
+        if (sessUuid == null || sessUuid.trim().isEmpty()) {
+            sessUuid = Helpers.get_prefs_sess("auth_auth_code_id", getActivity());
+        }
+        parameters.put("var_sess_id", sessUuid);
+        parameters.put("var_auth_code_id", Helpers.get_prefs_sess("auth_auth_code_id", getActivity()));
 
         iface.getFilesUploadedbySessDevidDownloaded(parameters).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     try {
-                        File dest = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), item.getUp_file_Name());
-                        InputStream in = response.body().byteStream();
-                        OutputStream out = new FileOutputStream(dest);
-                        byte[] buf = new byte[4096];
-                        int read;
-                        while ((read = in.read(buf)) != -1) out.write(buf, 0, read);
-                        out.flush();
-                        in.close();
-                        out.close();
-                        Toast.makeText(getActivity(), "✓ " + item.getUp_file_Name(), Toast.LENGTH_SHORT).show();
-                    } catch (IOException e) {
-                        Toast.makeText(getActivity(), "✗ Failed: " + item.getUp_file_Name(), Toast.LENGTH_SHORT).show();
+                        String rawName = item.getDisplayName() != null ? item.getDisplayName() : item.getUp_file_Name();
+                        String safeName = rawName != null ? rawName.replaceAll("[\\\\/:*?\"<>|]", "_") : "downloaded_file";
+                        File downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                        if (downloadDir != null && !downloadDir.exists()) {
+                            downloadDir.mkdirs();
+                        }
+                        File dest = new File(downloadDir, safeName);
+                        try (InputStream in = response.body().byteStream();
+                             OutputStream out = new FileOutputStream(dest)) {
+                            byte[] buf = new byte[4096];
+                            int read;
+                            while ((read = in.read(buf)) != -1) {
+                                out.write(buf, 0, read);
+                            }
+                            out.flush();
+                        }
+                        if (getActivity() != null) {
+                            Toast.makeText(getActivity(), "✓ " + safeName, Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        if (getActivity() != null) {
+                            Toast.makeText(getActivity(), "✗ Failed: " + item.getDisplayName(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
                 batchDownloadIndex++;
@@ -274,6 +292,7 @@ public class Fragment_History_Files extends Fragment implements Adapter_Uploaded
                         parameters.put("var_file_ids", ids.toString());
                         parameters.put("var_dev_uuid", Helpers.get_prefs_dev("dev_uuid", getActivity()));
                         parameters.put("var_auth_code_id", Helpers.get_prefs_sess("auth_auth_code_id", getActivity()));
+                        parameters.put("var_sess_id", Helpers.get_prefs_sess("auth_session_uuid", getActivity()));
 
                         iface.batchDeleteFiles(parameters).enqueue(new Callback<ResponseBody>() {
                             @Override

@@ -168,7 +168,10 @@ public class Adapter_Sel_Files extends RecyclerView.Adapter<Adapter_Sel_Files.Vi
         MultipartBody.Part body = MultipartBody.Part.createFormData("uploaded_file", tempFile.getName(), requestFile);
 
         String part_dev_id = helpers.get_prefs_dev("dev_uuid", context);
-        String part_sess_id = helpers.get_prefs_sess("auth_auth_code_id", context);
+        String part_sess_id = helpers.get_prefs_sess("auth_session_uuid", context);
+        if (part_sess_id == null || part_sess_id.trim().isEmpty()) {
+            part_sess_id = helpers.get_prefs_sess("auth_auth_code_id", context);
+        }
 
         RequestBody requestBody0 = RequestBody.create(okhttp3.MultipartBody.FORM, part_dev_id);
         RequestBody requestBody1 = RequestBody.create(okhttp3.MultipartBody.FORM, part_sess_id);
